@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import seng201.team0.services.CounterService;
 
 /**
- * Controller for the main.fxml window
+ * Controller for the fx_wrapper.fxml window
  * @author seng201 teaching team
  */
 public class MainController {
