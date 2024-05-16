@@ -12,7 +12,7 @@ import java.io.IOException;
  * Class starts the javaFX application window
  * @author seng201 teaching team
  */
-public class FXWindow extends Application {
+public class MainWindow extends Application {
 
     /**
      * Opens the gui with the fxml content specified in resources/fxml/fx_wrapper.fxml
