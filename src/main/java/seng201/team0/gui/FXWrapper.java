@@ -16,7 +16,7 @@ public class FXWrapper {
 
     public void init(Stage stage) {
         this.stage = stage;
-        new GameEnvironment(this::launchSetupScreen, this::clearPane);
+        new GameEnvironment(this::launchSetupScreen, this::launchTowerSelectScreen, this::clearPane);
     }
 
     public void clearPane() {
@@ -27,6 +27,18 @@ public class FXWrapper {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/setup_screen.fxml"));
             setupLoader.setControllerFactory(param -> new SetupScreenController(gameEnvironment));
+            Parent setupParent  = setupLoader.load();
+            pane.getChildren().add(setupParent);
+            stage.setTitle("Edit This");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void launchTowerSelectScreen(GameEnvironment gameEnvironment) {
+        try {
+            FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/tower_select_screen.fxml"));
+            setupLoader.setControllerFactory(param -> new TowerSelectScreenController(gameEnvironment));
             Parent setupParent  = setupLoader.load();
             pane.getChildren().add(setupParent);
             stage.setTitle("Edit This");

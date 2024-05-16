@@ -20,12 +20,16 @@ public class SetupScreenController {
     private Label selectedRoundNumber;
     @FXML
     private Label selectedDifficulty;
-    @FXML
-    private Button proceed;
+
+    private String name;
+    private int rounds;
+    private String difficulty;
+    private boolean informationUpdated;
 
     private GameEnvironment gameEnvironment;
 
     public SetupScreenController(GameEnvironment tempEnvironment) {
+        this.informationUpdated = false;
         this.gameEnvironment = tempEnvironment;
     }
 
@@ -33,18 +37,18 @@ public class SetupScreenController {
         difficultyBox.getItems().addAll( "Private", "Captain", "General");
 
     }
-
     @FXML
     public void updateSelections() {
 
-        String name = playerName.getText();
-        int rounds = (int) roundSlider.getValue();
-        String difficulty = difficultyBox.getValue();
+        this.name = playerName.getText();
+        this.rounds = (int) roundSlider.getValue();
+        this.difficulty = difficultyBox.getValue();
 
-        if (nameChecker(name) & difficultyChecker()) {
+        if (nameChecker(name) && difficultyChecker()) {
             selectedPlayerName.setText("Player's Name: " + name);
             selectedRoundNumber.setText("Rounds Selected: " + rounds);
             selectedDifficulty.setText("Difficulty Selected: " + difficulty);
+            informationUpdated = true;
         }
     }
 
@@ -52,29 +56,40 @@ public class SetupScreenController {
     private void onUpdateClicked() {
         updateSelections();
     }
+    @FXML
+    private void onProceedClicked() {
+        if (informationUpdated) {
+            gameEnvironment.startGame(name, rounds, difficulty);
+            gameEnvironment.closeSetupScreen();
+        }
+        else
+            showAlert("Information not Updated", "Please update your information before continuing.");
+    }
 
 
     public boolean nameChecker(String name) {
-        if (name.length() > 15 | name.length() < 3 | !name.matches("^[0-9a-zA-Z]*$")) {
+        if (name.length() > 15 || name.length() < 3 || !name.matches("^[0-9a-zA-Z]*$")) {
             showAlert("Invalid Name", "Name must be 3-15 characters long and not contain special characters.");
             return false;
         }
-        return true;
+        else
+            return true;
     }
 
     public boolean difficultyChecker() {
         if (difficultyBox.getValue() == null) {
-            showAlert("Invalid Difficulty", "Please select a difficulty");
+            showAlert("Invalid Difficulty", "Please select a difficulty.");
             return false;
         }
-        return true;
+        else
+            return true;
     }
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(message);
-        alert.showAndWait();
+        alert.show();
     }
 
 
