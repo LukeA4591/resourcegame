@@ -1,5 +1,9 @@
 package seng201.team0;
 
+import seng201.team0.models.towers.Tower;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class GameEnvironment {
@@ -17,17 +21,22 @@ public class GameEnvironment {
 
     private double startingBalance;
 
-
+    private List<Tower> selectedTowers;
+    private List<Tower> unselectedTowers;
 
 
 
     public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher
             , Consumer<GameEnvironment> gameScreenLauncher, Runnable clearScreen) {
+
         this.clearScreen = clearScreen;
         this.setupScreenLauncher = setupScreenLauncher;
         this.towerSelectScreenLauncher = towerSelectScreenLauncher;
         this.gameScreenLauncher = gameScreenLauncher;
         launchSetupScreen();
+
+        this.selectedTowers = new ArrayList<>();
+        this.unselectedTowers = new ArrayList<>();
     }
 
 
@@ -88,6 +97,14 @@ public class GameEnvironment {
 
     public double getStartingBalance() {
         return startingBalance;
+    }
+
+
+    public void addTower(Tower tower, boolean isSelected) {
+        if (isSelected) {
+            selectedTowers.add(tower);
+        }
+        else unselectedTowers.add(tower);
     }
 
 }

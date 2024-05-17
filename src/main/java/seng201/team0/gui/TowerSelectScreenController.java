@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.towers.*;
+import javafx.scene.control.Alert.*;
 
 import javafx.scene.control.*;
 
@@ -32,9 +33,9 @@ public class TowerSelectScreenController {
     @FXML
     private VBox towerStatsVBox;
 
-    private ToggleGroup ammunitionToggleGroup;
-    private ToggleGroup troopsToggleGroup;
-    private ToggleGroup medkitsToggleGroup;
+    private final ToggleGroup ammunitionToggleGroup = new ToggleGroup();
+    private final ToggleGroup troopsToggleGroup = new ToggleGroup();
+    private final ToggleGroup medkitsToggleGroup = new ToggleGroup();
 
 
     private GameEnvironment gameEnvironment;
@@ -57,10 +58,6 @@ public class TowerSelectScreenController {
         garrisonButton.setOnAction(event -> updateTowerStats(new Garrison()));
         medbayButton.setOnAction(event -> updateTowerStats(new Medbay()));
         medicalTentButton.setOnAction(event -> updateTowerStats(new MedicalTent()));
-
-        ammunitionToggleGroup = new ToggleGroup();
-        troopsToggleGroup = new ToggleGroup();
-        medkitsToggleGroup = new ToggleGroup();
 
         armouryButton.setToggleGroup(ammunitionToggleGroup);
         arsenalButton.setToggleGroup(ammunitionToggleGroup);
@@ -87,8 +84,53 @@ public class TowerSelectScreenController {
 
     @FXML
     public void onConfirmClicked() {
+        if (checkTowersSelected()) {
+            storeTowers();
+            gameEnvironment.closeTowerSelectScreen();
+        }
+        else
+            showAlert("Invalid Tower Selection", "Please select your three starting towers.");
+    }
 
-        gameEnvironment.closeTowerSelectScreen();
+
+    public boolean checkTowersSelected() {
+        return ammunitionToggleGroup.getSelectedToggle() != null && troopsToggleGroup.getSelectedToggle() != null
+                && medkitsToggleGroup.getSelectedToggle() != null;
+    }
+
+    public void storeTowers() {
+
+        if (ammunitionToggleGroup.getSelectedToggle() == armouryButton) {
+            gameEnvironment.addTower(new Armoury(), true);
+            gameEnvironment.addTower(new Arsenal(), false);
+        }  else {
+            gameEnvironment.addTower(new Armoury(), false);
+            gameEnvironment.addTower(new Arsenal(), true);
+        }
+
+        if (troopsToggleGroup.getSelectedToggle() == barracksButton) {
+            gameEnvironment.addTower(new Barracks(), true);
+            gameEnvironment.addTower(new Garrison(), false);
+        }  else {
+            gameEnvironment.addTower(new Barracks(), false);
+            gameEnvironment.addTower(new Garrison(), true);
+        }
+
+        if (medkitsToggleGroup.getSelectedToggle() == medicalTentButton) {
+            gameEnvironment.addTower(new MedicalTent(), true);
+            gameEnvironment.addTower(new Medbay(), false);
+        } else {
+            gameEnvironment.addTower(new MedicalTent(), false);
+            gameEnvironment.addTower(new Medbay(), true);
+        }
+
+    }
+
+    public void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.show();
     }
 
 
