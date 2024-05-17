@@ -18,19 +18,23 @@ public class TowerSelectScreenController {
     @FXML
     private Label currentBalance;
     @FXML
-    private Button armouryButton;
+    private ToggleButton armouryButton;
     @FXML
-    private Button arsenalButton;
+    private ToggleButton arsenalButton;
     @FXML
-    private Button barracksButton;
+    private ToggleButton barracksButton;
     @FXML
-    private Button garrisonButton;
+    private ToggleButton garrisonButton;
     @FXML
-    private Button medicalTentButton;
+    private ToggleButton medicalTentButton;
     @FXML
-    private Button medbayButton;
+    private ToggleButton medbayButton;
     @FXML
     private VBox towerStatsVBox;
+
+    private ToggleGroup ammunitionToggleGroup;
+    private ToggleGroup troopsToggleGroup;
+    private ToggleGroup medkitsToggleGroup;
 
 
     private GameEnvironment gameEnvironment;
@@ -38,13 +42,14 @@ public class TowerSelectScreenController {
     public TowerSelectScreenController(GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
     }
+
     @FXML
     public void initialize() {
 
         playerName.setText("Player Name: " + gameEnvironment.getPlayerName());
         gameDifficulty.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
         roundCounter.setText("Round: 0/" + gameEnvironment.getGameRounds());
-        currentBalance.setText("Current Balance: $" +gameEnvironment.getStartingBalance());
+        currentBalance.setText("Current Balance: $" + gameEnvironment.getStartingBalance());
 
         armouryButton.setOnAction(event -> updateTowerStats(new Armoury()));
         arsenalButton.setOnAction(event -> updateTowerStats(new Arsenal()));
@@ -53,8 +58,21 @@ public class TowerSelectScreenController {
         medbayButton.setOnAction(event -> updateTowerStats(new Medbay()));
         medicalTentButton.setOnAction(event -> updateTowerStats(new MedicalTent()));
 
-    }
+        ammunitionToggleGroup = new ToggleGroup();
+        troopsToggleGroup = new ToggleGroup();
+        medkitsToggleGroup = new ToggleGroup();
 
+        armouryButton.setToggleGroup(ammunitionToggleGroup);
+        arsenalButton.setToggleGroup(ammunitionToggleGroup);
+        barracksButton.setToggleGroup(troopsToggleGroup);
+        garrisonButton.setToggleGroup(troopsToggleGroup);
+        medicalTentButton.setToggleGroup(medkitsToggleGroup);
+        medbayButton.setToggleGroup(medkitsToggleGroup);
+
+
+
+    }
+    @FXML
     public void updateTowerStats(Tower tower) {
 
         towerStatsVBox.getChildren().clear();
@@ -66,6 +84,14 @@ public class TowerSelectScreenController {
                 new Label("Cost:   " + tower.getCost())
         );
     }
+
+    @FXML
+    public void onConfirmClicked() {
+
+        gameEnvironment.closeTowerSelectScreen();
+    }
+
+
 
 
 

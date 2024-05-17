@@ -7,6 +7,7 @@ public class GameEnvironment {
 
     private final Consumer<GameEnvironment> setupScreenLauncher;
     private final Consumer<GameEnvironment> towerSelectScreenLauncher;
+    private final Consumer<GameEnvironment> gameScreenLauncher;
     private final Runnable clearScreen;
 
 
@@ -16,11 +17,16 @@ public class GameEnvironment {
 
     private double startingBalance;
 
+
+
+
+
     public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher
-            , Runnable clearScreen) {
+            , Consumer<GameEnvironment> gameScreenLauncher, Runnable clearScreen) {
         this.clearScreen = clearScreen;
         this.setupScreenLauncher = setupScreenLauncher;
         this.towerSelectScreenLauncher = towerSelectScreenLauncher;
+        this.gameScreenLauncher = gameScreenLauncher;
         launchSetupScreen();
     }
 
@@ -35,7 +41,16 @@ public class GameEnvironment {
         launchTowerSelectScreen();
     }
 
+
     public void launchTowerSelectScreen() {towerSelectScreenLauncher.accept(this);}
+    public void closeTowerSelectScreen() {
+        clearScreen.run();
+        launchGameScreen();
+    }
+
+    public void launchGameScreen() {
+        gameScreenLauncher.accept(this);
+    }
 
 
 
