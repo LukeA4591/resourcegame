@@ -1,7 +1,7 @@
 package seng201.team0.gui;
 
 import javafx.fxml.FXML;
-import seng201.team0.models.GameEnvironment;
+import seng201.team0.GameEnvironment;
 
 import javafx.scene.control.*;
 

@@ -1,4 +1,6 @@
-package seng201.team0.models;
+package seng201.team0.models.towers;
+
+import seng201.team0.models.Purchasable;
 
 public abstract class Tower implements Purchasable {
     private String name;
@@ -10,7 +12,7 @@ public abstract class Tower implements Purchasable {
     private int sellPrice;
 
     public Tower(String name, int resourceAmount, double reloadSpeed, String resourceType, int level,
-            int cost, int sellPrice) {
+            int cost) {
 
         this.name = name;
         this.resourceAmount = resourceAmount;
@@ -18,7 +20,7 @@ public abstract class Tower implements Purchasable {
         this.resourceType = resourceType;
         this.level = level;
         this.cost = cost;
-        this.sellPrice = sellPrice;
+        this.sellPrice = cost / 2;
     }
 
     public String getName() {
@@ -31,7 +33,7 @@ public abstract class Tower implements Purchasable {
     public int getResourceAmount() {
         return resourceAmount;
     }
-    public void setName(int resourceAmount) {
+    public void setResourceAmount(int resourceAmount) {
         this.resourceAmount = resourceAmount;
     }
 
@@ -68,5 +70,9 @@ public abstract class Tower implements Purchasable {
     }
     public void setSellPrice(int sellPrice) {
         this.sellPrice = sellPrice;
+    }
+
+    public String getDescription() {
+        return "";
     }
 }

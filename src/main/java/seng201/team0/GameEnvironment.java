@@ -1,4 +1,4 @@
-package seng201.team0.models;
+package seng201.team0;
 
 import java.util.function.Consumer;
 
@@ -13,6 +13,8 @@ public class GameEnvironment {
     private String playerName;
     private int gameRounds;
     private String gameDifficulty;
+
+    private double startingBalance;
 
     public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher
             , Runnable clearScreen) {
@@ -42,7 +44,9 @@ public class GameEnvironment {
         this.playerName = name;
         this.gameRounds = rounds;
         this.gameDifficulty = difficulty;
+        setStartingBalance(difficulty);
     }
+
     public String getPlayerName() {
         return playerName;
     }
@@ -53,5 +57,22 @@ public class GameEnvironment {
         return gameDifficulty;
     }
 
+    public void setStartingBalance(String difficulty) {
+        switch (difficulty) {
+            case "Private":
+                startingBalance = 1500;
+                break;
+            case "Captain":
+                startingBalance = 1000;
+                break;
+            case "General":
+                startingBalance = 500;
+                break;
+        }
+    }
+
+    public double getStartingBalance() {
+        return startingBalance;
+    }
 
 }
