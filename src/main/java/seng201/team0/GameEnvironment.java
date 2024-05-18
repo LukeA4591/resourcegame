@@ -3,7 +3,9 @@ package seng201.team0;
 import seng201.team0.models.towers.Tower;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class GameEnvironment {
@@ -24,8 +26,10 @@ public class GameEnvironment {
     private int livesLeft;
 
 
-    private List<Tower> selectedTowers;
-    private List<Tower> unselectedTowers;
+    private Map<String, Tower> selectedTowers;
+    private Map<String, List<Tower>> unselectedTowers;
+
+    private Map<Tower, Integer> towerLevels;
 
 
 
@@ -41,8 +45,10 @@ public class GameEnvironment {
         this.inventoryScreenLauncher = inventoryScreenLauncher;
         launchSetupScreen();
 
-        this.selectedTowers = new ArrayList<>();
-        this.unselectedTowers = new ArrayList<>();
+        this.selectedTowers = new HashMap<>();
+        this.unselectedTowers = new HashMap<>();
+        this.towerLevels = new HashMap<>();
+
     }
 
 
@@ -139,19 +145,52 @@ public class GameEnvironment {
         return livesLeft;
     }
     public void loseLife() {
-        livesLeft -= 1;
+        livesLeft --;
     }
     public boolean isGameOver() {
         return livesLeft <= 0;
+    }
+
+    public int getTowerLevel(Tower tower) {
+        return towerLevels.get(tower);
+    }
+    public void levelUpTower(Tower tower) {
+        towerLevels.put(tower, tower.getLevel() + 1);
     }
 
 
 
     public void addTower(Tower tower, boolean isSelected) {
         if (isSelected) {
-            selectedTowers.add(tower);
+            selectedTowers.put(tower.getResourceType(), tower);
+            towerLevels.put(tower, 1);
         }
-        else unselectedTowers.add(tower);
+        else {
+            unselectedTowers.put(tower.getResourceType(), new ArrayList<>());
+            unselectedTowers.get(tower.getResourceType()).add(tower);
+            towerLevels.put(tower, 1);
+        }
+
+
     }
+
+    public Map<String, Tower> getSelectedTowers() {
+        return selectedTowers;
+    }
+    public Map<String, List<Tower>> getUnselectedTowers() {
+        return unselectedTowers;
+    }
+
+    public void swapTowers(Tower selectedTower, Tower unselectedTower) {
+
+
+        if (selectedTower.getResourceType().equals(unselectedTower.getResourceType())) {
+            selectedTowers.replace(selectedTower.getResourceType(), selectedTower, unselectedTower);
+            unselectedTowers.get(selectedTower.getResourceType()).remove(unselectedTower);
+            unselectedTowers.get(selectedTower.getResourceType()).add(selectedTower);
+        }
+        else throw new IllegalArgumentException("Towers must be of the same resourceType to swap.");
+    }
+
 
 }

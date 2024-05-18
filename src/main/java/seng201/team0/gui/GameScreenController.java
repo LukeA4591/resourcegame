@@ -3,6 +3,7 @@ package seng201.team0.gui;
 import seng201.team0.GameEnvironment;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import seng201.team0.models.towers.*;
 
 public class GameScreenController {
 
@@ -62,6 +63,14 @@ public class GameScreenController {
         roundCounterLabel.setText("Round: 0/" + gameEnvironment.getGameRounds());
         currentBalanceLabel.setText("Current Balance: $" + gameEnvironment.getCurrentBalance());
         livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
+
+        tower1NameLabel.setText(gameEnvironment.getSelectedTowers().get("Ammunition").getName());
+        tower2NameLabel.setText(gameEnvironment.getSelectedTowers().get("Troops").getName());
+        tower3NameLabel.setText(gameEnvironment.getSelectedTowers().get("Medkits").getName());
+
+        tower1LevelLabel.setText("Level " + gameEnvironment.getTowerLevel(gameEnvironment.getSelectedTowers().get("Ammunition")));
+        tower2LevelLabel.setText("Level " + gameEnvironment.getTowerLevel(gameEnvironment.getSelectedTowers().get("Troops")));
+        tower3LevelLabel.setText("Level " + gameEnvironment.getTowerLevel(gameEnvironment.getSelectedTowers().get("Medkits")));
 
 
     }
