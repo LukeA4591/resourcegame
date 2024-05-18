@@ -12,27 +12,33 @@ public class GameEnvironment {
     private final Consumer<GameEnvironment> setupScreenLauncher;
     private final Consumer<GameEnvironment> towerSelectScreenLauncher;
     private final Consumer<GameEnvironment> gameScreenLauncher;
+    private final Consumer<GameEnvironment> shopScreenLauncher;
+    private final Consumer<GameEnvironment> inventoryScreenLauncher;
     private final Runnable clearScreen;
 
 
     private String playerName;
     private int gameRounds;
     private String gameDifficulty;
+    private double currentBalance;
+    private int livesLeft;
 
-    private double startingBalance;
 
     private List<Tower> selectedTowers;
     private List<Tower> unselectedTowers;
 
 
 
-    public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher
-            , Consumer<GameEnvironment> gameScreenLauncher, Runnable clearScreen) {
+    public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher,
+                           Consumer<GameEnvironment> gameScreenLauncher, Consumer<GameEnvironment> shopScreenLauncher,
+                           Consumer<GameEnvironment> inventoryScreenLauncher, Runnable clearScreen) {
 
         this.clearScreen = clearScreen;
         this.setupScreenLauncher = setupScreenLauncher;
         this.towerSelectScreenLauncher = towerSelectScreenLauncher;
         this.gameScreenLauncher = gameScreenLauncher;
+        this.shopScreenLauncher = shopScreenLauncher;
+        this.inventoryScreenLauncher = inventoryScreenLauncher;
         launchSetupScreen();
 
         this.selectedTowers = new ArrayList<>();
@@ -60,15 +66,54 @@ public class GameEnvironment {
     public void launchGameScreen() {
         gameScreenLauncher.accept(this);
     }
+    public void closeGameScreen() {
+        clearScreen.run();
+        launchShopScreen();
+    }
+
+    public void launchShopScreen() {
+        clearScreen.run();
+        shopScreenLauncher.accept(this);
+    }
+    public void closeShopScreen() {
+        clearScreen.run();
+        launchGameScreen();
+    }
+
+    public void launchInventoryScreen() {
+        clearScreen.run();
+        inventoryScreenLauncher.accept(this);
+    }
+    public void closeInventoryScreen() {
+        clearScreen.run();
+        launchGameScreen();
+    }
+
+
 
 
 
 
     public void startGame(String name, int rounds, String difficulty) {
+
         this.playerName = name;
         this.gameRounds = rounds;
         this.gameDifficulty = difficulty;
-        setStartingBalance(difficulty);
+
+        switch (difficulty) {
+            case "Recruit":
+                setCurrentBalance(1500.00);
+                livesLeft = 3;
+                break;
+            case "Major":
+                setCurrentBalance(1000.00);
+                livesLeft = 2;
+                break;
+            case "Commander":
+                setCurrentBalance(500.00);
+                livesLeft = 1;
+                break;
+        }
     }
 
     public String getPlayerName() {
@@ -81,23 +126,25 @@ public class GameEnvironment {
         return gameDifficulty;
     }
 
-    public void setStartingBalance(String difficulty) {
-        switch (difficulty) {
-            case "Private":
-                startingBalance = 1500;
-                break;
-            case "Captain":
-                startingBalance = 1000;
-                break;
-            case "General":
-                startingBalance = 500;
-                break;
-        }
+
+    public void setCurrentBalance(Double balance) {
+        this.currentBalance = balance;
+    }
+    public double getCurrentBalance() {
+        return currentBalance;
     }
 
-    public double getStartingBalance() {
-        return startingBalance;
+
+    public int getLivesLeft() {
+        return livesLeft;
     }
+    public void loseLife() {
+        livesLeft -= 1;
+    }
+    public boolean isGameOver() {
+        return livesLeft <= 0;
+    }
+
 
 
     public void addTower(Tower tower, boolean isSelected) {

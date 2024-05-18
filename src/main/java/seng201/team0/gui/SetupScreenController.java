@@ -34,7 +34,7 @@ public class SetupScreenController {
     }
 
     public void initialize() {
-        difficultyBox.getItems().addAll( "Private", "Captain", "General");
+        difficultyBox.getItems().addAll( "Recruit", "Major", "Commander");
 
     }
     @FXML

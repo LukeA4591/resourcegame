@@ -7,49 +7,77 @@ import javafx.scene.control.*;
 public class GameScreenController {
 
     @FXML
-    private Label playerName;
+    private Label playerNameLabel;
     @FXML
-    private Label gameDifficulty;
+    private Label gameDifficultyLabel;
     @FXML
-    private Label roundCounter;
+    private Label roundCounterLabel;
     @FXML
-    private Label currentBalance;
+    private Label currentBalanceLabel;
     @FXML
-    private Label roundTimerLabel;
+    private Label livesLeftLabel;
+
     @FXML
-    private Button endRoundButton;
+    private Label tower1NameLabel;
     @FXML
-    private Label tower1Name;
+    private Label tower1LevelLabel;
     @FXML
-    private Button makeAmmoButton;
+    private Label tower2NameLabel;
     @FXML
-    private Label tower2Name;
+    private Label tower2LevelLabel;
     @FXML
-    private Button makeMedButton;
+    private Label tower3NameLabel;
     @FXML
-    private Label tower3Name;
+    private Label tower3LevelLabel;
     @FXML
-    private Button makeTroopButton;
+    private Label tower4NameLabel;
     @FXML
-    private Label tower4Name;
+    private Label tower4LevelLabel;
+
     @FXML
-    private Label ammoProgress;
+    private Button loadSupplyTruckButton;
     @FXML
-    private Label autoGenAmmo;
+    private Button loadHumveeButton;
     @FXML
-    private Label medProgress;
+    private Button loadAmbulanceButton;
+
     @FXML
-    private Label autoGenMed;
+    private Button shopButton;
     @FXML
-    private Label troopProgress;
+    private Button inventoryButton;
     @FXML
-    private Label autoGenTroop;
-    @FXML
-    private Label tower4Info;
+    private Button startRoundButton;
 
     private GameEnvironment gameEnvironment;
 
     public GameScreenController(GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
+    }
+
+    @FXML
+    public void initialize() {
+
+        playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
+        gameDifficultyLabel.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
+        roundCounterLabel.setText("Round: 0/" + gameEnvironment.getGameRounds());
+        currentBalanceLabel.setText("Current Balance: $" + gameEnvironment.getCurrentBalance());
+        livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
+
+
+    }
+
+    @FXML
+    public void onShopButtonClicked() {
+        gameEnvironment.launchShopScreen();
+    }
+
+    @FXML
+    public void onInventoryButtonClicked() {
+        gameEnvironment.launchInventoryScreen();
+    }
+
+    @FXML
+    public void onStartRoundButtonClicked() {
+        gameEnvironment.closeGameScreen(); // change this
     }
 }

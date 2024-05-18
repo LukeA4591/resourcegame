@@ -11,13 +11,15 @@ import javafx.scene.control.*;
 public class TowerSelectScreenController {
 
     @FXML
-    private Label playerName;
+    private Label playerNameLabel;
     @FXML
-    private Label gameDifficulty;
+    private Label gameDifficultyLabel;
     @FXML
-    private Label roundCounter;
+    private Label roundCounterLabel;
     @FXML
-    private Label currentBalance;
+    private Label currentBalanceLabel;
+    @FXML
+    private Label livesLeftLabel;
     @FXML
     private ToggleButton armouryButton;
     @FXML
@@ -47,10 +49,11 @@ public class TowerSelectScreenController {
     @FXML
     public void initialize() {
 
-        playerName.setText("Player Name: " + gameEnvironment.getPlayerName());
-        gameDifficulty.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
-        roundCounter.setText("Round: 0/" + gameEnvironment.getGameRounds());
-        currentBalance.setText("Current Balance: $" + gameEnvironment.getStartingBalance());
+        playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
+        gameDifficultyLabel.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
+        roundCounterLabel.setText("Round: 0/" + gameEnvironment.getGameRounds());
+        currentBalanceLabel.setText("Current Balance: $" + gameEnvironment.getCurrentBalance());
+        livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
 
         armouryButton.setOnAction(event -> updateTowerStats(new Armoury()));
         arsenalButton.setOnAction(event -> updateTowerStats(new Arsenal()));
@@ -88,8 +91,7 @@ public class TowerSelectScreenController {
             storeTowers();
             gameEnvironment.closeTowerSelectScreen();
         }
-        else
-            showAlert("Invalid Tower Selection", "Please select your three starting towers.");
+        else showAlert("Invalid Tower Selection", "Please select your three starting towers.");
     }
 
 
