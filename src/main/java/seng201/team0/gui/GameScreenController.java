@@ -58,11 +58,7 @@ public class GameScreenController {
     @FXML
     public void initialize() {
 
-        playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
-        gameDifficultyLabel.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
-        roundCounterLabel.setText("Round: 0/" + gameEnvironment.getGameRounds());
-        currentBalanceLabel.setText("Current Balance: $" + gameEnvironment.getCurrentBalance());
-        livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
+        updatePlayerDetails();
 
         tower1NameLabel.setText(gameEnvironment.getSelectedTowers().get("Ammunition").getName());
         tower2NameLabel.setText(gameEnvironment.getSelectedTowers().get("Troops").getName());
@@ -76,17 +72,26 @@ public class GameScreenController {
     }
 
     @FXML
+    public void updatePlayerDetails() {
+        playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
+        gameDifficultyLabel.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
+        roundCounterLabel.setText("Round: 0/" + gameEnvironment.getGameRounds());
+        currentBalanceLabel.setText("Current Balance: $" + gameEnvironment.getCurrentBalance());
+        livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
+    }
+
+    @FXML
     public void onShopButtonClicked() {
-        gameEnvironment.launchShopScreen();
+        gameEnvironment.closeGameScreen(false);
     }
 
     @FXML
     public void onInventoryButtonClicked() {
-        gameEnvironment.launchInventoryScreen();
+        gameEnvironment.closeGameScreen(true);
     }
 
     @FXML
     public void onStartRoundButtonClicked() {
-        gameEnvironment.closeGameScreen(); // change this
+        gameEnvironment.closeInventoryScreen(); // change this
     }
 }

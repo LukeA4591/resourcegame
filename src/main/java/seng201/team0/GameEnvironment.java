@@ -72,9 +72,12 @@ public class GameEnvironment {
     public void launchGameScreen() {
         gameScreenLauncher.accept(this);
     }
-    public void closeGameScreen() {
+    public void closeGameScreen(Boolean isInventory) {
         clearScreen.run();
-        launchShopScreen();
+        if (isInventory) {
+            launchInventoryScreen();
+        }
+        else launchShopScreen();
     }
 
     public void launchShopScreen() {
@@ -87,7 +90,6 @@ public class GameEnvironment {
     }
 
     public void launchInventoryScreen() {
-        clearScreen.run();
         inventoryScreenLauncher.accept(this);
     }
     public void closeInventoryScreen() {
@@ -189,7 +191,7 @@ public class GameEnvironment {
             unselectedTowers.get(selectedTower.getResourceType()).remove(unselectedTower);
             unselectedTowers.get(selectedTower.getResourceType()).add(selectedTower);
         }
-        else throw new IllegalArgumentException("Towers must be of the same resourceType to swap.");
+
     }
 
 
