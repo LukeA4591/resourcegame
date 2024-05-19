@@ -26,8 +26,9 @@ public class GameEnvironment {
     private int livesLeft;
 
 
-    private Map<String, Tower> selectedTowers;
-    private Map<String, List<Tower>> unselectedTowers;
+    private List<Tower> mainTowers;
+    private List<Tower> unselectedTowers;
+    private List<Tower> reserveTowers;
 
     private Map<Tower, Integer> towerLevels;
 
@@ -45,9 +46,10 @@ public class GameEnvironment {
         this.inventoryScreenLauncher = inventoryScreenLauncher;
         launchSetupScreen();
 
-        this.selectedTowers = new HashMap<>();
-        this.unselectedTowers = new HashMap<>();
+        this.mainTowers = new ArrayList<>();
+        this.unselectedTowers = new ArrayList<>();
         this.towerLevels = new HashMap<>();
+        this.reserveTowers = new ArrayList<>();
 
     }
 
@@ -164,32 +166,37 @@ public class GameEnvironment {
 
     public void addTower(Tower tower, boolean isSelected) {
         if (isSelected) {
-            selectedTowers.put(tower.getResourceType(), tower);
+            mainTowers.add(tower);
             towerLevels.put(tower, 1);
         }
         else {
-            unselectedTowers.put(tower.getResourceType(), new ArrayList<>());
-            unselectedTowers.get(tower.getResourceType()).add(tower);
+            unselectedTowers.add(tower);
             towerLevels.put(tower, 1);
         }
 
 
     }
 
-    public Map<String, Tower> getSelectedTowers() {
-        return selectedTowers;
+    public List<Tower> getMainTowers() {
+        return mainTowers;
     }
-    public Map<String, List<Tower>> getUnselectedTowers() {
+    public List<Tower> getUnselectedTowers() {
         return unselectedTowers;
     }
 
-    public void swapTowers(Tower selectedTower, Tower unselectedTower) {
+    public List<Tower> getReserveTowers() {
+        return reserveTowers;
+    }
 
+    public void swapTowers(Tower mainTower, Tower reserveTower) {
 
-        if (selectedTower.getResourceType().equals(unselectedTower.getResourceType())) {
-            selectedTowers.replace(selectedTower.getResourceType(), selectedTower, unselectedTower);
-            unselectedTowers.get(selectedTower.getResourceType()).remove(unselectedTower);
-            unselectedTowers.get(selectedTower.getResourceType()).add(selectedTower);
+        if (mainTower.getResourceType().equals(reserveTower.getResourceType())) {
+
+            int mainIndex = mainTowers.indexOf(mainTower);
+            int reserveIndex = reserveTowers.indexOf(reserveTower);
+
+            mainTowers.set(mainIndex, reserveTower);
+            reserveTowers.set(reserveIndex, mainTower);
         }
 
     }

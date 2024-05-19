@@ -86,7 +86,7 @@ public class TowerSelectScreenController {
     }
 
     @FXML
-    public void onConfirmClicked() {
+    private void onConfirmClicked() {
         if (checkTowersSelected()) {
             storeTowers();
             gameEnvironment.closeTowerSelectScreen();

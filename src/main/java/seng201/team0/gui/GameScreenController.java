@@ -60,19 +60,35 @@ public class GameScreenController {
 
         updatePlayerDetails();
 
-        tower1NameLabel.setText(gameEnvironment.getSelectedTowers().get("Ammunition").getName());
-        tower2NameLabel.setText(gameEnvironment.getSelectedTowers().get("Troops").getName());
-        tower3NameLabel.setText(gameEnvironment.getSelectedTowers().get("Medkits").getName());
-
-        tower1LevelLabel.setText("Level " + gameEnvironment.getTowerLevel(gameEnvironment.getSelectedTowers().get("Ammunition")));
-        tower2LevelLabel.setText("Level " + gameEnvironment.getTowerLevel(gameEnvironment.getSelectedTowers().get("Troops")));
-        tower3LevelLabel.setText("Level " + gameEnvironment.getTowerLevel(gameEnvironment.getSelectedTowers().get("Medkits")));
+        updateTowerLabels();
 
 
     }
 
     @FXML
-    public void updatePlayerDetails() {
+    private void updateTowerLabels() {
+
+        for (Tower tower : gameEnvironment.getMainTowers()) {
+            switch (tower.getResourceType()) {
+                case "Ammunition":
+                    tower1NameLabel.setText(tower.getName());
+                    tower1LevelLabel.setText("Level " + tower.getLevel());
+
+                case "Troops":
+                    tower2NameLabel.setText(tower.getName());
+                    tower2LevelLabel.setText("Level " + tower.getLevel().toString());
+
+                case "Medkits":
+                    tower3NameLabel.setText(tower.getName());
+                    tower3LevelLabel.setText("Level " + tower.getLevel().toString());
+            }
+        }
+
+    }
+
+
+    @FXML
+    private void updatePlayerDetails() {
         playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
         gameDifficultyLabel.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
         roundCounterLabel.setText("Round: 0/" + gameEnvironment.getGameRounds());
@@ -81,17 +97,17 @@ public class GameScreenController {
     }
 
     @FXML
-    public void onShopButtonClicked() {
+    private void onShopButtonClicked() {
         gameEnvironment.closeGameScreen(false);
     }
 
     @FXML
-    public void onInventoryButtonClicked() {
+    private void onInventoryButtonClicked() {
         gameEnvironment.closeGameScreen(true);
     }
 
     @FXML
-    public void onStartRoundButtonClicked() {
+    private void onStartRoundButtonClicked() {
         gameEnvironment.closeInventoryScreen(); // change this
     }
 }
