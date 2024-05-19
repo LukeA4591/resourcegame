@@ -199,4 +199,22 @@ public class GameEnvironment {
     }
 
 
+    public Tower getMainTowerByName(String name) {
+        for (Tower tower : mainTowers) {
+            if (tower.getName().equals(name)) {
+                return tower;
+            }
+        }
+        return null;
+    }
+
+    public Tower getReserveTowerByName(String name) {
+        for (Tower tower : reserveTowers) {
+            if (tower.getName().equals(name)) {
+                return tower;
+            }
+        }
+        return null;
+    }
+
 }

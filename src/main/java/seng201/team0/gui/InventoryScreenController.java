@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
-import seng201.team0.models.towers.Armoury;
-import seng201.team0.models.towers.Tower;
+import seng201.team0.models.towers.*;
 
 import java.util.List;
 
@@ -84,10 +83,35 @@ public class InventoryScreenController {
     public void initialize() {
 
         initializeToggleButtons();
-
         updatePlayerDetails();
-
         updateButtons();
+
+        ammunitionTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(ammunitionTowerButton.getText())));
+        troopsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(troopsTowerButton.getText())));
+        medkitsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(medkitsTowerButton.getText())));
+
+        reserveTower1Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower1Button.getText())));
+        reserveTower2Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower2Button.getText())));
+        reserveTower3Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower3Button.getText())));
+        reserveTower4Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower4Button.getText())));
+        reserveTower5Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower5Button.getText())));
+        reserveTower6Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower6Button.getText())));
+
+    }
+
+
+    @FXML
+    private void displayTowerInformation(Tower tower) {
+
+        descriptionVBox.getChildren().clear();
+
+        descriptionVBox.getChildren().addAll(
+                new Label("Name:  " + tower.getName()),
+                new Label("Resource type:  " + tower.getResourceType()),
+                new Label("Resources per click:  " + tower.getResourceAmount()),
+                new Label("Reload speed:  " + tower.getReloadSpeed()),
+                new Label("Cost:  " + tower.getCost())
+        );
     }
 
 

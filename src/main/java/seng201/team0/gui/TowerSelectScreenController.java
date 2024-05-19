@@ -55,12 +55,12 @@ public class TowerSelectScreenController {
         currentBalanceLabel.setText("Current Balance: $" + gameEnvironment.getCurrentBalance());
         livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
 
-        armouryButton.setOnAction(event -> updateTowerStats(new Armoury()));
-        arsenalButton.setOnAction(event -> updateTowerStats(new Arsenal()));
-        barracksButton.setOnAction(event -> updateTowerStats(new Barracks()));
-        garrisonButton.setOnAction(event -> updateTowerStats(new Garrison()));
-        medbayButton.setOnAction(event -> updateTowerStats(new Medbay()));
-        medicalTentButton.setOnAction(event -> updateTowerStats(new MedicalTent()));
+        armouryButton.setOnAction(event -> displayTowerInformation(new Armoury()));
+        arsenalButton.setOnAction(event -> displayTowerInformation(new Arsenal()));
+        barracksButton.setOnAction(event -> displayTowerInformation(new Barracks()));
+        garrisonButton.setOnAction(event -> displayTowerInformation(new Garrison()));
+        medbayButton.setOnAction(event -> displayTowerInformation(new Medbay()));
+        medicalTentButton.setOnAction(event -> displayTowerInformation(new MedicalTent()));
 
         armouryButton.setToggleGroup(ammunitionToggleGroup);
         arsenalButton.setToggleGroup(ammunitionToggleGroup);
@@ -73,7 +73,7 @@ public class TowerSelectScreenController {
 
     }
     @FXML
-    public void updateTowerStats(Tower tower) {
+    public void displayTowerInformation(Tower tower) {
 
         towerStatsVBox.getChildren().clear();
         towerStatsVBox.getChildren().addAll(
