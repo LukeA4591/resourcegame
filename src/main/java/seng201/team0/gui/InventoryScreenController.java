@@ -23,6 +23,9 @@ public class InventoryScreenController {
     private Label livesLeftLabel;
 
     @FXML
+    private Label towerSwappingLabel;
+
+    @FXML
     private ToggleButton ammunitionTowerButton;
     @FXML
     private ToggleButton troopsTowerButton;
@@ -155,6 +158,10 @@ public class InventoryScreenController {
         for (ToggleButton button : reserveButtons) {
             button.setToggleGroup(reserveTowersToggleGroup);
         }
+
+        sellButton.setDisable(true);
+        returnButton.setDisable(true);
+        towerSwappingLabel.setText("Tower Swap In Progress");
     }
 
     @FXML
@@ -168,6 +175,11 @@ public class InventoryScreenController {
         for (ToggleButton toggleButton : allToggleButtons) {
             toggleButton.setToggleGroup(allToggleButtonsGroup);
         }
+
+        sellButton.setDisable(false);
+        returnButton.setDisable(false);
+        towerSwappingLabel.setText("");
+
     }
 
     @FXML
@@ -181,21 +193,26 @@ public class InventoryScreenController {
 
         if (selectedMainTowerButton != null && selectedReserveTowerButton != null) {
 
-            for (int i = 0; i < gameEnvironment.getMainTowers().size(); i++) {
-                if (gameEnvironment.getMainTowers().get(i).getName().equals(selectedMainTowerButton.getText())) {
-                    mainTower = gameEnvironment.getMainTowers().get(i);
+            for (Tower tower : gameEnvironment.getMainTowers()) {
+                if (tower.getName().equals(selectedMainTowerButton.getText())) {
+                    mainTower = tower;
+                    break;
                 }
             }
-            for (int i = 0; i < gameEnvironment.getMainTowers().size(); i++) {
-                if (gameEnvironment.getMainTowers().get(i).getName().equals(selectedReserveTowerButton.getText())) {
-                    reserveTower = gameEnvironment.getReserveTowers().get(i);
+            for (Tower tower : gameEnvironment.getReserveTowers()) {
+                if (tower.getName().equals(selectedReserveTowerButton.getText())) {
+                    reserveTower = tower;
+                    break;
                 }
             }
 
-            assert mainTower != null && reserveTower!= null;
-            gameEnvironment.swapTowers(mainTower, reserveTower);
-
-            updateButtons();
+            if (mainTower != null && reserveTower!= null) {
+                gameEnvironment.swapTowers(mainTower, reserveTower);
+                updateButtons();
+            }
+        }
+        else {
+            showAlert("Invalid Tower Selection", "You must select two towers to swap them.", Alert.AlertType.ERROR);
 
         }
 
@@ -222,5 +239,12 @@ public class InventoryScreenController {
                 reserveToggleButtons.get(i).setDisable(true);
             }
         }
+    }
+
+    public void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

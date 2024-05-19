@@ -103,27 +103,27 @@ public class TowerSelectScreenController {
     public void storeTowers() {
 
         if (ammunitionToggleGroup.getSelectedToggle() == armouryButton) {
-            gameEnvironment.addTower(new Armoury(), true);
-            gameEnvironment.addTower(new Arsenal(), false);
+            gameEnvironment.addTowerFromSelection(new Armoury(), true);
+            gameEnvironment.addTowerFromSelection(new Arsenal(), false);
         }  else {
-            gameEnvironment.addTower(new Armoury(), false);
-            gameEnvironment.addTower(new Arsenal(), true);
+            gameEnvironment.addTowerFromSelection(new Armoury(), false);
+            gameEnvironment.addTowerFromSelection(new Arsenal(), true);
         }
 
         if (troopsToggleGroup.getSelectedToggle() == barracksButton) {
-            gameEnvironment.addTower(new Barracks(), true);
-            gameEnvironment.addTower(new Garrison(), false);
+            gameEnvironment.addTowerFromSelection(new Barracks(), true);
+            gameEnvironment.addTowerFromSelection(new Garrison(), false);
         }  else {
-            gameEnvironment.addTower(new Barracks(), false);
-            gameEnvironment.addTower(new Garrison(), true);
+            gameEnvironment.addTowerFromSelection(new Barracks(), false);
+            gameEnvironment.addTowerFromSelection(new Garrison(), true);
         }
 
         if (medkitsToggleGroup.getSelectedToggle() == medicalTentButton) {
-            gameEnvironment.addTower(new MedicalTent(), true);
-            gameEnvironment.addTower(new Medbay(), false);
+            gameEnvironment.addTowerFromSelection(new MedicalTent(), true);
+            gameEnvironment.addTowerFromSelection(new Medbay(), false);
         } else {
-            gameEnvironment.addTower(new MedicalTent(), false);
-            gameEnvironment.addTower(new Medbay(), true);
+            gameEnvironment.addTowerFromSelection(new MedicalTent(), false);
+            gameEnvironment.addTowerFromSelection(new Medbay(), true);
         }
 
     }

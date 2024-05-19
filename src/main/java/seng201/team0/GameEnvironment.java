@@ -1,5 +1,6 @@
 package seng201.team0;
 
+import javafx.scene.control.Alert;
 import seng201.team0.models.towers.Tower;
 
 import java.util.ArrayList;
@@ -30,8 +31,6 @@ public class GameEnvironment {
     private List<Tower> unselectedTowers;
     private List<Tower> reserveTowers;
 
-    private Map<Tower, Integer> towerLevels;
-
 
 
     public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher,
@@ -48,7 +47,6 @@ public class GameEnvironment {
 
         this.mainTowers = new ArrayList<>();
         this.unselectedTowers = new ArrayList<>();
-        this.towerLevels = new HashMap<>();
         this.reserveTowers = new ArrayList<>();
 
     }
@@ -155,26 +153,15 @@ public class GameEnvironment {
         return livesLeft <= 0;
     }
 
-    public int getTowerLevel(Tower tower) {
-        return towerLevels.get(tower);
-    }
-    public void levelUpTower(Tower tower) {
-        towerLevels.put(tower, tower.getLevel() + 1);
-    }
 
 
-
-    public void addTower(Tower tower, boolean isSelected) {
+    public void addTowerFromSelection(Tower tower, boolean isSelected) {
         if (isSelected) {
             mainTowers.add(tower);
-            towerLevels.put(tower, 1);
         }
         else {
             unselectedTowers.add(tower);
-            towerLevels.put(tower, 1);
         }
-
-
     }
 
     public List<Tower> getMainTowers() {
@@ -198,7 +185,17 @@ public class GameEnvironment {
             mainTowers.set(mainIndex, reserveTower);
             reserveTowers.set(reserveIndex, mainTower);
         }
+        else {
+            showAlert("Invalid Resource Type", "Towers must be of the same resource type to swap.", Alert.AlertType.ERROR);
+        }
 
+    }
+
+    public void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 

@@ -76,11 +76,11 @@ public class GameScreenController {
 
                 case "Troops":
                     tower2NameLabel.setText(tower.getName());
-                    tower2LevelLabel.setText("Level " + tower.getLevel().toString());
+                    tower2LevelLabel.setText("Level " + tower.getLevel());
 
                 case "Medkits":
                     tower3NameLabel.setText(tower.getName());
-                    tower3LevelLabel.setText("Level " + tower.getLevel().toString());
+                    tower3LevelLabel.setText("Level " + tower.getLevel());
             }
         }
 
