@@ -22,7 +22,7 @@ public class InventoryScreenController {
     private Label livesLeftLabel;
 
     @FXML
-    private Label towerSwappingLabel;
+    private Label infoLabel;
 
     @FXML
     private ToggleButton ammunitionTowerButton;
@@ -185,7 +185,7 @@ public class InventoryScreenController {
 
         sellButton.setDisable(true);
         returnButton.setDisable(true);
-        towerSwappingLabel.setText("Tower Swap In Progress");
+        infoLabel.setText("Tower Swap In Progress");
     }
 
     @FXML
@@ -202,7 +202,7 @@ public class InventoryScreenController {
 
         sellButton.setDisable(false);
         returnButton.setDisable(false);
-        towerSwappingLabel.setText("");
+        infoLabel.setText("");
 
     }
 
