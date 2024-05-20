@@ -8,6 +8,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.towers.Tower;
+import seng201.team0.models.items.Item;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class ShopScreenController {
     private ToggleButton tower8Button;
     @FXML
     private ToggleButton tower9Button;
+
     @FXML
     private ToggleButton item1Button;
     @FXML
@@ -49,17 +51,34 @@ public class ShopScreenController {
     @FXML
     private ToggleButton item3Button;
 
+    @FXML
+    private ToggleButton myTowerButton1;
+    @FXML
+    private ToggleButton myTowerButton2;
+    @FXML
+    private ToggleButton myTowerButton3;
+    @FXML
+    private ToggleButton myTowerButton4;
+
+    @FXML
+    private ToggleButton myItemButton1;
+    @FXML
+    private ToggleButton myItemButton2;
+    @FXML
+    private ToggleButton myItemButton3;
+
 
     @FXML
     private VBox descriptionVBox;
 
 
-
-    private ToggleGroup toggleButtons = new ToggleGroup();
-
+    private final ToggleGroup toggleButtons = new ToggleGroup();
 
 
-    private List<ToggleButton> towerButtons;
+    private List<ToggleButton> towerShopButtons;
+    private List<ToggleButton> playerItemButtons;
+    private List<ToggleButton> itemsInShopButtons;
+    private List<ToggleButton> reserveTowerButtons;
 
     private GameEnvironment gameEnvironment;
 
@@ -68,15 +87,21 @@ public class ShopScreenController {
     }
 
     public void initialize() {
-        towerButtons = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button,
+        towerShopButtons = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button,
                 tower7Button, tower8Button, tower9Button);
+
+        reserveTowerButtons = List.of(myTowerButton1, myTowerButton2, myTowerButton3, myTowerButton4);
+
+        playerItemButtons = List.of(myItemButton1, myItemButton2, myItemButton3);
+
+        itemsInShopButtons = List.of(item1Button, item2Button, item3Button);
 
         updatePlayerDetails();
         initializeToggleButtonGroups();
 
-        updateTowerToggleButtons();
+        updateToggleButtons();
 
-        for (ToggleButton button : towerButtons) {
+        for (ToggleButton button : towerShopButtons) {
             button.setOnAction(event -> displayTowerInformation(gameEnvironment.getTowerInShopByName(button.getText())));
         }
 
@@ -110,7 +135,8 @@ public class ShopScreenController {
     private void initializeToggleButtonGroups() {
 
         List<ToggleButton> buttons = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button,
-                tower6Button, tower7Button, tower8Button, tower9Button, item1Button, item2Button, item3Button);
+                tower6Button, tower7Button, tower8Button, tower9Button, item1Button, item2Button, item3Button, myItemButton1,
+                myItemButton2, myItemButton3, myTowerButton1, myTowerButton2, myTowerButton3, myTowerButton4);
 
         for (ToggleButton button : buttons) {
             button.setToggleGroup(toggleButtons);
@@ -119,23 +145,47 @@ public class ShopScreenController {
     }
 
     @FXML
-    private void updateTowerToggleButtons() {
+    private void updateToggleButtons() {
 
         for (int i = 0; i < gameEnvironment.getAvailableTowersInShop().size(); i++) {
+            towerShopButtons.get(i).setDisable(false);
+            towerShopButtons.get(i).setText(gameEnvironment.getAvailableTowersInShop().get(i).getName());
+        }
+        for (int i = gameEnvironment.getAvailableTowersInShop().size(); i < towerShopButtons.size(); i++) {
 
-            towerButtons.get(i).setText(gameEnvironment.getAvailableTowersInShop().get(i).getName());
+            towerShopButtons.get(i).setText("Locked");
+            towerShopButtons.get(i).setDisable(true);
         }
 
-        for (int i = gameEnvironment.getAvailableTowersInShop().size(); i < towerButtons.size(); i++) {
-
-            towerButtons.get(i).setText("Locked");
-            towerButtons.get(i).setDisable(true);
+        for (int i = 0; i < gameEnvironment.getAvailableItems().size(); i++) {
+            itemsInShopButtons.get(i).setDisable(false);
+            itemsInShopButtons.get(i).setText(gameEnvironment.getAvailableItems().get(i).getName());
         }
+        for (int i = gameEnvironment.getAvailableItems().size(); i < itemsInShopButtons.size(); i++) {
+            itemsInShopButtons.get(i).setText("Locked");
+            itemsInShopButtons.get(i).setDisable(true);
+        }
+
+        for (int i = 0; i < gameEnvironment.getReserveTowers().size(); i++) {
+            reserveTowerButtons.get(i).setDisable(false);
+            reserveTowerButtons.get(i).setText(gameEnvironment.getReserveTowers().get(i).getName());
+        }
+        for (int i = gameEnvironment.getReserveTowers().size(); i < reserveTowerButtons.size(); i++) {
+            reserveTowerButtons.get(i).setText("Locked");
+            reserveTowerButtons.get(i).setDisable(true);
+        }
+
+        for (int i = 0; i < gameEnvironment.getPlayerItems().size(); i++) {
+            playerItemButtons.get(i).setDisable(false);
+            playerItemButtons.get(i).setText(gameEnvironment.getPlayerItems().get(i).getName());
+        }
+        for (int i = gameEnvironment.getPlayerItems().size(); i < playerItemButtons.size(); i++) {
+            playerItemButtons.get(i).setText("Locked");
+            playerItemButtons.get(i).setDisable(true);
+        }
+
 
     }
-
-
-
 
 
     @FXML
@@ -143,26 +193,89 @@ public class ShopScreenController {
 
         ToggleButton selectedButton = (ToggleButton) toggleButtons.getSelectedToggle();
 
+        List<ToggleButton> towerButtonsForPurchase = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button);
+        List<ToggleButton> itemButtonsForPurchase = List.of(item1Button, item2Button, item3Button);
+
         if (selectedButton != null) {
 
-            Tower selectedTower = gameEnvironment.getTowerInShopByName(selectedButton.getText());
+            if (towerButtonsForPurchase.contains(selectedButton)) {
 
-            if (selectedTower != null && gameEnvironment.getCurrentBalance() >= selectedTower.getCost()) {
-                gameEnvironment.setCurrentBalance(gameEnvironment.getCurrentBalance() - selectedTower.getCost());
-                gameEnvironment.buyTower(selectedTower);
-                updatePlayerDetails();
-                selectedButton.setText("Purchased");
-                selectedButton.setDisable(true);
-            }
-            else {gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
+                Tower selectedTower = gameEnvironment.getTowerInShopByName(selectedButton.getText());
 
+                if (selectedTower != null && gameEnvironment.getCurrentBalance() >= selectedTower.getCost() && gameEnvironment.getReserveTowers().size() < 4) {
+                    gameEnvironment.buyTower(selectedTower);
+                    updatePlayerDetails();
+                    selectedButton.setText("Purchased");
+                    selectedButton.setDisable(true);
+                    updateToggleButtons();
+                } else {
+                    gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
+
+                }
+            } else if (itemButtonsForPurchase.contains(selectedButton)) {
+                Item selectedItem = gameEnvironment.getItemInShopByName(selectedButton.getText());
+
+                if (selectedItem != null && gameEnvironment.getCurrentBalance() >= selectedItem.getCost() && gameEnvironment.getPlayerItems().size() < 3) {
+                    gameEnvironment.buyItem(selectedItem);
+                    updatePlayerDetails();
+                    selectedButton.setText("Purchased");
+                    selectedButton.setDisable(true);
+                    updateToggleButtons();
+                } else {
+                    gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this item.", Alert.AlertType.ERROR);
+                }
+            } else {
+                gameEnvironment.showAlert("Invalid Selection", "Please select a valid tower or item to buy it.", Alert.AlertType.ERROR);
             }
+        } else {
+            gameEnvironment.showAlert("No Selection", "Please select a tower or item to buy it.", Alert.AlertType.ERROR);
+        }
+
+    }
+
+
+    @FXML
+    private void onSellButtonClicked() {
+
+        ToggleButton selectedButton = (ToggleButton) toggleButtons.getSelectedToggle();
+
+        List<ToggleButton> playerTowerButtons = List.of(myTowerButton1, myTowerButton2, myTowerButton3, myTowerButton4);
+        List<ToggleButton> playerItemButtons = List.of(myItemButton1, myItemButton2, myItemButton3);
+
+        if (selectedButton != null) {
+            if (playerTowerButtons.contains(selectedButton)) {
+
+                Tower selectedTower = gameEnvironment.getReserveTowerByName(selectedButton.getText());
+
+                if (selectedTower != null) {
+                    gameEnvironment.sellTower(selectedTower);
+                    selectedButton.setText("Locked");
+                    selectedButton.setDisable(true);
+                    updateToggleButtons();
+                    updatePlayerDetails();
+                }
+            } else if (playerItemButtons.contains(selectedButton)) {
+
+                Item selectedItem = gameEnvironment.getPlayerItemByName(selectedButton.getText());
+
+                if (selectedItem != null) {
+                    gameEnvironment.sellItem(selectedItem);
+                    selectedButton.setText("Locked");
+                    selectedButton.setDisable(true);
+                    updateToggleButtons();
+                    updatePlayerDetails();
+                }
+            } else {
+                gameEnvironment.showAlert("Invalid Selection", "Please select a valid tower or item to sell it.", Alert.AlertType.ERROR);
+            }
+        } else {
+            gameEnvironment.showAlert("No Selection", "Please select a tower or item to buy it.", Alert.AlertType.ERROR);
 
 
         }
-        else {gameEnvironment.showAlert("Invalid Tower Selection", "Please select a tower to buy it", Alert.AlertType.ERROR); }
-
     }
+
+
 
     @FXML
     private void onReturnButtonClicked() {

@@ -77,16 +77,8 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets bottom="16.0" />
+                        <Insets />
                      </GridPane.margin>
-                  </Label>
-                  <Label fx:id="tower4LevelLabel" text="Tower 4 Level" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets top="16.0" />
-                     </GridPane.margin>
-                     <font>
-                        <Font size="11.0" />
-                     </font>
                   </Label>
                </children>
             </GridPane>

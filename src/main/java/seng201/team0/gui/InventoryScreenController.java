@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
+import seng201.team0.models.items.Item;
 import seng201.team0.models.towers.*;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class InventoryScreenController {
     private ToggleButton troopsTowerButton;
     @FXML
     private ToggleButton medkitsTowerButton;
+    @FXML
+    private ToggleButton supportTowerButton;
 
     @FXML
     private ToggleButton reserveTower1Button;
@@ -39,10 +42,7 @@ public class InventoryScreenController {
     private ToggleButton reserveTower3Button;
     @FXML
     private ToggleButton reserveTower4Button;
-    @FXML
-    private ToggleButton reserveTower5Button;
-    @FXML
-    private ToggleButton reserveTower6Button;
+
     @FXML
     private ToggleButton item1Button;
     @FXML
@@ -52,8 +52,6 @@ public class InventoryScreenController {
 
     @FXML
     private Button swapTowersButton;
-    @FXML
-    private Button sellButton;
     @FXML
     private Button returnButton;
 
@@ -89,13 +87,12 @@ public class InventoryScreenController {
         ammunitionTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(ammunitionTowerButton.getText())));
         troopsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(troopsTowerButton.getText())));
         medkitsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(medkitsTowerButton.getText())));
+        supportTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getSupportTower()));
 
         reserveTower1Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower1Button.getText())));
         reserveTower2Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower2Button.getText())));
         reserveTower3Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower3Button.getText())));
         reserveTower4Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower4Button.getText())));
-        reserveTower5Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower5Button.getText())));
-        reserveTower6Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower6Button.getText())));
 
     }
 
@@ -118,24 +115,15 @@ public class InventoryScreenController {
     @FXML
     private void initializeToggleButtons() {
 
-        List<ToggleButton> allToggleButtons = List.of(ammunitionTowerButton, troopsTowerButton, medkitsTowerButton, reserveTower1Button, reserveTower2Button,
-                reserveTower3Button, reserveTower4Button, reserveTower5Button, reserveTower6Button, item1Button, item2Button,
+        List<ToggleButton> allToggleButtons = List.of(ammunitionTowerButton, troopsTowerButton, medkitsTowerButton, supportTowerButton, reserveTower1Button, reserveTower2Button,
+                reserveTower3Button, reserveTower4Button, item1Button, item2Button,
                 item3Button);
 
         for (ToggleButton toggleButton : allToggleButtons) {
             toggleButton.setToggleGroup(allToggleButtonsGroup);
         }
 
-        reserveToggleButtons = List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button, reserveTower4Button,
-                reserveTower5Button, reserveTower6Button);
-
-
-        item1Button.setText("Locked");
-        item1Button.setDisable(true);
-        item2Button.setText("Locked");
-        item2Button.setDisable(true);
-        item3Button.setText("Locked");
-        item3Button.setDisable(true);
+        reserveToggleButtons = List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button, reserveTower4Button);
 
     }
 
@@ -176,14 +164,12 @@ public class InventoryScreenController {
         troopsTowerButton.setToggleGroup(mainTowersToggleGroup);
         medkitsTowerButton.setToggleGroup(mainTowersToggleGroup);
 
-        List<ToggleButton> reserveButtons= List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button, reserveTower4Button,
-                reserveTower5Button, reserveTower6Button);
+        List<ToggleButton> reserveButtons= List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button, reserveTower4Button);
 
         for (ToggleButton button : reserveButtons) {
             button.setToggleGroup(reserveTowersToggleGroup);
         }
 
-        sellButton.setDisable(true);
         returnButton.setDisable(true);
         infoLabel.setText("Tower Swap In Progress");
     }
@@ -193,14 +179,12 @@ public class InventoryScreenController {
         swappingTowers = false;
 
         List<ToggleButton> allToggleButtons = List.of(ammunitionTowerButton, troopsTowerButton, medkitsTowerButton, reserveTower1Button, reserveTower2Button,
-                reserveTower3Button, reserveTower4Button, reserveTower5Button, reserveTower6Button, item1Button, item2Button,
-                item3Button);
+                reserveTower3Button, reserveTower4Button, item1Button, item2Button, item3Button);
 
         for (ToggleButton toggleButton : allToggleButtons) {
             toggleButton.setToggleGroup(allToggleButtonsGroup);
         }
 
-        sellButton.setDisable(false);
         returnButton.setDisable(false);
         infoLabel.setText("");
 
@@ -249,9 +233,17 @@ public class InventoryScreenController {
         troopsTowerButton.setText(gameEnvironment.getMainTowers().get(1).getName());
         medkitsTowerButton.setText(gameEnvironment.getMainTowers().get(2).getName());
 
+        if (gameEnvironment.getSupportTower() != null) {
+            supportTowerButton.setText(gameEnvironment.getSupportTower().getName());
+        }
+        else {
+            supportTowerButton.setText("Locked");
+            supportTowerButton.setDisable(true);
+        }
+
+
+
         for (int i = 0; i < reserveToggleButtons.size(); i++) {
-
-
 
             if (i < gameEnvironment.getReserveTowers().size()) {
                 reserveToggleButtons.get(i).setText(gameEnvironment.getReserveTowers().get(i).getName());
@@ -261,6 +253,18 @@ public class InventoryScreenController {
             else {
                 reserveToggleButtons.get(i).setText("Locked");
                 reserveToggleButtons.get(i).setDisable(true);
+            }
+        }
+
+        List<ToggleButton> itemButtons = List.of(item1Button, item2Button, item3Button);
+
+        for (int i = 0; i < itemButtons.size(); i++) {
+            if (i < gameEnvironment.getPlayerItems().size() && gameEnvironment.getPlayerItems().get(i) != null) {
+                itemButtons.get(i).setText(gameEnvironment.getPlayerItems().get(i).getName());
+                itemButtons.get(i).setDisable(false);
+            } else {
+                itemButtons.get(i).setText("Locked");
+                itemButtons.get(i).setDisable(true);
             }
         }
     }

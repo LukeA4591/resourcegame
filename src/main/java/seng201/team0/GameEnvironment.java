@@ -1,6 +1,7 @@
 package seng201.team0;
 
 import javafx.scene.control.Alert;
+import seng201.team0.models.items.Item;
 import seng201.team0.models.towers.Tower;
 
 import java.util.ArrayList;
@@ -28,12 +29,14 @@ public class GameEnvironment {
 
 
     private List<Tower> mainTowers;
-
     private List<Tower> availableTowersInShop;
-
     private List<Tower> allPossibleTowers;
-
     private List<Tower> reserveTowers;
+
+    private Tower supportTower = null;
+
+    private List<Item> availableItems;
+    private List<Item> playerItems;
 
 
 
@@ -54,6 +57,9 @@ public class GameEnvironment {
 
         this.availableTowersInShop = new ArrayList<>();
         this.allPossibleTowers = new ArrayList<>();
+
+        this.playerItems = new ArrayList<>();
+        this.availableItems = new ArrayList<>();
 
     }
 
@@ -160,6 +166,13 @@ public class GameEnvironment {
         return livesLeft <= 0;
     }
 
+    public void setSupportTower(Tower tower) {
+        supportTower = tower;
+    }
+    public Tower getSupportTower() {
+        return supportTower;
+    }
+
 
 
     public void addTowerFromSelection(Tower tower, boolean isSelected) {
@@ -177,6 +190,13 @@ public class GameEnvironment {
 
     public List<Tower> getAvailableTowersInShop() {
         return availableTowersInShop;
+    }
+
+    public List<Item> getAvailableItems() {
+        return availableItems;
+    }
+    public List<Item> getPlayerItems() {
+        return playerItems;
     }
 
 
@@ -236,9 +256,45 @@ public class GameEnvironment {
         return null;
     }
 
+    public Item getItemInShopByName(String name) {
+        for (Item item : availableItems) {
+            if (item.getName().equals(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Item getPlayerItemByName(String name) {
+        for (Item item : playerItems) {
+            if (item.getName().equals(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+
+
+    public void buyItem(Item item) {
+        playerItems.add(item);
+        availableItems.remove(item);
+    }
+    public void sellItem(Item item) {
+        playerItems.remove(item);
+        availableItems.add(item);
+    }
+
     public void buyTower(Tower tower) {
+        setCurrentBalance(currentBalance - tower.getCost());
         reserveTowers.add(tower);
         availableTowersInShop.remove(tower);
+    }
+    public void sellTower(Tower tower) {
+        setCurrentBalance(currentBalance + tower.getSellPrice());
+        tower.setLevel(1);
+        reserveTowers.remove(tower);
+        availableTowersInShop.add(tower);
     }
 
 }

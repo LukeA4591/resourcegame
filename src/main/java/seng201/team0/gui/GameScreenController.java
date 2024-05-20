@@ -32,8 +32,6 @@ public class GameScreenController {
     private Label tower3LevelLabel;
     @FXML
     private Label tower4NameLabel;
-    @FXML
-    private Label tower4LevelLabel;
 
     @FXML
     private Button loadSupplyTruckButton;
@@ -82,6 +80,12 @@ public class GameScreenController {
                     tower3NameLabel.setText(tower.getName());
                     tower3LevelLabel.setText("Level " + tower.getLevel());
             }
+        }
+
+        if (gameEnvironment.getSupportTower() != null) {
+            tower4NameLabel.setText(gameEnvironment.getSupportTower().getName());
+        }
+        else {tower4NameLabel.setText("Locked");
         }
 
     }
