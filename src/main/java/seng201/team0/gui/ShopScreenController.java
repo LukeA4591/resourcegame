@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.towers.Tower;
 
@@ -49,6 +50,10 @@ public class ShopScreenController {
     private ToggleButton item3Button;
 
 
+    @FXML
+    private VBox descriptionVBox;
+
+
 
     private ToggleGroup toggleButtons = new ToggleGroup();
 
@@ -71,7 +76,25 @@ public class ShopScreenController {
 
         updateTowerToggleButtons();
 
+        for (ToggleButton button : towerButtons) {
+            button.setOnAction(event -> displayTowerInformation(gameEnvironment.getTowerInShopByName(button.getText())));
+        }
 
+
+    }
+
+    @FXML
+    private void displayTowerInformation(Tower tower) {
+
+        descriptionVBox.getChildren().clear();
+
+        descriptionVBox.getChildren().addAll(
+                new Label("Name:  " + tower.getName()),
+                new Label("Resource type:  " + tower.getResourceType()),
+                new Label("Resources per click:  " + tower.getResourceAmount()),
+                new Label("Reload speed:  " + tower.getReloadSpeed()),
+                new Label("Cost:  " + tower.getCost())
+        );
     }
 
     @FXML
