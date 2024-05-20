@@ -1,10 +1,12 @@
 package seng201.team0.gui;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import seng201.team0.GameEnvironment;
+import seng201.team0.models.towers.Tower;
 
 import java.util.List;
 
@@ -50,6 +52,10 @@ public class ShopScreenController {
 
     private ToggleGroup toggleButtons = new ToggleGroup();
 
+
+
+    private List<ToggleButton> towerButtons;
+
     private GameEnvironment gameEnvironment;
 
     public ShopScreenController(GameEnvironment tempEnvironment) {
@@ -57,11 +63,13 @@ public class ShopScreenController {
     }
 
     public void initialize() {
+        towerButtons = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button,
+                tower7Button, tower8Button, tower9Button);
 
         updatePlayerDetails();
         initializeToggleButtonGroups();
 
-        updateToggleButtons();
+        updateTowerToggleButtons();
 
 
     }
@@ -88,9 +96,18 @@ public class ShopScreenController {
     }
 
     @FXML
-    private void updateToggleButtons() {
+    private void updateTowerToggleButtons() {
 
+        for (int i = 0; i < gameEnvironment.getAvailableTowersInShop().size(); i++) {
 
+            towerButtons.get(i).setText(gameEnvironment.getAvailableTowersInShop().get(i).getName());
+        }
+
+        for (int i = gameEnvironment.getAvailableTowersInShop().size(); i < towerButtons.size(); i++) {
+
+            towerButtons.get(i).setText("Locked");
+            towerButtons.get(i).setDisable(true);
+        }
 
     }
 
@@ -100,6 +117,27 @@ public class ShopScreenController {
 
     @FXML
     private void onBuyButtonClicked() {
+
+        ToggleButton selectedButton = (ToggleButton) toggleButtons.getSelectedToggle();
+
+        if (selectedButton != null) {
+
+            Tower selectedTower = gameEnvironment.getTowerInShopByName(selectedButton.getText());
+
+            if (selectedTower != null && gameEnvironment.getCurrentBalance() >= selectedTower.getCost()) {
+                gameEnvironment.setCurrentBalance(gameEnvironment.getCurrentBalance() - selectedTower.getCost());
+                gameEnvironment.buyTower(selectedTower);
+                updatePlayerDetails();
+                selectedButton.setText("Purchased");
+                selectedButton.setDisable(true);
+            }
+            else {gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
+
+            }
+
+
+        }
+        else {gameEnvironment.showAlert("Invalid Tower Selection", "Please select a tower to buy it", Alert.AlertType.ERROR); }
 
     }
 

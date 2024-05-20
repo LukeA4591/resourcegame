@@ -28,7 +28,11 @@ public class GameEnvironment {
 
 
     private List<Tower> mainTowers;
-    private List<Tower> unselectedTowers;
+
+    private List<Tower> availableTowersInShop;
+
+    private List<Tower> allPossibleTowers;
+
     private List<Tower> reserveTowers;
 
 
@@ -46,8 +50,10 @@ public class GameEnvironment {
         launchSetupScreen();
 
         this.mainTowers = new ArrayList<>();
-        this.unselectedTowers = new ArrayList<>();
         this.reserveTowers = new ArrayList<>();
+
+        this.availableTowersInShop = new ArrayList<>();
+        this.allPossibleTowers = new ArrayList<>();
 
     }
 
@@ -122,6 +128,7 @@ public class GameEnvironment {
                 livesLeft = 1;
                 break;
         }
+
     }
 
     public String getPlayerName() {
@@ -160,16 +167,19 @@ public class GameEnvironment {
             mainTowers.add(tower);
         }
         else {
-            unselectedTowers.add(tower);
+            availableTowersInShop.add(tower);
         }
     }
 
     public List<Tower> getMainTowers() {
         return mainTowers;
     }
-    public List<Tower> getUnselectedTowers() {
-        return unselectedTowers;
+
+    public List<Tower> getAvailableTowersInShop() {
+        return availableTowersInShop;
     }
+
+
 
     public List<Tower> getReserveTowers() {
         return reserveTowers;
@@ -215,6 +225,20 @@ public class GameEnvironment {
             }
         }
         return null;
+    }
+
+    public Tower getTowerInShopByName(String name) {
+        for (Tower tower : availableTowersInShop) {
+            if (tower.getName().equals(name)) {
+                return tower;
+            }
+        }
+        return null;
+    }
+
+    public void buyTower(Tower tower) {
+        reserveTowers.add(tower);
+        availableTowersInShop.remove(tower);
     }
 
 }

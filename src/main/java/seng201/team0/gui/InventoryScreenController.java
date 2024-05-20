@@ -236,7 +236,7 @@ public class InventoryScreenController {
             }
         }
         else {
-            showAlert("Invalid Tower Selection", "You must select two towers to swap them.", Alert.AlertType.ERROR);
+            gameEnvironment.showAlert("Invalid Tower Selection", "You must select two towers to swap them.", Alert.AlertType.ERROR);
 
         }
 
@@ -265,10 +265,5 @@ public class InventoryScreenController {
         }
     }
 
-    public void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 }

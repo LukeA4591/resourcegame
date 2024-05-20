@@ -12,17 +12,31 @@ public class Round {
     private int roundNumber;
     private String difficulty;
 
-    public Round(int roundNumber, String difficulty) {
+    private String roundType;
+
+    public Round(int roundNumber, String difficulty, String roundType) {
 
         this.roundNumber = roundNumber;
         this.difficulty = difficulty;
         this.carts = new HashMap<>();
+        this.roundType = roundType;
 
         configureRound();
 
     }
 
     private void configureRound() {
+
+        switch (roundType) {
+
+            case "Close-Quarters Combat":
+                break;
+
+            case "Standard Warfare":
+                break;
+
+            case "":
+        }
         int numberOfCarts = 1 + ((roundNumber - 1) / 5);
     }
 }
