@@ -7,7 +7,6 @@ public abstract class Item implements Purchasable {
     private String name;
     private int cost;
     private int resourceBoost;
-    private String towerType;
     private int sellPrice;
 
     public Item(String name, int cost, int resourceBoost) {
@@ -29,9 +28,8 @@ public abstract class Item implements Purchasable {
     public int getResourceBoost() {
         return resourceBoost;
     }
-    public String getTowerType() {
-        return towerType;
-    }
+    public abstract String getTowerType();
+
 
     public int getSellPrice() {
         return sellPrice;

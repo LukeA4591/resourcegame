@@ -70,9 +70,9 @@ public class GameEnvironment {
     }
 
     public void initializeItems() {
-        availableItems.add(new AmmoCrate("Ammo Crate", 0, 0));
-        availableItems.add(new Paratroopers("Paratroopers", 0, 0));
-        availableItems.add(new MedicalSupplyDrop("Medical Supply Drop", 0, 0));
+        availableItems.add(new AmmoCrate(0, 0));
+        availableItems.add(new Paratroopers(0, 0));
+        availableItems.add(new MedicalSupplyDrop(0, 0));
     }
 
 
@@ -305,6 +305,8 @@ public class GameEnvironment {
         setCurrentBalance(currentBalance + tower.getSellPrice());
         tower.setLevel(1);
         reserveTowers.remove(tower);
+
+
         availableTowersInShop.add(createNewInstance(tower));
     }
 
@@ -330,5 +332,34 @@ public class GameEnvironment {
         }
             return null;
     }
+
+    public void applyItemEffect(Item item) {
+
+        for (Tower tower : mainTowers) {
+            if (item.getTowerType().equals(tower.getResourceType())) {
+                tower.setResourceAmount((int) (tower.getResourceAmount() * 1.5));
+            }
+        }
+        for (Tower tower : reserveTowers) {
+            if (item.getTowerType().equals(tower.getResourceType())) {
+                tower.setResourceAmount((int) (tower.getResourceAmount() * 1.5));
+            }
+        }
+    }
+
+    public void removeItemEffect(Item item) {
+
+        for (Tower tower : mainTowers) {
+            if (item.getTowerType().equals(tower.getResourceType())) {
+                tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
+            }
+        }
+        for (Tower tower : reserveTowers) {
+            if (item.getTowerType().equals(tower.getResourceType())) {
+                tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
+            }
+        }
+    }
+
 
 }

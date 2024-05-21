@@ -1,7 +1,11 @@
 package seng201.team0.models.items;
 
 public class MedicalSupplyDrop extends Item {
-    public MedicalSupplyDrop(String name, int cost, int resourceBoost) {
-        super(name, cost, resourceBoost);
+    public MedicalSupplyDrop(int cost, int resourceBoost) {
+        super("Medical Supply Drop", cost, resourceBoost);
+    }
+
+    public String getTowerType() {
+        return "Medkits";
     }
 }

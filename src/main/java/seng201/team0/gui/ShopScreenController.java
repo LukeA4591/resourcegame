@@ -238,6 +238,11 @@ public class ShopScreenController {
                         selectedButton.setText("Purchased");
                         selectedButton.setDisable(true);
                         updateToggleButtons();
+
+                        for (Item item : gameEnvironment.getPlayerItems()) {
+                            gameEnvironment.applyItemEffect(item);
+                        }
+
                     } else {
                         gameEnvironment.showAlert("Reserve Towers Full", "You do not have enough space in your inventory to purchase this tower.", Alert.AlertType.ERROR);
                     }
@@ -248,12 +253,18 @@ public class ShopScreenController {
             } else if (itemButtonsForPurchase.contains(selectedButton)) {
                 Item selectedItem = gameEnvironment.getItemInShopByName(selectedButton.getText());
 
-                if (selectedItem != null && gameEnvironment.getCurrentBalance() >= selectedItem.getCost() && gameEnvironment.getPlayerItems().size() < 3) {
-                    gameEnvironment.buyItem(selectedItem);
-                    updatePlayerDetails();
-                    selectedButton.setText("Purchased");
-                    selectedButton.setDisable(true);
-                    updateToggleButtons();
+                if (selectedItem != null && gameEnvironment.getCurrentBalance() >= selectedItem.getCost()) {
+
+                    if (gameEnvironment.getPlayerItems().size() < 3) {
+                        gameEnvironment.buyItem(selectedItem);
+                        updatePlayerDetails();
+                        selectedButton.setText("Purchased");
+                        selectedButton.setDisable(true);
+                        updateToggleButtons();
+                        gameEnvironment.applyItemEffect(selectedItem);
+                    } else {
+                        gameEnvironment.showAlert("Item Slots Full", "You do not have enough space in your inventory to purchase this tower.", Alert.AlertType.ERROR);
+                    }
                 } else {
                     gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this item.", Alert.AlertType.ERROR);
                 }
@@ -297,6 +308,8 @@ public class ShopScreenController {
                     selectedButton.setDisable(true);
                     updateToggleButtons();
                     updatePlayerDetails();
+
+                    gameEnvironment.removeItemEffect(selectedItem);
                 }
             } else {
                 gameEnvironment.showAlert("Invalid Selection", "Please select a valid tower or item to sell it.", Alert.AlertType.ERROR);
