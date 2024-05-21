@@ -23,6 +23,7 @@ public class GameEnvironment {
 
     private String playerName;
     private int gameRounds;
+    private int currentRound;
     private String gameDifficulty;
     private double currentBalance;
     private int livesLeft;

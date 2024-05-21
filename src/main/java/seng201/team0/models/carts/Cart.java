@@ -2,12 +2,10 @@ package seng201.team0.models.carts;
 
 public abstract class Cart {
     private int size;
-    private String resourceType;
     private int speed;
 
-    public Cart(int size, String resourceType, int speed) {
+    public Cart(int size, int speed) {
         this.size = size;
-        this.resourceType = resourceType;
         this.speed = speed;
     }
 
@@ -17,14 +15,6 @@ public abstract class Cart {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public String getResourceType() {
-        return resourceType;
-    }
-
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
     }
 
     public int getSpeed() {

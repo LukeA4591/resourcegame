@@ -2,14 +2,19 @@ package seng201.team0.models.carts;
 
 public class AmmunitionCart extends Cart {
     private int ammunitionCapacity;
+    private String resourceType;
 
-    public AmmunitionCart(int size, String resourceType, int speed, int ammunitionCapacity) {
-        super(size, resourceType, speed);
-        this.ammunitionCapacity = ammunitionCapacity;
+    public AmmunitionCart(int size, int speed) {
+        super(size, speed);
+        this.ammunitionCapacity = 0;
+        this.resourceType = "Ammunition";
     }
 
     public int getAmmunitionCapacity() {
         return ammunitionCapacity;
+    }
+    public String getResourceType(){
+        return resourceType;
     }
 
     public void setAmmunitionCapacity(int ammunitionCapacity) {

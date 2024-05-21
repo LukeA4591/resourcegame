@@ -2,10 +2,15 @@ package seng201.team0.models.carts;
 
 public class MedkitCart extends Cart {
     private int medkitCount;
+    private String resourceType;
 
-    public MedkitCart(int size, String resourceType, int speed, int medkitCount) {
-        super(size, resourceType, speed);
-        this.medkitCount = medkitCount;
+    public MedkitCart(int size, int speed) {
+        super(size, speed);
+        this.medkitCount = 0;
+        this.resourceType = "Med-Kit";
+    }
+    public String getResourceType(){
+        return resourceType;
     }
 
     public int getMedkitCount() {

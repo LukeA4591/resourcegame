@@ -2,10 +2,15 @@ package seng201.team0.models.carts;
 
 public class TroopCart extends Cart {
     private int soldierCapacity;
+    private String resourceType;
 
-    public TroopCart(int size, String resourceType, int speed, int soldierCapacity) {
-        super(size, resourceType, speed);
-        this.soldierCapacity = soldierCapacity;
+    public TroopCart(int size, int speed) {
+        super(size, speed);
+        this.soldierCapacity = 0;
+        this.resourceType = "Troop";
+    }
+    public String getResourceType(){
+        return resourceType;
     }
 
     public int getSoldierCapacity() {
