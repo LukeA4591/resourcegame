@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.towers.Tower;
 import seng201.team0.models.items.Item;
@@ -133,7 +134,8 @@ public class ShopScreenController {
                 new Label("Affects: " + item.getTowerType() + " Towers"),
                 new Label("Resource Boost: " + item.getResourceBoost()),
                 new Label("Cost: " + item.getCost()),
-                new Label("Sell Price: " + item.getSellPrice())
+                new Label("Sell Price: " + item.getSellPrice()),
+                new Label("Description: " + item.getDescription())
         );
     }
 
@@ -147,7 +149,8 @@ public class ShopScreenController {
                 new Label("Resource type:  " + tower.getResourceType()),
                 new Label("Resources per click:  " + tower.getResourceAmount()),
                 new Label("Reload speed:  " + tower.getReloadSpeed()),
-                new Label("Cost:  " + tower.getCost())
+                new Label("Cost:  " + tower.getCost()),
+                new Label("Sell price: " + tower.getSellPrice())
         );
     }
 
@@ -176,21 +179,21 @@ public class ShopScreenController {
     @FXML
     private void updateToggleButtons() {
 
-        for (int i = 0; i < gameEnvironment.getAvailableTowersInShop().size(); i++) {
+        for (int i = 0; i < gameEnvironment.getTowersInShop().size(); i++) {
             towerShopButtons.get(i).setDisable(false);
-            towerShopButtons.get(i).setText(gameEnvironment.getAvailableTowersInShop().get(i).getName());
+            towerShopButtons.get(i).setText(gameEnvironment.getTowersInShop().get(i).getName());
         }
-        for (int i = gameEnvironment.getAvailableTowersInShop().size(); i < towerShopButtons.size(); i++) {
+        for (int i = gameEnvironment.getTowersInShop().size(); i < towerShopButtons.size(); i++) {
 
             towerShopButtons.get(i).setText("Locked");
             towerShopButtons.get(i).setDisable(true);
         }
 
-        for (int i = 0; i < gameEnvironment.getAvailableItems().size(); i++) {
+        for (int i = 0; i < gameEnvironment.getItemsInShop().size(); i++) {
             itemsInShopButtons.get(i).setDisable(false);
-            itemsInShopButtons.get(i).setText(gameEnvironment.getAvailableItems().get(i).getName());
+            itemsInShopButtons.get(i).setText(gameEnvironment.getItemsInShop().get(i).getName());
         }
-        for (int i = gameEnvironment.getAvailableItems().size(); i < itemsInShopButtons.size(); i++) {
+        for (int i = gameEnvironment.getItemsInShop().size(); i < itemsInShopButtons.size(); i++) {
             itemsInShopButtons.get(i).setText("Locked");
             itemsInShopButtons.get(i).setDisable(true);
         }

@@ -82,14 +82,27 @@ public abstract class Tower implements Purchasable {
         return isBroken;
     }
 
-    public void setBroken() {
+    public void breakTower() {
         this.isBroken = true;
+        setName("Broken " + name);
     }
-
-
     public void levelUp() {
-        this.level++;
-        this.reloadSpeed *= 0.98;
-        this.resourceAmount *= 1.02;
+        level++;
+        reloadSpeed *= 0.9;
+        resourceAmount *= 1.1;
     }
+
+
+    public void communicationsBreakdown() {
+        reloadSpeed *= 1.2;
+    }
+
+    public void medicalSupplyLineSabotage() {
+        reloadSpeed *= 1.2;
+    }
+
+    public void enemyAmbush() {
+        reloadSpeed *= 1.2;
+    }
+
 }

@@ -1,16 +1,14 @@
 package seng201.team0;
 
 import javafx.scene.control.Alert;
+import seng201.team0.models.RandomEvent;
 import seng201.team0.models.items.AmmoCrate;
 import seng201.team0.models.items.Item;
 import seng201.team0.models.items.MedicalSupplyDrop;
 import seng201.team0.models.items.Paratroopers;
 import seng201.team0.models.towers.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class GameEnvironment {
@@ -33,14 +31,15 @@ public class GameEnvironment {
 
 
     private List<Tower> mainTowers;
-    private List<Tower> availableTowersInShop;
-    private List<Tower> allPossibleTowers;
+    private List<Tower> towersInShop;
     private List<Tower> reserveTowers;
 
     private Tower supportTower = null;
 
-    private List<Item> availableItems;
+    private List<Item> itemsInShop;
     private List<Item> playerItems;
+
+    private final Random random = new Random();
 
 
 
@@ -59,20 +58,19 @@ public class GameEnvironment {
         this.mainTowers = new ArrayList<>();
         this.reserveTowers = new ArrayList<>();
 
-        this.availableTowersInShop = new ArrayList<>();
-        this.allPossibleTowers = new ArrayList<>();
+        this.towersInShop = new ArrayList<>();
 
         this.playerItems = new ArrayList<>();
-        this.availableItems = new ArrayList<>();
+        this.itemsInShop = new ArrayList<>();
 
         initializeItems();
 
     }
 
     public void initializeItems() {
-        availableItems.add(new AmmoCrate(0, 0));
-        availableItems.add(new Paratroopers(0, 0));
-        availableItems.add(new MedicalSupplyDrop(0, 0));
+        itemsInShop.add(new AmmoCrate(0, 0));
+        itemsInShop.add(new Paratroopers(0, 0));
+        itemsInShop.add(new MedicalSupplyDrop(0, 0));
     }
 
 
@@ -171,7 +169,7 @@ public class GameEnvironment {
     public void loseLife() {
         livesLeft --;
     }
-    public boolean isGameOver() {
+    public boolean isGameLost() {
         return livesLeft <= 0;
     }
 
@@ -189,27 +187,22 @@ public class GameEnvironment {
             mainTowers.add(tower);
         }
         else {
-            availableTowersInShop.add(tower);
+            towersInShop.add(tower);
         }
     }
 
     public List<Tower> getMainTowers() {
         return mainTowers;
     }
-
-    public List<Tower> getAvailableTowersInShop() {
-        return availableTowersInShop;
+    public List<Tower> getTowersInShop() {
+        return towersInShop;
     }
-
-    public List<Item> getAvailableItems() {
-        return availableItems;
+    public List<Item> getItemsInShop() {
+        return itemsInShop;
     }
     public List<Item> getPlayerItems() {
         return playerItems;
     }
-
-
-
     public List<Tower> getReserveTowers() {
         return reserveTowers;
     }
@@ -257,7 +250,7 @@ public class GameEnvironment {
     }
 
     public Tower getTowerInShopByName(String name) {
-        for (Tower tower : availableTowersInShop) {
+        for (Tower tower : towersInShop) {
             if (tower.getName().equals(name)) {
                 return tower;
             }
@@ -266,7 +259,7 @@ public class GameEnvironment {
     }
 
     public Item getItemInShopByName(String name) {
-        for (Item item : availableItems) {
+        for (Item item : itemsInShop) {
             if (item.getName().equals(name)) {
                 return item;
             }
@@ -288,18 +281,18 @@ public class GameEnvironment {
     public void buyItem(Item item) {
         setCurrentBalance(currentBalance - item.getCost());
         playerItems.add(item);
-        availableItems.remove(item);
+        itemsInShop.remove(item);
     }
     public void sellItem(Item item) {
         setCurrentBalance(currentBalance + item.getSellPrice());
         playerItems.remove(item);
-        availableItems.add(item);
+        itemsInShop.add(item);
     }
 
     public void buyTower(Tower tower) {
         setCurrentBalance(currentBalance - tower.getCost());
         reserveTowers.add(tower);
-        availableTowersInShop.remove(tower);
+        towersInShop.remove(tower);
     }
     public void sellTower(Tower tower) {
         setCurrentBalance(currentBalance + tower.getSellPrice());
@@ -307,7 +300,7 @@ public class GameEnvironment {
         reserveTowers.remove(tower);
 
 
-        availableTowersInShop.add(createNewInstance(tower));
+        towersInShop.add(createNewInstance(tower));
     }
 
     private Tower createNewInstance(Tower tower) {
@@ -359,6 +352,121 @@ public class GameEnvironment {
                 tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
             }
         }
+    }
+
+
+
+    public boolean shouldTriggerRandomEvent() {
+
+        switch (gameDifficulty) {
+            case "Recruit":
+                return random.nextInt(100) < 15;
+
+            case "Major":
+                return random.nextInt(100) < 20;
+
+            case "Commander":
+                return random.nextInt(100) < 25;
+
+        }
+        return false;
+    }
+
+    public void initiateRandomEvent() {
+        RandomEvent event = getRandomEvent();
+
+        switch (event) {
+            case ENEMY_AIR_STRIKE -> enemyAirStrike();
+            case ENEMY_AMBUSH -> enemyAmbush();
+            case COMMUNICATIONS_BREAKDOWN -> communicationsBreakdown();
+            case MEDICAL_SUPPLY_LINE_SABOTAGE -> medicalSupplyLineSabotage();
+        }
+    }
+
+    public RandomEvent getRandomEvent() {
+        RandomEvent[] randomEvents = RandomEvent.values();
+        return randomEvents[random.nextInt(randomEvents.length)];
+    }
+
+    public void enemyAirStrike() {
+
+        Tower selectedTower;
+
+        if (50 > random.nextInt(65)) {
+            selectedTower = mainTowers.get(random.nextInt(mainTowers.size()));
+        } else {
+
+            if (reserveTowers.isEmpty()) {
+                selectedTower = mainTowers.get(random.nextInt(mainTowers.size()));
+            }
+
+            selectedTower = reserveTowers.get(random.nextInt(reserveTowers.size()));
+        }
+        showAlert("ENEMY AIRSTRIKE", "An enemy airstrike has broken your " + selectedTower.getName() + " tower.", Alert.AlertType.INFORMATION);
+
+        selectedTower.breakTower();
+
+    }
+
+    public void communicationsBreakdown() {
+
+        List<Tower> allTowers = mainTowers;
+        allTowers.addAll(reserveTowers);
+
+        List<Tower> possibleTowers = new ArrayList<>();
+
+        for (Tower tower : allTowers) {
+            if (tower.getResourceType().equals("Troops")) {
+                possibleTowers.add(tower);
+            }
+        }
+
+        Tower selectedTower = possibleTowers.get(random.nextInt(possibleTowers.size()));
+
+        showAlert("COMMUNICATIONS BREAKDOWN", "Our communication lines have been shut down!: " + selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
+
+        selectedTower.communicationsBreakdown();
+
+    }
+
+    public void medicalSupplyLineSabotage() {
+
+        List<Tower> allTowers = mainTowers;
+        allTowers.addAll(reserveTowers);
+
+        List<Tower> possibleTowers = new ArrayList<>();
+
+        for (Tower tower : allTowers) {
+            if (tower.getResourceType().equals("Medkits")) {
+                possibleTowers.add(tower);
+            }
+        }
+
+        Tower selectedTower = possibleTowers.get(random.nextInt(possibleTowers.size()));
+
+        showAlert("MEDICAL SUPPLY LINE SABOTAGE", "Our medical supply lines have been sabotaged!: " + selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
+
+        selectedTower.medicalSupplyLineSabotage();
+    }
+
+    public void enemyAmbush() {
+
+        List<Tower> allTowers = mainTowers;
+        allTowers.addAll(reserveTowers);
+
+        List<Tower> possibleTowers = new ArrayList<>();
+
+        for (Tower tower : allTowers) {
+            if (tower.getResourceType().equals("Ammunition")) {
+                possibleTowers.add(tower);
+            }
+        }
+
+        Tower selectedTower = possibleTowers.get(random.nextInt(possibleTowers.size()));
+
+        showAlert("ENEMY AMBUSH", "Our ammunition suppliers have been ambushed!: " + selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
+
+        selectedTower.enemyAmbush();
     }
 
 

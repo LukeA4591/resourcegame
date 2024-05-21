@@ -17,7 +17,6 @@ public abstract class Item implements Purchasable {
         }
 
 
-
     public String getName() {
         return name;
     }
@@ -35,9 +34,6 @@ public abstract class Item implements Purchasable {
         return sellPrice;
     }
 
-    public String getDescription() {
-        return "";
-    }
-
+    public abstract String getDescription();
 
 }
