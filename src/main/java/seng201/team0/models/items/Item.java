@@ -2,7 +2,7 @@ package seng201.team0.models.items;
 
 import seng201.team0.models.Purchasable;
 
-public class Item {
+public abstract class Item implements Purchasable {
 
     private String name;
     private int cost;
@@ -15,20 +15,9 @@ public class Item {
         this.cost = cost;
         this.resourceBoost = resourceBoost;
         this.sellPrice = cost / 2;
-
-        switch (name) {
-            case "Ammo Crate":
-                this.towerType = "Ammunition";
-                break;
-            case "Paratroopers":
-                this.towerType = "Troops";
-                break;
-            case "Medical Supply Drop":
-                this.towerType = "Medkits";
-                break;
         }
 
-    }
+
 
     public String getName() {
         return name;
@@ -46,6 +35,10 @@ public class Item {
 
     public int getSellPrice() {
         return sellPrice;
+    }
+
+    public String getDescription() {
+        return "";
     }
 
 

@@ -116,6 +116,12 @@ public class ShopScreenController {
         myItemButton2.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(myItemButton2.getText())));
         myItemButton3.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(myItemButton3.getText())));
 
+        myTowerButton1.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(myTowerButton1.getText())));
+        myTowerButton2.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(myTowerButton2.getText())));
+        myTowerButton3.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(myTowerButton3.getText())));
+        myTowerButton4.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(myTowerButton4.getText())));
+
+
     }
 
     @FXML
@@ -225,12 +231,16 @@ public class ShopScreenController {
 
                 Tower selectedTower = gameEnvironment.getTowerInShopByName(selectedButton.getText());
 
-                if (selectedTower != null && gameEnvironment.getCurrentBalance() >= selectedTower.getCost() && gameEnvironment.getReserveTowers().size() < 4) {
-                    gameEnvironment.buyTower(selectedTower);
-                    updatePlayerDetails();
-                    selectedButton.setText("Purchased");
-                    selectedButton.setDisable(true);
-                    updateToggleButtons();
+                if (selectedTower != null && gameEnvironment.getCurrentBalance() >= selectedTower.getCost()) {
+                    if (gameEnvironment.getReserveTowers().size() < 4) {
+                        gameEnvironment.buyTower(selectedTower);
+                        updatePlayerDetails();
+                        selectedButton.setText("Purchased");
+                        selectedButton.setDisable(true);
+                        updateToggleButtons();
+                    } else {
+                        gameEnvironment.showAlert("Reserve Towers Full", "You do not have enough space in your inventory to purchase this tower.", Alert.AlertType.ERROR);
+                    }
                 } else {
                     gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
 

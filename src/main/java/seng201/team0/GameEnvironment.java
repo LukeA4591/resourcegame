@@ -1,8 +1,11 @@
 package seng201.team0;
 
 import javafx.scene.control.Alert;
+import seng201.team0.models.items.AmmoCrate;
 import seng201.team0.models.items.Item;
-import seng201.team0.models.towers.Tower;
+import seng201.team0.models.items.MedicalSupplyDrop;
+import seng201.team0.models.items.Paratroopers;
+import seng201.team0.models.towers.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,9 +70,9 @@ public class GameEnvironment {
     }
 
     public void initializeItems() {
-        availableItems.add(new Item("Ammo Crate", 0, 0));
-        availableItems.add(new Item("Paratroopers", 0, 0));
-        availableItems.add(new Item("Medical Supply Drop", 0, 0));
+        availableItems.add(new AmmoCrate("Ammo Crate", 0, 0));
+        availableItems.add(new Paratroopers("Paratroopers", 0, 0));
+        availableItems.add(new MedicalSupplyDrop("Medical Supply Drop", 0, 0));
     }
 
 
@@ -302,7 +305,30 @@ public class GameEnvironment {
         setCurrentBalance(currentBalance + tower.getSellPrice());
         tower.setLevel(1);
         reserveTowers.remove(tower);
-        // DO THIS;
+        availableTowersInShop.add(createNewInstance(tower));
+    }
+
+    private Tower createNewInstance(Tower tower) {
+        if (tower instanceof Armoury) {
+            return new Armoury();
+        } else if (tower instanceof Barracks) {
+            return new Barracks();
+        } else if (tower instanceof Medbay) {
+            return new Medbay();
+        } else if (tower instanceof Arsenal) {
+            return new Arsenal();
+        } else if (tower instanceof Garrison) {
+            return new Garrison();
+        } else if (tower instanceof MedicalTent) {
+            return new MedicalTent();
+        } else if (tower instanceof EaglesNest) {
+            return new EaglesNest();
+        } else if (tower instanceof SpecialForcesCamp) {
+            return new SpecialForcesCamp();
+        } else if (tower instanceof FieldHospital) {
+            return new FieldHospital();
+        }
+            return null;
     }
 
 }

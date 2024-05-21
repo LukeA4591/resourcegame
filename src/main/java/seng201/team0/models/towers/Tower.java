@@ -10,9 +10,10 @@ public abstract class Tower implements Purchasable {
     private Integer level;
     private int cost;
     private int sellPrice;
+    private boolean isBroken;
 
-    public Tower(String name, double resourceAmount, double reloadSpeed, String resourceType, int level,
-            int cost) {
+    public Tower(String name, double resourceAmount, double reloadSpeed, String resourceType, int cost,
+            int level) {
 
         this.name = name;
         this.resourceAmount = resourceAmount;
@@ -21,6 +22,7 @@ public abstract class Tower implements Purchasable {
         this.level = level;
         this.cost = cost;
         this.sellPrice = cost / 2;
+        this.isBroken = false;
     }
 
     public String getName() {
@@ -74,6 +76,14 @@ public abstract class Tower implements Purchasable {
 
     public String getDescription() {
         return "";
+    }
+
+    public boolean isBroken() {
+        return isBroken;
+    }
+
+    public void setBroken() {
+        this.isBroken = true;
     }
 
 
