@@ -4,14 +4,14 @@ import seng201.team0.models.Purchasable;
 
 public abstract class Tower implements Purchasable {
     private String name;
-    private int resourceAmount;
+    private double resourceAmount;
     private double reloadSpeed;
     private String resourceType;
     private Integer level;
     private int cost;
     private int sellPrice;
 
-    public Tower(String name, int resourceAmount, double reloadSpeed, String resourceType, int level,
+    public Tower(String name, double resourceAmount, double reloadSpeed, String resourceType, int level,
             int cost) {
 
         this.name = name;
@@ -30,7 +30,7 @@ public abstract class Tower implements Purchasable {
         this.name = name;
     }
 
-    public int getResourceAmount() {
+    public double getResourceAmount() {
         return resourceAmount;
     }
     public void setResourceAmount(int resourceAmount) {
@@ -74,5 +74,12 @@ public abstract class Tower implements Purchasable {
 
     public String getDescription() {
         return "";
+    }
+
+
+    public void levelUp() {
+        this.level++;
+        this.reloadSpeed *= 0.98;
+        this.resourceAmount *= 1.02;
     }
 }

@@ -62,6 +62,14 @@ public class GameEnvironment {
         this.playerItems = new ArrayList<>();
         this.availableItems = new ArrayList<>();
 
+        initializeItems();
+
+    }
+
+    public void initializeItems() {
+        availableItems.add(new Item("Ammo Crate", 0, 0));
+        availableItems.add(new Item("Paratroopers", 0, 0));
+        availableItems.add(new Item("Medical Supply Drop", 0, 0));
     }
 
 
@@ -109,9 +117,6 @@ public class GameEnvironment {
         clearScreen.run();
         launchGameScreen();
     }
-
-
-
 
 
 
@@ -278,10 +283,12 @@ public class GameEnvironment {
 
 
     public void buyItem(Item item) {
+        setCurrentBalance(currentBalance - item.getCost());
         playerItems.add(item);
         availableItems.remove(item);
     }
     public void sellItem(Item item) {
+        setCurrentBalance(currentBalance + item.getSellPrice());
         playerItems.remove(item);
         availableItems.add(item);
     }
@@ -295,7 +302,7 @@ public class GameEnvironment {
         setCurrentBalance(currentBalance + tower.getSellPrice());
         tower.setLevel(1);
         reserveTowers.remove(tower);
-        availableTowersInShop.add(tower);
+        // DO THIS;
     }
 
 }

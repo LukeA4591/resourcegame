@@ -1,6 +1,6 @@
 package seng201.team0.models.towers;
 
-public class Barracks extends Tower {
+public class SpecialForcesCamp extends Tower{
 
     private static final double DEFAULT_RESOURCE_AMOUNT = 10.0;
     private static final double DEFAULT_RELOAD_SPEED = 1.5;
@@ -8,7 +8,8 @@ public class Barracks extends Tower {
     private static final int DEFAULT_COST = 150;
     private static final int DEFAULT_LEVEL = 1;
 
-    public Barracks() {
-        super("Barracks", DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
+    public SpecialForcesCamp() {
+        super("Special Forces Camp", DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
     }
 }
+

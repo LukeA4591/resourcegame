@@ -83,6 +83,12 @@ public class InventoryScreenController {
         initializeToggleButtons();
         updatePlayerDetails();
         updateButtons();
+        initializeDescriptions();
+
+    }
+
+    @FXML
+    private void initializeDescriptions() {
 
         ammunitionTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(ammunitionTowerButton.getText())));
         troopsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(troopsTowerButton.getText())));
@@ -93,6 +99,10 @@ public class InventoryScreenController {
         reserveTower2Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower2Button.getText())));
         reserveTower3Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower3Button.getText())));
         reserveTower4Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower4Button.getText())));
+
+        item1Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(item1Button.getText())));
+        item2Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(item2Button.getText())));
+        item3Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(item3Button.getText())));
 
     }
 
@@ -108,6 +118,19 @@ public class InventoryScreenController {
                 new Label("Resources per click:  " + tower.getResourceAmount()),
                 new Label("Reload speed:  " + tower.getReloadSpeed()),
                 new Label("Cost:  " + tower.getCost())
+        );
+    }
+
+    @FXML
+    private void displayItemInformation(Item item) {
+        descriptionVBox.getChildren().clear();
+
+        descriptionVBox.getChildren().addAll(
+                new Label("Name: " + item.getName()),
+                new Label("Affects: " + item.getTowerType() + " Towers"),
+                new Label("Resource Boost: " + item.getResourceBoost()),
+                new Label("Cost: " + item.getCost()),
+                new Label("Sell Price: " + item.getSellPrice())
         );
     }
 

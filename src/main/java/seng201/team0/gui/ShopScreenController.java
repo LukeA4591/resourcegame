@@ -87,25 +87,48 @@ public class ShopScreenController {
     }
 
     public void initialize() {
+
         towerShopButtons = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button,
                 tower7Button, tower8Button, tower9Button);
-
         reserveTowerButtons = List.of(myTowerButton1, myTowerButton2, myTowerButton3, myTowerButton4);
-
         playerItemButtons = List.of(myItemButton1, myItemButton2, myItemButton3);
-
         itemsInShopButtons = List.of(item1Button, item2Button, item3Button);
 
         updatePlayerDetails();
         initializeToggleButtonGroups();
-
         updateToggleButtons();
+        initializeDescriptions();
+
+
+    }
+    @FXML
+    private void initializeDescriptions() {
 
         for (ToggleButton button : towerShopButtons) {
             button.setOnAction(event -> displayTowerInformation(gameEnvironment.getTowerInShopByName(button.getText())));
         }
 
+        item1Button.setOnAction(event -> displayItemInformation(gameEnvironment.getItemInShopByName(item1Button.getText())));
+        item2Button.setOnAction(event -> displayItemInformation(gameEnvironment.getItemInShopByName(item2Button.getText())));
+        item3Button.setOnAction(event -> displayItemInformation(gameEnvironment.getItemInShopByName(item3Button.getText())));
 
+        myItemButton1.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(myItemButton1.getText())));
+        myItemButton2.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(myItemButton2.getText())));
+        myItemButton3.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(myItemButton3.getText())));
+
+    }
+
+    @FXML
+    private void displayItemInformation(Item item) {
+        descriptionVBox.getChildren().clear();
+
+        descriptionVBox.getChildren().addAll(
+                new Label("Name: " + item.getName()),
+                new Label("Affects: " + item.getTowerType() + " Towers"),
+                new Label("Resource Boost: " + item.getResourceBoost()),
+                new Label("Cost: " + item.getCost()),
+                new Label("Sell Price: " + item.getSellPrice())
+        );
     }
 
     @FXML
