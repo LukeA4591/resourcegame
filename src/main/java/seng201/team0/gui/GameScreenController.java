@@ -43,9 +43,7 @@ public class GameScreenController {
     @FXML
     private Label difficultyLabel;
     @FXML
-    private Label roundInfoLabel1;
-    @FXML
-    private Label roundInfoLabel2;
+    private Label cartInfoLabel;
     @FXML
     private Label roundTimerLabel;
     @FXML
@@ -79,7 +77,7 @@ public class GameScreenController {
     private ProgressBar medKitProgressBar;
     @FXML
     private ProgressBar roundTimerProgressBar;
-    private String roundDifficulty;
+    private String difficulty;
     private GameEnvironment gameEnvironment;
     private int numMedCarts;
     private int numAmmoCarts;
@@ -91,9 +89,11 @@ public class GameScreenController {
     private int ammunitionNeeded;
     private int troopsNeeded;
     private Round newRound;
+    private boolean called;
 
     public GameScreenController(GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
+        called = true;
     }
 
     @FXML
@@ -152,7 +152,8 @@ public class GameScreenController {
     private void updatePlayerDetails() {
         playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
         gameDifficultyLabel.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
-        roundCounterLabel.setText("Round: 0/" + gameEnvironment.getGameRounds());
+        roundCounterLabel.setText("Round: " + gameEnvironment.getCurrentRound() +
+                " / " + gameEnvironment.getGameRounds());
         currentBalanceLabel.setText("Current Balance: $" + gameEnvironment.getCurrentBalance());
         livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
     }
@@ -169,30 +170,21 @@ public class GameScreenController {
 
 
     @FXML
-    private void onSelectDifficultyClicked(){
-        this.roundDifficulty = roundDifficultyBox.getValue();
-        if (roundDifficulty == null){
+    private void onDisplayDifficulty(){
+        this.difficulty = roundDifficultyBox.getValue();
+        if (difficulty == null){
             gameEnvironment.showAlert("Invalid Difficulty", 
                     "Please chose a diffuculty for your next round", Alert.AlertType.ERROR);
         } else {
-            difficultyLabel.setText("Difficulty: " + roundDifficulty);
+            difficultyLabel.setText("Difficulty: " + difficulty);
             newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
-                    roundDifficulty, gameEnvironment);
+                    difficulty, gameEnvironment);
             ArrayList<Integer> numCarts = newRound.getNumCarts();
             numAmmoCarts = numCarts.get(0);
             numMedCarts = numCarts.get(1);
             numTroopCarts = numCarts.get(2);
-            roundInfoLabel1.setText(numAmmoCarts + " Ammunition Carts, " + numMedCarts + " Med-kit carts, " +
+            cartInfoLabel.setText(numAmmoCarts + " Ammunition Carts, " + numMedCarts + " Med-kit carts, " +
                     numTroopCarts + " Troop carts");
-
-            switch (roundDifficulty) {
-                case "Close-Quarters Combat":
-                    roundInfoLabel2.setText("EDIT THIS");
-                case "Standard Warfare":
-                    roundInfoLabel2.setText("EDIT THIS");
-                case "Sniper Combat":
-                    roundInfoLabel2.setText("EDIT THIS");
-            }
         }
     }
     @FXML
@@ -203,6 +195,7 @@ public class GameScreenController {
             ammoProgressBar.setProgress(1);
             loadSupplyTruckButton.setDisable(true);
             fillSupplyTruckLabel.setText("Supply Truck full!");
+            checkRoundDone();
         } else {
             ammoProgressBar.setProgress((double) ammunitionCollected / ammunitionNeeded);
             disableButtonForTime(loadSupplyTruckButton, newRound.getAmmoTowerReload());
@@ -216,6 +209,7 @@ public class GameScreenController {
             troopProgressBar.setProgress(1);
             loadHumveeButton.setDisable(true);
             fillHumveeLabel.setText("Humvee full!");
+            checkRoundDone();
         } else {
             troopProgressBar.setProgress((double) troopsCollected / troopsNeeded);
             disableButtonForTime(loadHumveeButton, newRound.getTroopTowerReload());
@@ -229,6 +223,7 @@ public class GameScreenController {
             medKitProgressBar.setProgress(1);
             loadAmbulanceButton.setDisable(true);
             fillAmbulanceLabel.setText("Ambulance full!");
+            checkRoundDone();
         } else {
             medKitProgressBar.setProgress((double) medKitsCollected / medKitsNeeded);
             disableButtonForTime(loadAmbulanceButton, newRound.getMedTowerReload());
@@ -238,22 +233,15 @@ public class GameScreenController {
     @FXML
     private void onStartRoundButtonClicked() {
 
-
-
-
-
-
-        if (roundDifficulty != null){
+        if (difficulty != null){
 
             if (!gameEnvironment.isMainTowerBroken()) {
-
 
                 selectDifficultyLabel.setVisible(false);
                 roundDifficultyBox.setVisible(false);
                 selectDifficultyButton.setVisible(false);
                 difficultyLabel.setVisible(false);
-                roundInfoLabel1.setText("");
-                roundInfoLabel2.setText("");
+                cartInfoLabel.setVisible(false);
                 shopButton.setVisible(false);
                 inventoryButton.setVisible(false);
                 startRoundButton.setVisible(false);
@@ -271,7 +259,7 @@ public class GameScreenController {
                 medKitsNeeded = newRound.getMedKitsRequired();
                 ammunitionNeeded = newRound.getAmmunitionRequired();
                 troopsNeeded = newRound.getTroopsRequired();
-                startProgressTimer(20);
+                startProgressTimer(25);
             }
             else {
                 gameEnvironment.showAlert("Main Tower is Broken", "Round cannot be played with a broken tower", Alert.AlertType.ERROR);
@@ -308,12 +296,49 @@ public class GameScreenController {
                 }
                 return null;
             }
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                // Call your function here
+                checkRoundDone();
+            }
         };
-
         // Bind the progress of the task to the ProgressBar
         roundTimerProgressBar.progressProperty().bind(task.progressProperty());
-
         // Run the task in a background thread
         new Thread(task).start();
+    }
+
+    private void checkRoundDone(){
+        if (medKitProgressBar.getProgress() == 1 &&
+                ammoProgressBar.getProgress() == 1 &&
+                troopProgressBar.getProgress() == 1 && called){
+            called = false;
+            endRound(true);
+        } else if (called && roundTimerProgressBar.getProgress() == 1){
+            endRound(false);
+        }
+    }
+
+    private void endRound(boolean roundFinish){
+        if (roundFinish){
+            int roundWinPrize = gameEnvironment.roundWinPrize();
+            gameEnvironment.showAlert("Round Completed!",
+                    "Congratulations you have beaten round " + gameEnvironment.getCurrentRound() +
+                            " and you have won " + roundWinPrize + " dollars! \n Your towers " +
+                            " now gather 10% more resources and reload" +
+                            " 10% faster per cart filled" , Alert.AlertType.INFORMATION);
+            gameEnvironment.setCurrentRound(gameEnvironment.getCurrentRound() + 1);
+            gameEnvironment.upGradeTowers(newRound.getNumCarts());
+            gameEnvironment.refreshGameScreen();
+        } else {
+            gameEnvironment.loseLife();
+            if (gameEnvironment.isGameLost()){
+                gameEnvironment.launchEndGameScreen();
+            } else {
+                gameEnvironment.showAlert("Round failed!", "You have lost a life", Alert.AlertType.INFORMATION);
+                gameEnvironment.refreshGameScreen();
+            }
+        }
     }
 }

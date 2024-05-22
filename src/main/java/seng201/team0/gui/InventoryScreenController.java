@@ -164,7 +164,8 @@ public class InventoryScreenController {
     private void updatePlayerDetails() {
         playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
         gameDifficultyLabel.setText("Difficulty: " + gameEnvironment.getGameDifficulty());
-        roundCounterLabel.setText("Round: 0/" + gameEnvironment.getGameRounds());
+        roundCounterLabel.setText("Round: " + gameEnvironment.getCurrentRound() +
+                " / " + gameEnvironment.getGameRounds());
         currentBalanceLabel.setText("Current Balance: $" + gameEnvironment.getCurrentBalance());
         livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
     }

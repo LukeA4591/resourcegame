@@ -22,7 +22,7 @@ public class GameEnvironment {
 
     private String playerName;
     private int gameRounds;
-    private int currentRound;
+    private int currentRound = 1;
     private String gameDifficulty;
     private double currentBalance;
     private int livesLeft;
@@ -103,6 +103,10 @@ public class GameEnvironment {
         }
         else launchShopScreen();
     }
+    public void refreshGameScreen(){
+        clearScreen.run();
+        launchGameScreen();
+    }
 
     public void launchShopScreen() {
         clearScreen.run();
@@ -170,7 +174,6 @@ public class GameEnvironment {
         return gameDifficulty;
     }
 
-
     public void setCurrentBalance(Double balance) {
         this.currentBalance = balance;
     }
@@ -195,7 +198,6 @@ public class GameEnvironment {
     public Tower getSupportTower() {
         return supportTower;
     }
-
 
     public boolean getGameWon() {
         return gameWon;
@@ -535,5 +537,33 @@ public class GameEnvironment {
 
     }
 
-
+    public int roundWinPrize(){
+        int prize = 200 + (currentRound - 1) * 20;
+        currentBalance += prize;
+        return prize;
+    }
+    public void upGradeTowers(ArrayList<Integer> carts){
+        int numAmmoCarts = carts.get(0);
+        int numMedCarts = carts.get(1);
+        int numTroopCarts = carts.get(2);
+        for (Tower tower : mainTowers){
+            String resourcetype = tower.getResourceType();
+            if (resourcetype == "Medkits") {
+                for (int i = 0; i < numMedCarts; i++){
+                    tower.levelUp();
+                }
+            }
+            if (resourcetype == "Ammunition") {
+                for (int i = 0; i < numAmmoCarts; i++) {
+                    tower.levelUp();
+                }
+            }
+            if (resourcetype == "Troops"){
+                for (int i = 0; i < numTroopCarts; i++){
+                    tower.levelUp();
+                }
+            }
+        }
+    }
 }
+

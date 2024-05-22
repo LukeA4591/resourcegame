@@ -190,9 +190,9 @@
                   <Insets bottom="10.0" left="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="roundInfoLabel1" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Label fx:id="cartInfoLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets bottom="25.0" />
+                  <Insets bottom="15.0" />
                </GridPane.margin>
             </Label>
             <ComboBox fx:id="roundDifficultyBox" prefWidth="150.0" promptText="Choose diffciculty:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -200,7 +200,7 @@
                   <Insets />
                </GridPane.margin>
             </ComboBox>
-            <Button fx:id="selectDifficultyButton" mnemonicParsing="false" onAction="#onSelectDifficultyClicked" text="Select difficulty" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <Button fx:id="selectDifficultyButton" mnemonicParsing="false" onAction="#onDisplayDifficulty" text="Select difficulty" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -248,11 +248,6 @@
             <Label fx:id="fillAmbulanceLabel" text="Fill the ambulance!" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="15.0" />
-               </GridPane.margin>
-            </Label>
-            <Label fx:id="roundInfoLabel2" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets bottom="5.0" />
                </GridPane.margin>
             </Label>
          </children>
