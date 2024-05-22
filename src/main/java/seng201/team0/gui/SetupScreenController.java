@@ -63,13 +63,13 @@ public class SetupScreenController {
             gameEnvironment.closeSetupScreen();
         }
         else
-            showAlert("Information not Updated", "Please update your information before continuing.");
+            gameEnvironment.showAlert("Information not Updated", "Please update your information before continuing.", Alert.AlertType.ERROR);
     }
 
 
     public boolean nameChecker(String name) {
         if (name.length() > 15 || name.length() < 3 || !name.matches("^[0-9a-zA-Z]*$")) {
-            showAlert("Invalid Name", "Name must be 3-15 characters long and not contain special characters.");
+            gameEnvironment.showAlert("Invalid Name", "Name must be 3-15 characters long and not contain special characters.", Alert.AlertType.ERROR);
             return false;
         }
         else
@@ -78,18 +78,11 @@ public class SetupScreenController {
 
     public boolean difficultyChecker() {
         if (difficultyBox.getValue() == null) {
-            showAlert("Invalid Difficulty", "Please select a difficulty.");
+            gameEnvironment.showAlert("Invalid Difficulty", "Please select a difficulty.", Alert.AlertType.ERROR);
             return false;
         }
         else
             return true;
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.show();
     }
 
 

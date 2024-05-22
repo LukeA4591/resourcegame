@@ -128,13 +128,13 @@ public class GameEnvironment {
 
 
 
-    public void startGame(String name, int rounds, String difficulty) {
+    public void startGame(String name, int rounds, String gameDifficulty) {
 
         this.playerName = name;
         this.gameRounds = rounds;
-        this.gameDifficulty = difficulty;
+        this.gameDifficulty = gameDifficulty;
 
-        switch (difficulty) {
+        switch (gameDifficulty) {
             case "Recruit":
                 setCurrentBalance(1500.00);
                 livesLeft = 3;

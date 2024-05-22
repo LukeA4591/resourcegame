@@ -91,7 +91,7 @@ public class TowerSelectScreenController {
             storeTowers();
             gameEnvironment.closeTowerSelectScreen();
         }
-        else showAlert("Invalid Tower Selection", "Please select your three starting towers.");
+        else gameEnvironment.showAlert("Invalid Tower Selection", "Please select your three starting towers.", AlertType.ERROR);
     }
 
 
@@ -128,12 +128,6 @@ public class TowerSelectScreenController {
 
     }
 
-    public void showAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.show();
-    }
 
 
 

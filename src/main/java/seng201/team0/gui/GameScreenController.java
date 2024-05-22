@@ -43,7 +43,9 @@ public class GameScreenController {
     @FXML
     private Label difficultyLabel;
     @FXML
-    private Label cartInfoLabel;
+    private Label roundInfoLabel1;
+    @FXML
+    private Label roundInfoLabel2;
     @FXML
     private Label roundTimerLabel;
     @FXML
@@ -77,7 +79,7 @@ public class GameScreenController {
     private ProgressBar medKitProgressBar;
     @FXML
     private ProgressBar roundTimerProgressBar;
-    private String difficulty;
+    private String roundDifficulty;
     private GameEnvironment gameEnvironment;
     private int numMedCarts;
     private int numAmmoCarts;
@@ -167,21 +169,30 @@ public class GameScreenController {
 
 
     @FXML
-    private void onDisplayDifficulty(){
-        this.difficulty = roundDifficultyBox.getValue();
-        if (difficulty == null){
+    private void onSelectDifficultyClicked(){
+        this.roundDifficulty = roundDifficultyBox.getValue();
+        if (roundDifficulty == null){
             gameEnvironment.showAlert("Invalid Difficulty", 
                     "Please chose a diffuculty for your next round", Alert.AlertType.ERROR);
         } else {
-            difficultyLabel.setText("Difficulty: " + difficulty);
+            difficultyLabel.setText("Difficulty: " + roundDifficulty);
             newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
-                    difficulty, gameEnvironment);
+                    roundDifficulty, gameEnvironment);
             ArrayList<Integer> numCarts = newRound.getNumCarts();
             numAmmoCarts = numCarts.get(0);
             numMedCarts = numCarts.get(1);
             numTroopCarts = numCarts.get(2);
-            cartInfoLabel.setText(numAmmoCarts + " Ammunition Carts, " + numMedCarts + " Med-kit carts, " +
+            roundInfoLabel1.setText(numAmmoCarts + " Ammunition Carts, " + numMedCarts + " Med-kit carts, " +
                     numTroopCarts + " Troop carts");
+
+            switch (roundDifficulty) {
+                case "Close-Quarters Combat":
+                    roundInfoLabel2.setText("EDIT THIS");
+                case "Standard Warfare":
+                    roundInfoLabel2.setText("EDIT THIS");
+                case "Sniper Combat":
+                    roundInfoLabel2.setText("EDIT THIS");
+            }
         }
     }
     @FXML
@@ -232,7 +243,7 @@ public class GameScreenController {
 
 
 
-        if (difficulty != null){
+        if (roundDifficulty != null){
 
             if (!gameEnvironment.isMainTowerBroken()) {
 
@@ -241,7 +252,8 @@ public class GameScreenController {
                 roundDifficultyBox.setVisible(false);
                 selectDifficultyButton.setVisible(false);
                 difficultyLabel.setVisible(false);
-                cartInfoLabel.setVisible(false);
+                roundInfoLabel1.setText("");
+                roundInfoLabel2.setText("");
                 shopButton.setVisible(false);
                 inventoryButton.setVisible(false);
                 startRoundButton.setVisible(false);
