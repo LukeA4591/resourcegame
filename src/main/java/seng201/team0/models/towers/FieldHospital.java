@@ -11,5 +11,9 @@ public class FieldHospital extends Tower{
     public FieldHospital() {
         super("Field Hospital", DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
     }
+
+    public String getDescription() {
+        return "State-of-the-art medical facility\nensuring the highest quality medical supplies";
+    }
 }
 

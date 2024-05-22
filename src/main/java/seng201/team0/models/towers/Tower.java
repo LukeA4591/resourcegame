@@ -74,9 +74,7 @@ public abstract class Tower implements Purchasable {
         this.sellPrice = sellPrice;
     }
 
-    public String getDescription() {
-        return "";
-    }
+    public abstract String getDescription();
 
     public boolean isBroken() {
         return isBroken;
@@ -86,6 +84,11 @@ public abstract class Tower implements Purchasable {
         this.isBroken = true;
         setName("Broken " + name);
     }
+    public void repairTower() {
+        this.isBroken = false;
+        setName(name.substring(7));
+    }
+
     public void levelUp() {
         level++;
         reloadSpeed *= 0.9;

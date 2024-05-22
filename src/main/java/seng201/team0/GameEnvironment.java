@@ -491,5 +491,29 @@ public class GameEnvironment {
         selectedTower.enemyAmbush();
     }
 
+    public void useRepairKit(Item repairKit, Tower tower) {
+        tower.repairTower();
+        playerItems.remove(repairKit);
+
+        showAlert("Tower Repaired!", tower.getName() + " has been repaired using " + repairKit.getName(), Alert.AlertType.INFORMATION);
+    }
+
+    public void removeTower(Tower tower) {
+
+        reserveTowers.remove(tower);
+
+        showAlert("Tower Removed", tower.getName() + " has been removed from your inventory", Alert.AlertType.INFORMATION);
+    }
+
+    public boolean isMainTowerBroken() {
+
+        for (Tower tower : mainTowers) {
+            if (tower.isBroken()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

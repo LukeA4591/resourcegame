@@ -11,4 +11,8 @@ public class Arsenal extends Tower {
     public Arsenal() {
         super("Arsenal", DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
     }
+
+    public String getDescription() {
+        return "Stores and dispenses\nammunition with efficiency.";
+    }
 }

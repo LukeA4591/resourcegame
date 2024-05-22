@@ -11,4 +11,8 @@ public class Garrison extends Tower {
     public Garrison() {
         super("Garrison", DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
     }
+
+    public String getDescription() {
+        return "Military station ready to\ndeploy well trained troops.";
+    }
 }

@@ -151,7 +151,8 @@ public class ShopScreenController {
                 new Label("Resources per click:  " + tower.getResourceAmount()),
                 new Label("Reload speed:  " + tower.getReloadSpeed()),
                 new Label("Cost:  " + tower.getCost()),
-                new Label("Sell price: " + tower.getSellPrice())
+                new Label("Sell price: " + tower.getSellPrice()),
+                new Label("Description: " + tower.getDescription())
         );
     }
 
@@ -231,12 +232,9 @@ public class ShopScreenController {
 
         ToggleButton selectedButton = (ToggleButton) toggleButtons.getSelectedToggle();
 
-        List<ToggleButton> towerButtonsForPurchase = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button, tower6Button);
-        List<ToggleButton> itemButtonsForPurchase = List.of(item1Button, item2Button, item3Button);
-
         if (selectedButton != null) {
 
-            if (towerButtonsForPurchase.contains(selectedButton)) {
+            if (towerShopButtons.contains(selectedButton)) {
 
                 Tower selectedTower = gameEnvironment.getTowerInShopByName(selectedButton.getText());
 
@@ -259,7 +257,7 @@ public class ShopScreenController {
                     gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
 
                 }
-            } else if (itemButtonsForPurchase.contains(selectedButton)) {
+            } else if (itemsInShopButtons.contains(selectedButton)) {
                 Item selectedItem = gameEnvironment.getItemInShopByName(selectedButton.getText());
 
                 if (selectedItem != null && gameEnvironment.getCurrentBalance() >= selectedItem.getCost()) {

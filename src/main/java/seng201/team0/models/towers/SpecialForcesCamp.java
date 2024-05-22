@@ -11,5 +11,9 @@ public class SpecialForcesCamp extends Tower{
     public SpecialForcesCamp() {
         super("Special Forces Camp", DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
     }
+
+    public String getDescription() {
+        return "Trains and deploys elite soldiers with\nunparalleled combat skills suitable for any mission";
+    }
 }
 

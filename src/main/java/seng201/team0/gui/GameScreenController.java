@@ -226,33 +226,48 @@ public class GameScreenController {
 
     @FXML
     private void onStartRoundButtonClicked() {
-        if (difficulty == null){
+
+
+
+
+
+
+        if (difficulty != null){
+
+            if (!gameEnvironment.isMainTowerBroken()) {
+
+
+                selectDifficultyLabel.setVisible(false);
+                roundDifficultyBox.setVisible(false);
+                selectDifficultyButton.setVisible(false);
+                difficultyLabel.setVisible(false);
+                cartInfoLabel.setVisible(false);
+                shopButton.setVisible(false);
+                inventoryButton.setVisible(false);
+                startRoundButton.setVisible(false);
+                ammoProgressBar.setVisible(true);
+                troopProgressBar.setVisible(true);
+                medKitProgressBar.setVisible(true);
+                roundTimerProgressBar.setVisible(true);
+                roundTimerLabel.setVisible(true);
+                fillSupplyTruckLabel.setVisible(true);
+                fillAmbulanceLabel.setVisible(true);
+                fillHumveeLabel.setVisible(true);
+                loadSupplyTruckButton.setDisable(false);
+                loadAmbulanceButton.setDisable(false);
+                loadHumveeButton.setDisable(false);
+                medKitsNeeded = newRound.getMedKitsRequired();
+                ammunitionNeeded = newRound.getAmmunitionRequired();
+                troopsNeeded = newRound.getTroopsRequired();
+                startProgressTimer(20);
+            }
+            else {
+                gameEnvironment.showAlert("Main Tower is Broken", "Round cannot be played with a broken tower", Alert.AlertType.ERROR);
+            }
+        }
+        else {
             gameEnvironment.showAlert("Invalid Difficulty",
                     "Please choose a difficulty for your next round", Alert.AlertType.ERROR);
-        } else {
-            selectDifficultyLabel.setVisible(false);
-            roundDifficultyBox.setVisible(false);
-            selectDifficultyButton.setVisible(false);
-            difficultyLabel.setVisible(false);
-            cartInfoLabel.setVisible(false);
-            shopButton.setVisible(false);
-            inventoryButton.setVisible(false);
-            startRoundButton.setVisible(false);
-            ammoProgressBar.setVisible(true);
-            troopProgressBar.setVisible(true);
-            medKitProgressBar.setVisible(true);
-            roundTimerProgressBar.setVisible(true);
-            roundTimerLabel.setVisible(true);
-            fillSupplyTruckLabel.setVisible(true);
-            fillAmbulanceLabel.setVisible(true);
-            fillHumveeLabel.setVisible(true);
-            loadSupplyTruckButton.setDisable(false);
-            loadAmbulanceButton.setDisable(false);
-            loadHumveeButton.setDisable(false);
-            medKitsNeeded = newRound.getMedKitsRequired();
-            ammunitionNeeded = newRound.getAmmunitionRequired();
-            troopsNeeded = newRound.getTroopsRequired();
-            startProgressTimer(20);
         }
     }
     private void disableButtonForTime(Button button, int seconds) {

@@ -11,4 +11,8 @@ public class MedicalTent extends Tower {
     public MedicalTent() {
         super("Medical Tent",  DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
     }
+
+    public String getDescription() {
+        return "Delivers immediate medical\ncare to the front lines.";
+    }
 }

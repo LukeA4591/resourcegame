@@ -11,4 +11,8 @@ public class Medbay extends Tower {
     public Medbay() {
         super("Medbay",  DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
     }
+
+    public String getDescription() {
+        return "Provides essential medical\nsupplies to injured soldiers";
+    }
 }

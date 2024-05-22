@@ -58,8 +58,8 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="140.0" minHeight="10.0" prefHeight="140.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="111.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="154.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 1.5;" GridPane.columnIndex="1">
@@ -195,8 +195,8 @@
                   <Insets bottom="10.0" right="10.0" />
                </GridPane.margin>
             </ToggleButton>
-            <Button fx:id="repairTowerButton" mnemonicParsing="false" onAction="#onSwapTowersButtonClicked" text="Repair Tower" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <Button fx:id="removeTowerButton" mnemonicParsing="false" onAction="#onSwapTowersButtonClicked" text="Remove Tower" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Button fx:id="repairTowerButton" mnemonicParsing="false" onAction="#onRepairTowerButtonClicked" text="Repair Tower" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="removeTowerButton" mnemonicParsing="false" onAction="#onRemoveTowerButtonClicked" text="Remove Tower" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>

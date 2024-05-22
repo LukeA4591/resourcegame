@@ -13,4 +13,8 @@ public class Armoury extends Tower {
 
     }
 
+    public String getDescription() {
+        return "Provides a steady supply\nof ammunition to keep your troops well-armed.";
+    }
+
 }

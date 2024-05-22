@@ -11,5 +11,9 @@ public class EaglesNest extends Tower {
     public EaglesNest() {
         super("Eagle's Nest", DEFAULT_RESOURCE_AMOUNT, DEFAULT_RELOAD_SPEED, DEFAULT_RESOURCE_TYPE, DEFAULT_COST, DEFAULT_LEVEL);
     }
+
+    public String getDescription() {
+        return "Elite munitions outpost\ndelivering the highest quality ammunition.";
+    }
 }
 
