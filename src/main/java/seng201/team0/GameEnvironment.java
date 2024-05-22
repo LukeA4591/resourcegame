@@ -160,6 +160,11 @@ public class GameEnvironment {
     public int getGameRounds() {
         return gameRounds;
     }
+
+    public int getCurrentRound(){
+        return currentRound;
+    }
+
     public String getGameDifficulty() {
         return gameDifficulty;
     }
@@ -198,9 +203,6 @@ public class GameEnvironment {
         this.gameWon = true;
     }
 
-    public int getCurrentRound() {
-        return currentRound;
-    }
     public void setCurrentRound(int roundNumber) {
         this.currentRound = roundNumber;
     }
