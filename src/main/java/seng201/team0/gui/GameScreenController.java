@@ -1,15 +1,15 @@
 package seng201.team0.gui;
 
+import javafx.concurrent.Task;
+import javafx.util.Duration;
 import seng201.team0.GameEnvironment;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.animation.*;
 import seng201.team0.models.Round;
 import seng201.team0.models.towers.*;
-import seng201.team0.GameEnvironment;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameScreenController {
 
@@ -46,6 +46,12 @@ public class GameScreenController {
     private Label cartInfoLabel;
     @FXML
     private Label roundTimerLabel;
+    @FXML
+    private Label fillSupplyTruckLabel;
+    @FXML
+    private Label fillHumveeLabel;
+    @FXML
+    private Label fillAmbulanceLabel;
 
     @FXML
     private Button loadSupplyTruckButton;
@@ -53,7 +59,6 @@ public class GameScreenController {
     private Button loadHumveeButton;
     @FXML
     private Button loadAmbulanceButton;
-
     @FXML
     private Button shopButton;
     @FXML
@@ -92,11 +97,18 @@ public class GameScreenController {
     @FXML
     public void initialize() {
         roundDifficultyBox.getItems().addAll("Close-Quarters Combat", "Standard Warfare", "Sniper Combat");
+        ammoProgressBar.setProgress(0);
+        troopProgressBar.setProgress(0);
+        medKitProgressBar.setProgress(0);
+        roundTimerProgressBar.setProgress(0);
         ammoProgressBar.setVisible(false);
         troopProgressBar.setVisible(false);
         medKitProgressBar.setVisible(false);
         roundTimerProgressBar.setVisible(false);
         roundTimerLabel.setVisible(false);
+        fillSupplyTruckLabel.setVisible(false);
+        fillAmbulanceLabel.setVisible(false);
+        fillSupplyTruckLabel.setVisible(false);
         loadSupplyTruckButton.setDisable(true);
         loadAmbulanceButton.setDisable(true);
         loadHumveeButton.setDisable(true);
@@ -176,21 +188,40 @@ public class GameScreenController {
     private void onLoadSupplyTruckButton(){
         newRound.increaseAmmunitionCollected();
         ammunitionCollected = newRound.getAmmunitionCollected();
-        ammoProgressBar.setProgress((double) ammunitionCollected / ammunitionNeeded);
+        if (ammunitionCollected >= ammunitionNeeded) {
+            ammoProgressBar.setProgress(1);
+            loadSupplyTruckButton.setDisable(true);
+            fillSupplyTruckLabel.setText("Supply Truck full!");
+        } else {
+            ammoProgressBar.setProgress((double) ammunitionCollected / ammunitionNeeded);
+            disableButtonForTime(loadSupplyTruckButton, newRound.getAmmoTowerReload());
+        }
     }
     @FXML
     private void onLoadHumveeButton(){
         newRound.increaseTroopsCollected();
         troopsCollected = newRound.getTroopsCollected();
-        System.out.println(troopsCollected + " " + troopsNeeded);
-        troopProgressBar.setProgress((double) troopsCollected / troopsNeeded);
+        if (troopsCollected >= troopsNeeded){
+            troopProgressBar.setProgress(1);
+            loadHumveeButton.setDisable(true);
+            fillHumveeLabel.setText("Humvee full!");
+        } else {
+            troopProgressBar.setProgress((double) troopsCollected / troopsNeeded);
+            disableButtonForTime(loadHumveeButton, newRound.getTroopTowerReload());
+        }
     }
     @FXML
     private void onLoadAmbulanceButton(){
         newRound.increaseMedKitsCollected();
         medKitsCollected = newRound.getMedKitsCollected();
-        System.out.println(medKitsCollected + " " + medKitsNeeded);
-        medKitProgressBar.setProgress((double) medKitsCollected / medKitsNeeded);
+        if (medKitsCollected >= medKitsNeeded){
+            medKitProgressBar.setProgress(1);
+            loadAmbulanceButton.setDisable(true);
+            fillAmbulanceLabel.setText("Ambulance full!");
+        } else {
+            medKitProgressBar.setProgress((double) medKitsCollected / medKitsNeeded);
+            disableButtonForTime(loadAmbulanceButton, newRound.getMedTowerReload());
+        }
     }
 
     @FXML
@@ -212,20 +243,50 @@ public class GameScreenController {
             medKitProgressBar.setVisible(true);
             roundTimerProgressBar.setVisible(true);
             roundTimerLabel.setVisible(true);
+            fillSupplyTruckLabel.setVisible(true);
+            fillAmbulanceLabel.setVisible(true);
+            fillHumveeLabel.setVisible(true);
             loadSupplyTruckButton.setDisable(false);
             loadAmbulanceButton.setDisable(false);
             loadHumveeButton.setDisable(false);
             medKitsNeeded = newRound.getMedKitsRequired();
             ammunitionNeeded = newRound.getAmmunitionRequired();
             troopsNeeded = newRound.getTroopsRequired();
-
-            Timer roundTimer = new Timer();
-            TimerTask roundTask = new TimerTask() {
-                @Override
-                public void run() {
-
-                }
-            };
+            startProgressTimer(20);
         }
+    }
+    private void disableButtonForTime(Button button, int seconds) {
+        button.setDisable(true); // Disable the button
+
+        // Create a Timeline to re-enable the button after the specified time
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.seconds(seconds),
+                event -> button.setDisable(false) // Re-enable the button after the duration
+        ));
+        timeline.setCycleCount(1); // Only run once
+        timeline.play(); // Start the timeline
+    }
+    private void startProgressTimer(int durationInSeconds) {
+        // Reset progress
+        double progress = 0.0;
+        roundTimerProgressBar.setProgress(progress);
+
+        // Define a Task to update progress
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                for (int i = 0; i < durationInSeconds; i++) {
+                    Thread.sleep(1000); // Sleep for 1 second
+                    updateProgress(i + 1, durationInSeconds);
+                }
+                return null;
+            }
+        };
+
+        // Bind the progress of the task to the ProgressBar
+        roundTimerProgressBar.progressProperty().bind(task.progressProperty());
+
+        // Run the task in a background thread
+        new Thread(task).start();
     }
 }

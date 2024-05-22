@@ -235,6 +235,21 @@
                   <Insets left="15.0" />
                </GridPane.margin>
             </ProgressBar>
+            <Label fx:id="fillSupplyTruckLabel" text="Fill the supply truck!" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="fillHumveeLabel" text="Fill the humvee!" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="fillAmbulanceLabel" text="Fill the ambulance!" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </children>

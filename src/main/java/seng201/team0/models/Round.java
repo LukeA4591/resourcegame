@@ -127,4 +127,13 @@ public class Round {
     public int getTroopsRequired(){
         return troopsRequired;
     }
+    public int getMedTowerReload(){
+        return (int) medTower.getReloadSpeed();
+    }
+    public int getAmmoTowerReload(){
+        return (int) ammoTower.getReloadSpeed();
+    }
+    public int getTroopTowerReload(){
+        return (int) troopTower.getReloadSpeed();
+    }
 }
