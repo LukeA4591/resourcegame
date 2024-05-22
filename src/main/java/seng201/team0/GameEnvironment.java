@@ -19,6 +19,7 @@ public class GameEnvironment {
     private final Consumer<GameEnvironment> gameScreenLauncher;
     private final Consumer<GameEnvironment> shopScreenLauncher;
     private final Consumer<GameEnvironment> inventoryScreenLauncher;
+    private final Consumer<GameEnvironment> endGameScreenLauncher;
     private final Runnable clearScreen;
 
 
@@ -41,11 +42,14 @@ public class GameEnvironment {
 
     private final Random random = new Random();
 
+    private boolean gameWon;
+
 
 
     public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher,
                            Consumer<GameEnvironment> gameScreenLauncher, Consumer<GameEnvironment> shopScreenLauncher,
-                           Consumer<GameEnvironment> inventoryScreenLauncher, Runnable clearScreen) {
+                           Consumer<GameEnvironment> inventoryScreenLauncher, Consumer<GameEnvironment> endGameScreenLauncher,
+                           Runnable clearScreen) {
 
         this.clearScreen = clearScreen;
         this.setupScreenLauncher = setupScreenLauncher;
@@ -53,6 +57,7 @@ public class GameEnvironment {
         this.gameScreenLauncher = gameScreenLauncher;
         this.shopScreenLauncher = shopScreenLauncher;
         this.inventoryScreenLauncher = inventoryScreenLauncher;
+        this.endGameScreenLauncher = endGameScreenLauncher;
         launchSetupScreen();
 
         this.mainTowers = new ArrayList<>();
@@ -68,9 +73,9 @@ public class GameEnvironment {
     }
 
     public void initializeItems() {
-        itemsInShop.add(new AmmoCrate(0, 0));
-        itemsInShop.add(new Paratroopers(0, 0));
-        itemsInShop.add(new MedicalSupplyDrop(0, 0));
+        itemsInShop.add(new AmmoCrate(350, 100));
+        itemsInShop.add(new Paratroopers(500, 100));
+        itemsInShop.add(new MedicalSupplyDrop(650, 100));
     }
 
 
@@ -94,7 +99,7 @@ public class GameEnvironment {
     public void launchGameScreen() {
         gameScreenLauncher.accept(this);
     }
-    public void closeGameScreen(Boolean isInventory) {
+    public void closeGameScreen(boolean isInventory) {
         clearScreen.run();
         if (isInventory) {
             launchInventoryScreen();
@@ -117,6 +122,11 @@ public class GameEnvironment {
     public void closeInventoryScreen() {
         clearScreen.run();
         launchGameScreen();
+    }
+
+    public void launchEndGameScreen() {
+        clearScreen.run();
+        endGameScreenLauncher.accept(this);
     }
 
 
@@ -178,6 +188,21 @@ public class GameEnvironment {
     }
     public Tower getSupportTower() {
         return supportTower;
+    }
+
+
+    public boolean getGameWon() {
+        return gameWon;
+    }
+    public void setGameWon(boolean gameWon) {
+        this.gameWon = true;
+    }
+
+    public int getCurrentRound() {
+        return currentRound;
+    }
+    public void setCurrentRound(int roundNumber) {
+        this.currentRound = roundNumber;
     }
 
 
