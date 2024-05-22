@@ -39,7 +39,6 @@ public class TowerSelectScreenController {
     private final ToggleGroup troopsToggleGroup = new ToggleGroup();
     private final ToggleGroup medkitsToggleGroup = new ToggleGroup();
 
-
     private GameEnvironment gameEnvironment;
 
     public TowerSelectScreenController(GameEnvironment tempEnvironment) {

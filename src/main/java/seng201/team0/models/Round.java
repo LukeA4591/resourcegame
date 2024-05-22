@@ -51,29 +51,29 @@ public class Round {
 
             case "Close-Quarters Combat":
                 for (int i = 0; i < numberOfCarts; i++) {
-                    ammunitionCarts.add(new AmmunitionCart(0, 0));
-                    medKitCarts.add(new MedkitCart(0, 0));
+                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
+                    medKitCarts.add(new MedkitCart(50 + 10 * roundNumber, 0));
                 }
                 for (int i = 0; i < numberOfCarts + 1; i++) {
-                    troopCarts.add(new TroopCart(0, 0));
+                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, 0));
                 }
                 break;
 
             case "Standard Warfare":
                 for (int i = 0; i < numberOfCarts; i++) {
-                    ammunitionCarts.add(new AmmunitionCart(0, 0));
-                    medKitCarts.add(new MedkitCart(0, 0));
-                    troopCarts.add(new TroopCart(0, 0));
+                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
+                    medKitCarts.add(new MedkitCart(50 + 10 * roundNumber, 0));
+                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, 0));
                 }
                 break;
 
             case "Sniper Combat":
                 for (int i = 0; i < numberOfCarts + 1; i++) {
-                    ammunitionCarts.add(new AmmunitionCart(0, 0));
+                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
                 }
                 for (int i = 0; i < numberOfCarts; i++) {
-                    medKitCarts.add(new MedkitCart(0, 0));
-                    troopCarts.add(new TroopCart(0, 0));
+                    medKitCarts.add(new MedkitCart(50 + 10 * roundNumber, 0));
+                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, 0));
                 }
                 break;
         }
@@ -88,12 +88,10 @@ public class Round {
             troopsRequired += troopCart.getSize();
         }
         for (Tower tower : gameEnvironment.getMainTowers()){
-            if (tower.getResourceType().equals("Medkit")){
-                this.medTower = tower;
-            } else if (tower.getResourceType().equals("Ammunition")) {
-                this.ammoTower = tower;
-            } else if (tower.getResourceType().equals("Troop")) {
-                this.troopTower = tower;
+            switch (tower.getResourceType()) {
+                case "Medkits" -> this.medTower = tower;
+                case "Ammunition" -> this.ammoTower = tower;
+                case "Troops" -> this.troopTower = tower;
             }
         }
     }
@@ -102,23 +100,31 @@ public class Round {
                 medKitCarts.size(), troopCarts.size()));
         return numCarts;
     }
-
-    public ArrayList<Integer> iterateRound(ArrayList<String> resourceClicked) {
-        for (String resource : resourceClicked){
-            switch (resource) {
-                case "Medkit":
-                    medKitsCollected += (int) medTower.getResourceAmount();
-                    break;
-                case "Ammunition":
-                    ammunitionCollected += (int) ammoTower.getResourceAmount();
-                    break;
-                case "Troop":
-                    troopsCollected += (int) troopTower.getResourceAmount();
-                    break;
-            }
-        }
-        ArrayList<Integer> resourcesCollected = new ArrayList<Integer>(
-                List.of(medKitsCollected, ammunitionCollected, troopsCollected));
-        return resourcesCollected;
+    public int getMedKitsCollected(){
+        return medKitsCollected;
+    }
+    public int getTroopsCollected(){
+        return troopsCollected;
+    }
+    public int getAmmunitionCollected(){
+        return ammunitionCollected;
+    }
+    public void increaseMedKitsCollected(){
+        medKitsCollected += (int) medTower.getResourceAmount();
+    }
+    public void increaseAmmunitionCollected(){
+        ammunitionCollected += (int) ammoTower.getResourceAmount();
+    }
+    public void increaseTroopsCollected(){
+        troopsCollected += (int) troopTower.getResourceAmount();
+    }
+    public int getMedKitsRequired(){
+        return medKitsRequired;
+    }
+    public int getAmmunitionRequired(){
+        return ammunitionRequired;
+    }
+    public int getTroopsRequired(){
+        return troopsRequired;
     }
 }

@@ -171,9 +171,9 @@
                   </Label>
                </children>
             </GridPane>
-            <Button fx:id="loadSupplyTruckButton" mnemonicParsing="false" text="Load Supply Truck" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button fx:id="loadHumveeButton" mnemonicParsing="false" text="Load Humvee" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button fx:id="loadAmbulanceButton" mnemonicParsing="false" text="Load Ambulance" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="loadSupplyTruckButton" mnemonicParsing="false" onAction="#onLoadSupplyTruckButton" text="Load Supply Truck" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="loadHumveeButton" mnemonicParsing="false" onAction="#onLoadHumveeButton" text="Load Humvee" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="loadAmbulanceButton" mnemonicParsing="false" onAction="#onLoadAmbulanceButton" text="Load Ambulance" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <Button fx:id="shopButton" mnemonicParsing="false" onAction="#onShopButtonClicked" text="Shop" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="10.0" />
@@ -221,6 +221,16 @@
                </GridPane.margin>
             </ProgressBar>
             <ProgressBar fx:id="medKitProgressBar" prefWidth="200.0" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="15.0" />
+               </GridPane.margin>
+            </ProgressBar>
+            <Label fx:id="roundTimerLabel" text="Round timer:" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="15.0" />
+               </GridPane.margin>
+            </Label>
+            <ProgressBar fx:id="roundTimerProgressBar" prefWidth="200.0" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="15.0" />
                </GridPane.margin>

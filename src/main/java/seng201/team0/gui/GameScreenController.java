@@ -8,6 +8,8 @@ import seng201.team0.models.towers.*;
 import seng201.team0.GameEnvironment;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameScreenController {
 
@@ -42,6 +44,8 @@ public class GameScreenController {
     private Label difficultyLabel;
     @FXML
     private Label cartInfoLabel;
+    @FXML
+    private Label roundTimerLabel;
 
     @FXML
     private Button loadSupplyTruckButton;
@@ -66,11 +70,20 @@ public class GameScreenController {
     private ProgressBar troopProgressBar;
     @FXML
     private ProgressBar medKitProgressBar;
+    @FXML
+    private ProgressBar roundTimerProgressBar;
     private String difficulty;
     private GameEnvironment gameEnvironment;
     private int numMedCarts;
     private int numAmmoCarts;
     private int numTroopCarts;
+    private int medKitsCollected;
+    private int ammunitionCollected;
+    private int troopsCollected;
+    private int medKitsNeeded;
+    private int ammunitionNeeded;
+    private int troopsNeeded;
+    private Round newRound;
 
     public GameScreenController(GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
@@ -82,6 +95,11 @@ public class GameScreenController {
         ammoProgressBar.setVisible(false);
         troopProgressBar.setVisible(false);
         medKitProgressBar.setVisible(false);
+        roundTimerProgressBar.setVisible(false);
+        roundTimerLabel.setVisible(false);
+        loadSupplyTruckButton.setDisable(true);
+        loadAmbulanceButton.setDisable(true);
+        loadHumveeButton.setDisable(true);
         updatePlayerDetails();
         updateTowerLabels();
 
@@ -135,6 +153,7 @@ public class GameScreenController {
         gameEnvironment.closeGameScreen(true);
     }
 
+
     @FXML
     private void onDisplayDifficulty(){
         this.difficulty = roundDifficultyBox.getValue();
@@ -143,16 +162,35 @@ public class GameScreenController {
                     "Please chose a diffuculty for your next round", Alert.AlertType.ERROR);
         } else {
             difficultyLabel.setText("Difficulty: " + difficulty);
-            Round newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
+            newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
                     difficulty, gameEnvironment);
             ArrayList<Integer> numCarts = newRound.getNumCarts();
-            System.out.println(numCarts);
             numAmmoCarts = numCarts.get(0);
             numMedCarts = numCarts.get(1);
             numTroopCarts = numCarts.get(2);
             cartInfoLabel.setText(numAmmoCarts + " Ammunition Carts, " + numMedCarts + " Med-kit carts, " +
                     numTroopCarts + " Troop carts");
         }
+    }
+    @FXML
+    private void onLoadSupplyTruckButton(){
+        newRound.increaseAmmunitionCollected();
+        ammunitionCollected = newRound.getAmmunitionCollected();
+        ammoProgressBar.setProgress((double) ammunitionCollected / ammunitionNeeded);
+    }
+    @FXML
+    private void onLoadHumveeButton(){
+        newRound.increaseTroopsCollected();
+        troopsCollected = newRound.getTroopsCollected();
+        System.out.println(troopsCollected + " " + troopsNeeded);
+        troopProgressBar.setProgress((double) troopsCollected / troopsNeeded);
+    }
+    @FXML
+    private void onLoadAmbulanceButton(){
+        newRound.increaseMedKitsCollected();
+        medKitsCollected = newRound.getMedKitsCollected();
+        System.out.println(medKitsCollected + " " + medKitsNeeded);
+        medKitProgressBar.setProgress((double) medKitsCollected / medKitsNeeded);
     }
 
     @FXML
@@ -166,9 +204,28 @@ public class GameScreenController {
             selectDifficultyButton.setVisible(false);
             difficultyLabel.setVisible(false);
             cartInfoLabel.setVisible(false);
+            shopButton.setVisible(false);
+            inventoryButton.setVisible(false);
+            startRoundButton.setVisible(false);
             ammoProgressBar.setVisible(true);
             troopProgressBar.setVisible(true);
             medKitProgressBar.setVisible(true);
+            roundTimerProgressBar.setVisible(true);
+            roundTimerLabel.setVisible(true);
+            loadSupplyTruckButton.setDisable(false);
+            loadAmbulanceButton.setDisable(false);
+            loadHumveeButton.setDisable(false);
+            medKitsNeeded = newRound.getMedKitsRequired();
+            ammunitionNeeded = newRound.getAmmunitionRequired();
+            troopsNeeded = newRound.getTroopsRequired();
+
+            Timer roundTimer = new Timer();
+            TimerTask roundTask = new TimerTask() {
+                @Override
+                public void run() {
+
+                }
+            };
         }
     }
 }
