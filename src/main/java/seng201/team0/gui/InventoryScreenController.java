@@ -128,7 +128,7 @@ public class InventoryScreenController {
         descriptionVBox.getChildren().addAll(
                 new Label("Name: " + item.getName()),
                 new Label("Affects: " + item.getTowerType() + " Towers"),
-                new Label("Resource Boost: " + item.getResourceBoost()),
+                new Label("Resource Boost: 1.5x multiplier"),
                 new Label("Cost: " + item.getCost()),
                 new Label("Sell Price: " + item.getSellPrice())
         );

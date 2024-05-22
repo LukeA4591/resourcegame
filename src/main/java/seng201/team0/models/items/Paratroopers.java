@@ -1,8 +1,9 @@
 package seng201.team0.models.items;
 
 public class Paratroopers extends Item {
-    public Paratroopers(int cost, int resourceBoost) {
-        super("Paratroopers", cost, resourceBoost);
+
+    public Paratroopers(String name, int cost) {
+        super(name, cost);
     }
 
     public String getTowerType() {

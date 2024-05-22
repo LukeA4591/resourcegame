@@ -102,27 +102,27 @@ public class TowerSelectScreenController {
     public void storeTowers() {
 
         if (ammunitionToggleGroup.getSelectedToggle() == armouryButton) {
-            gameEnvironment.addTowerFromSelection(new Armoury(), true);
-            gameEnvironment.addTowerFromSelection(new Arsenal(), false);
+            gameEnvironment.addTowerFromSelectScreen(new Armoury(), true);
+            gameEnvironment.addTowerFromSelectScreen(new Arsenal(), false);
         }  else {
-            gameEnvironment.addTowerFromSelection(new Armoury(), false);
-            gameEnvironment.addTowerFromSelection(new Arsenal(), true);
+            gameEnvironment.addTowerFromSelectScreen(new Armoury(), false);
+            gameEnvironment.addTowerFromSelectScreen(new Arsenal(), true);
         }
 
         if (troopsToggleGroup.getSelectedToggle() == barracksButton) {
-            gameEnvironment.addTowerFromSelection(new Barracks(), true);
-            gameEnvironment.addTowerFromSelection(new Garrison(), false);
+            gameEnvironment.addTowerFromSelectScreen(new Barracks(), true);
+            gameEnvironment.addTowerFromSelectScreen(new Garrison(), false);
         }  else {
-            gameEnvironment.addTowerFromSelection(new Barracks(), false);
-            gameEnvironment.addTowerFromSelection(new Garrison(), true);
+            gameEnvironment.addTowerFromSelectScreen(new Barracks(), false);
+            gameEnvironment.addTowerFromSelectScreen(new Garrison(), true);
         }
 
         if (medkitsToggleGroup.getSelectedToggle() == medicalTentButton) {
-            gameEnvironment.addTowerFromSelection(new MedicalTent(), true);
-            gameEnvironment.addTowerFromSelection(new Medbay(), false);
+            gameEnvironment.addTowerFromSelectScreen(new MedicalTent(), true);
+            gameEnvironment.addTowerFromSelectScreen(new Medbay(), false);
         } else {
-            gameEnvironment.addTowerFromSelection(new MedicalTent(), false);
-            gameEnvironment.addTowerFromSelection(new Medbay(), true);
+            gameEnvironment.addTowerFromSelectScreen(new MedicalTent(), false);
+            gameEnvironment.addTowerFromSelectScreen(new Medbay(), true);
         }
 
     }

@@ -108,7 +108,7 @@ public class GameScreenController {
         roundTimerLabel.setVisible(false);
         fillSupplyTruckLabel.setVisible(false);
         fillAmbulanceLabel.setVisible(false);
-        fillSupplyTruckLabel.setVisible(false);
+        fillHumveeLabel.setVisible(false);
         loadSupplyTruckButton.setDisable(true);
         loadAmbulanceButton.setDisable(true);
         loadHumveeButton.setDisable(true);
@@ -228,7 +228,7 @@ public class GameScreenController {
     private void onStartRoundButtonClicked() {
         if (difficulty == null){
             gameEnvironment.showAlert("Invalid Difficulty",
-                    "Please chose a diffuculty for your next round", Alert.AlertType.ERROR);
+                    "Please choose a difficulty for your next round", Alert.AlertType.ERROR);
         } else {
             selectDifficultyLabel.setVisible(false);
             roundDifficultyBox.setVisible(false);

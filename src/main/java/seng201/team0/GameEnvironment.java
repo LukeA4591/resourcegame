@@ -73,9 +73,9 @@ public class GameEnvironment {
     }
 
     public void initializeItems() {
-        itemsInShop.add(new AmmoCrate(350, 100));
-        itemsInShop.add(new Paratroopers(500, 100));
-        itemsInShop.add(new MedicalSupplyDrop(650, 100));
+        itemsInShop.add(new AmmoCrate("Ammo Crate", 350));
+        itemsInShop.add(new Paratroopers("Paratroopers", 500));
+        itemsInShop.add(new MedicalSupplyDrop("Medical Supply Drop", 650));
     }
 
 
@@ -164,6 +164,10 @@ public class GameEnvironment {
     public int getCurrentRound(){
         return currentRound;
     }
+    public void setCurrentRound(int roundNumber) {
+        this.currentRound = roundNumber;
+    }
+
 
     public String getGameDifficulty() {
         return gameDifficulty;
@@ -203,13 +207,10 @@ public class GameEnvironment {
         this.gameWon = true;
     }
 
-    public void setCurrentRound(int roundNumber) {
-        this.currentRound = roundNumber;
-    }
 
 
 
-    public void addTowerFromSelection(Tower tower, boolean isSelected) {
+    public void addTowerFromSelectScreen(Tower tower, boolean isSelected) {
         if (isSelected) {
             mainTowers.add(tower);
         }
@@ -234,6 +235,7 @@ public class GameEnvironment {
         return reserveTowers;
     }
 
+
     public void swapTowers(Tower mainTower, Tower reserveTower) {
 
         if (mainTower.getResourceType().equals(reserveTower.getResourceType())) {
@@ -245,7 +247,7 @@ public class GameEnvironment {
             reserveTowers.set(reserveIndex, mainTower);
         }
         else {
-            showAlert("Invalid Resource Type", "Towers must be of the same resource type to swap.", Alert.AlertType.ERROR);
+            showAlert("Incompatible Towers", "Towers must be of the same resource type to swap.", Alert.AlertType.ERROR);
         }
 
     }
@@ -385,18 +387,12 @@ public class GameEnvironment {
 
     public boolean shouldTriggerRandomEvent() {
 
-        switch (gameDifficulty) {
-            case "Recruit":
-                return random.nextInt(100) < 15;
-
-            case "Major":
-                return random.nextInt(100) < 20;
-
-            case "Commander":
-                return random.nextInt(100) < 25;
-
-        }
-        return false;
+        return switch (gameDifficulty) {
+            case "Recruit" -> random.nextInt(100) < 15;
+            case "Major" -> random.nextInt(100) < 20;
+            case "Commander" -> random.nextInt(100) < 25;
+            default -> false;
+        };
     }
 
     public void initiateRandomEvent() {
@@ -421,12 +417,11 @@ public class GameEnvironment {
 
         if (50 > random.nextInt(65)) {
             selectedTower = mainTowers.get(random.nextInt(mainTowers.size()));
-        } else {
-
-            if (reserveTowers.isEmpty()) {
+        }
+        else if (reserveTowers.isEmpty()){
                 selectedTower = mainTowers.get(random.nextInt(mainTowers.size()));
             }
-
+        else {
             selectedTower = reserveTowers.get(random.nextInt(reserveTowers.size()));
         }
         showAlert("ENEMY AIRSTRIKE", "An enemy airstrike has broken your " + selectedTower.getName() + " tower.", Alert.AlertType.INFORMATION);

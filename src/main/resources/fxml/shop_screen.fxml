@@ -170,22 +170,22 @@
                   <Font size="16.0" />
                </font>
                <GridPane.margin>
-                  <Insets />
+                  <Insets top="60.0" />
                </GridPane.margin>
             </Label>
-            <ToggleButton fx:id="myItemButton1" mnemonicParsing="false" prefWidth="88.0" text="My Item 1" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+            <ToggleButton fx:id="playerItem1Button" mnemonicParsing="false" prefWidth="88.0" text="Player Item 1" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets bottom="40.0" left="10.0" />
+                  <Insets bottom="10.0" left="10.0" />
                </GridPane.margin>
             </ToggleButton>
-            <ToggleButton fx:id="myItemButton2" mnemonicParsing="false" prefWidth="88.0" text="My Item 2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <ToggleButton fx:id="playerItem2Button" mnemonicParsing="false" prefWidth="88.0" text="Player Item 2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets bottom="40.0" />
+                  <Insets bottom="10.0" />
                </GridPane.margin>
             </ToggleButton>
-            <ToggleButton fx:id="myItemButton3" mnemonicParsing="false" prefWidth="88.0" text="My Item 3" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+            <ToggleButton fx:id="playerItem3Button" mnemonicParsing="false" prefWidth="88.0" text="Play Item 3" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets bottom="40.0" right="10.0" />
+                  <Insets bottom="10.0" right="10.0" />
                </GridPane.margin>
             </ToggleButton>
             <Label text="My Reserve Towers" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -196,22 +196,22 @@
                   <Insets top="5.0" />
                </GridPane.margin>
             </Label>
-            <ToggleButton fx:id="myTowerButton1" mnemonicParsing="false" prefWidth="88.0" text="My Tower 1" GridPane.rowIndex="1">
+            <ToggleButton fx:id="playerTower1Button" mnemonicParsing="false" prefWidth="88.0" text="My Tower 1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="20.0" left="40.0" />
                </GridPane.margin>
             </ToggleButton>
-            <ToggleButton fx:id="myTowerButton2" mnemonicParsing="false" prefWidth="88.0" text="My Tower 2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+            <ToggleButton fx:id="playerTower2Button" mnemonicParsing="false" prefWidth="88.0" text="My Tower 2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="20.0" right="40.0" />
                </GridPane.margin>
             </ToggleButton>
-            <ToggleButton fx:id="myTowerButton3" mnemonicParsing="false" prefWidth="88.0" text="My Tower 3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <ToggleButton fx:id="playerTower3Button" mnemonicParsing="false" prefWidth="88.0" text="My Tower 3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="30.0" left="40.0" />
                </GridPane.margin>
             </ToggleButton>
-            <ToggleButton fx:id="myTowerButton4" mnemonicParsing="false" prefWidth="88.0" text="My Tower 4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <ToggleButton fx:id="playerTower4Button" mnemonicParsing="false" prefWidth="88.0" text="My Tower 4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="30.0" right="40.0" />
                </GridPane.margin>
@@ -221,6 +221,21 @@
                   <Insets right="30.0" />
                </GridPane.margin>
             </Button>
+            <ToggleButton fx:id="item4Button" mnemonicParsing="false" prefWidth="88.0" text="Item 4" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </GridPane.margin>
+            </ToggleButton>
+            <ToggleButton fx:id="item5Button" mnemonicParsing="false" prefWidth="88.0" text="Item 5" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </ToggleButton>
+            <ToggleButton fx:id="item6Button" mnemonicParsing="false" prefWidth="88.0" text="Item 6" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+               <GridPane.margin>
+                  <Insets bottom="10.0" right="10.0" />
+               </GridPane.margin>
+            </ToggleButton>
             </children>
         </GridPane>
     </children>
