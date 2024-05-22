@@ -138,7 +138,8 @@ public class InventoryScreenController {
                 new Label("Affects: " + item.getTowerType() + " Towers"),
                 new Label("Resource Boost: 1.5x multiplier"),
                 new Label("Cost: " + item.getCost()),
-                new Label("Sell Price: " + item.getSellPrice())
+                new Label("Sell Price: " + item.getSellPrice()),
+                new Label("Description: " + item.getDescription())
         );
     }
 
@@ -312,29 +313,36 @@ public class InventoryScreenController {
 
         ToggleButton selectedButton = (ToggleButton) allToggleButtonsGroup.getSelectedToggle();
 
-        Tower selectedTower = getSelectedTower(selectedButton);
+        Tower selectedTower;
 
-        if (selectedTower != null) {
+        if (selectedButton != null) {
 
-            if (selectedTower.isBroken()) {
+            selectedTower = getSelectedTower(selectedButton);
 
-                Item repairkit = null;
+            if (selectedTower != null) {
 
-                for (ToggleButton button : itemToggleButtons) {
+                if (selectedTower.isBroken()) {
 
-                    if (gameEnvironment.getPlayerItems().contains(gameEnvironment.getPlayerItemByName(button.getText())) &&
-                            gameEnvironment.getPlayerItemByName(button.getText()).getTowerType().equals(selectedTower.getResourceType())) {
-                        repairkit = gameEnvironment.getPlayerItemByName(button.getText());
+                    Item repairkit;
 
-                        gameEnvironment.useRepairKit(repairkit, selectedTower);
+                    for (ToggleButton button : itemToggleButtons) {
+
+                        if (gameEnvironment.getPlayerItems().contains(gameEnvironment.getPlayerItemByName(button.getText())) &&
+                                gameEnvironment.getPlayerItemByName(button.getText()).getTowerType().equals(selectedTower.getResourceType())) {
+                            repairkit = gameEnvironment.getPlayerItemByName(button.getText());
+
+                            gameEnvironment.useRepairKit(repairkit, selectedTower);
+                        } else {
+                            gameEnvironment.showAlert("No Valid Repairkit", "No repairkits are available to repair this tower", Alert.AlertType.ERROR);
+                        }
                     }
-                    else {gameEnvironment.showAlert("No Valid Repairkit", "No repairkits are available to repair this tower", Alert.AlertType.ERROR);}
+                } else {
+                    gameEnvironment.showAlert("Tower Not Broken", "There is no need to use a repairkit on this tower because it is not broken.", Alert.AlertType.ERROR);
                 }
             }
-            else {gameEnvironment.showAlert("Tower Not Broken", "There is no need to use a repairkit on this tower because it is not broken.", Alert.AlertType.ERROR);}
+            }
+            else {gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected for repairing", Alert.AlertType.ERROR);}
         }
-        else {gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected for repairing", Alert.AlertType.ERROR);}
-    }
 
     @FXML
     private Tower getSelectedTower(ToggleButton selectedButton) {
@@ -359,23 +367,31 @@ public class InventoryScreenController {
 
         ToggleButton selectedButton = (ToggleButton) allToggleButtonsGroup.getSelectedToggle();
 
-        Tower selectedTower = getSelectedTower(selectedButton);
+        Tower selectedTower;
 
-        if (selectedTower != null) {
-            if (selectedTower.isBroken()) {
+        if (selectedButton != null) {
 
-                if (!gameEnvironment.getMainTowers().contains(selectedTower)) {
-                    gameEnvironment.removeTower(selectedTower);
+            selectedTower = getSelectedTower(selectedButton);
+
+            if (selectedTower != null) {
+                if (selectedTower.isBroken()) {
+
+                    if (!gameEnvironment.getMainTowers().contains(selectedTower)) {
+                        gameEnvironment.removeTower(selectedTower);
+                    } else {
+                        gameEnvironment.showAlert("Main Towers Cannot Be Removed", "Please swap the tower to reserves in order to remove it", Alert.AlertType.ERROR);
+                    }
                 } else {
-                    gameEnvironment.showAlert("Main Towers Cannot Be Removed", "Please swap the tower to reserves in order to remove it", Alert.AlertType.ERROR);
+                    gameEnvironment.showAlert("Tower Is Not Broken", "The selected tower is not broken and does not need to be removed", Alert.AlertType.ERROR);
                 }
-            } else {
-                gameEnvironment.showAlert("Tower Is Not Broken", "The selected tower is not broken and does not need to be removed", Alert.AlertType.ERROR);
             }
         }
-        else {
-            gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected for removal", Alert.AlertType.ERROR);
+                else
+                {
+                    gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected for removal", Alert.AlertType.ERROR);
+
+
+            }
         }
-    }
 }
 

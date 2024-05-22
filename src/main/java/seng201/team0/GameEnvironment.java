@@ -2,10 +2,7 @@ package seng201.team0;
 
 import javafx.scene.control.Alert;
 import seng201.team0.models.RandomEvent;
-import seng201.team0.models.items.AmmoCrate;
-import seng201.team0.models.items.Item;
-import seng201.team0.models.items.MedicalSupplyDrop;
-import seng201.team0.models.items.Paratroopers;
+import seng201.team0.models.items.*;
 import seng201.team0.models.towers.*;
 
 import java.util.*;
@@ -73,9 +70,9 @@ public class GameEnvironment {
     }
 
     public void initializeItems() {
-        itemsInShop.add(new AmmoCrate("Ammo Crate", 350));
-        itemsInShop.add(new Paratroopers("Paratroopers", 500));
-        itemsInShop.add(new MedicalSupplyDrop("Medical Supply Drop", 650));
+        itemsInShop.add(new AmmunitionTowerRepairKit());
+        itemsInShop.add(new MedkitsTowerRepairKit());
+        itemsInShop.add(new TroopsTowerRepairKit());
     }
 
 
@@ -513,6 +510,29 @@ public class GameEnvironment {
             }
         }
         return false;
+    }
+
+    public void updateShopPostRound() {
+
+        if (currentRound == 4) {
+            towersInShop.add(new EaglesNest());
+        }
+        if (currentRound == 8) {
+            towersInShop.add(new FieldHospital());
+        }
+        if (currentRound == 12) {
+            towersInShop.add(new SpecialForcesCamp());
+        }
+        if (currentRound == 3) {
+            itemsInShop.add(new AmmoCrate("Ammo Crate", 350));
+        }
+        if (currentRound == 6) {
+            itemsInShop.add(new Paratroopers("Paratroopers", 500));
+        }
+        if (currentRound == 10) {
+            itemsInShop.add(new MedicalSupplyDrop("Medical Supply Drop", 650));
+        }
+
     }
 
 

@@ -180,9 +180,9 @@
                   <Insets bottom="55.0" right="33.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="infoLabel" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Label fx:id="infoLabel" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="3" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets top="10.0" />
+                  <Insets bottom="37.0" />
                </GridPane.margin>
             </Label>
             <Label text="Support" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
