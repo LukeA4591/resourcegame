@@ -547,13 +547,13 @@ public class GameEnvironment {
             towersInShop.add(new SpecialForcesCamp());
         }
         if (currentRound == 3) {
-            shopItems.add(new AmmoCrate("Ammo Crate", 350));
+            shopItems.add(new AmmoCrate());
         }
         if (currentRound == 6) {
-            shopItems.add(new Paratroopers("Paratroopers", 500));
+            shopItems.add(new Paratroopers());
         }
         if (currentRound == 10) {
-            shopItems.add(new MedicalSupplyDrop("Medical Supply Drop", 650));
+            shopItems.add(new MedicalSupplyDrop());
         }
         if (currentRound == 5) {
             towersInShop.add(new AmmoRelayStation());
@@ -572,7 +572,7 @@ public class GameEnvironment {
         currentBalance += prize;
         return prize;
     }
-    public void upGradeTowers(ArrayList<Integer> carts){
+    public void levelUpTowers(ArrayList<Integer> carts){
         int numAmmoCarts = carts.get(0);
         int numMedCarts = carts.get(1);
         int numTroopCarts = carts.get(2);

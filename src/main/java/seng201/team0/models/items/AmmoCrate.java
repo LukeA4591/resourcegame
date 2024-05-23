@@ -3,8 +3,8 @@ package seng201.team0.models.items;
 public class AmmoCrate extends Item {
 
 
-    public AmmoCrate(String name, int cost) {
-        super(name, cost);
+    public AmmoCrate() {
+        super("Ammo Crate", 350);
     }
 
     public String getTowerType() {

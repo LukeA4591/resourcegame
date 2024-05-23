@@ -326,15 +326,21 @@ public class GameScreenController {
             int roundWinPrize = gameEnvironment.roundWinPrize();
             gameEnvironment.showAlert("Round Completed!",
                     "Congratulations you have beaten round " + gameEnvironment.getCurrentRound() +
-                            " and you have won " + roundWinPrize + " dollars! \n Your towers " +
+                            " and you have won $" + roundWinPrize + "! \n Your towers " +
                             " now gather 10% more resources and reload" +
                             " 10% faster per cart filled" , Alert.AlertType.INFORMATION);
             if (gameEnvironment.isGameWon()){
                 gameEnvironment.setGameWon(true);
                 gameEnvironment.launchEndGameScreen();
             } else {
+
+                if (gameEnvironment.shouldTriggerRandomEvent()) {
+                    gameEnvironment.initiateRandomEvent();
+                }
+
+                gameEnvironment.updateShopPostRound();
                 gameEnvironment.setCurrentRound(gameEnvironment.getCurrentRound() + 1);
-                gameEnvironment.upGradeTowers(newRound.getNumCarts());
+                gameEnvironment.levelUpTowers(newRound.getNumCarts());
                 gameEnvironment.refreshGameScreen();
             }
         } else {
@@ -343,6 +349,12 @@ public class GameScreenController {
                 gameEnvironment.launchEndGameScreen();
             } else {
                 gameEnvironment.showAlert("Round failed!", "You have lost a life", Alert.AlertType.INFORMATION);
+
+                if (gameEnvironment.shouldTriggerRandomEvent()) {
+                    gameEnvironment.initiateRandomEvent();
+                }
+
+                gameEnvironment.updateShopPostRound();
                 gameEnvironment.refreshGameScreen();
             }
         }

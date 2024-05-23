@@ -32,4 +32,17 @@ public class TowerTest {
         fieldHospital = new FieldHospital();
     }
 
+    @Test
+    public void testInitialization() {
+        assertNotNull(armoury);
+        assertNotNull(arsenal);
+        assertNotNull(barracks);
+        assertNotNull(garrison);
+        assertNotNull(medicalTent);
+        assertNotNull(medbay);
+        assertNotNull(eaglesNest);
+        assertNotNull(specialForcesCamp);
+        assertNotNull(fieldHospital);
+    }
+
 }
