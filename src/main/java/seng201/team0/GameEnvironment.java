@@ -28,14 +28,14 @@ public class GameEnvironment {
     private int livesLeft;
 
 
-    private List<Tower> mainTowers;
-    private List<Tower> towersInShop;
-    private List<Tower> reserveTowers;
+    private final List<Tower> mainTowers;
+    private final List<Tower> towersInShop;
+    private final List<Tower> reserveTowers;
 
-    private Tower supportTower = null;
+    private SupportTower supportTower = null;
 
-    private List<Item> itemsInShop;
-    private List<Item> playerItems;
+    private final List<Item> shopItems;
+    private final List<Item> playerItems;
 
     private final Random random = new Random();
 
@@ -63,16 +63,16 @@ public class GameEnvironment {
         this.towersInShop = new ArrayList<>();
 
         this.playerItems = new ArrayList<>();
-        this.itemsInShop = new ArrayList<>();
+        this.shopItems = new ArrayList<>();
 
         initializeItems();
 
     }
 
     public void initializeItems() {
-        itemsInShop.add(new AmmunitionTowerRepairKit());
-        itemsInShop.add(new MedkitsTowerRepairKit());
-        itemsInShop.add(new TroopsTowerRepairKit());
+        shopItems.add(new AmmunitionTowerRepairKit());
+        shopItems.add(new MedkitsTowerRepairKit());
+        shopItems.add(new TroopsTowerRepairKit());
     }
 
 
@@ -192,10 +192,10 @@ public class GameEnvironment {
         return livesLeft <= 0;
     }
 
-    public void setSupportTower(Tower tower) {
+    public void setSupportTower(SupportTower tower) {
         supportTower = tower;
     }
-    public Tower getSupportTower() {
+    public SupportTower getSupportTower() {
         return supportTower;
     }
 
@@ -224,8 +224,8 @@ public class GameEnvironment {
     public List<Tower> getTowersInShop() {
         return towersInShop;
     }
-    public List<Item> getItemsInShop() {
-        return itemsInShop;
+    public List<Item> getShopItems() {
+        return shopItems;
     }
     public List<Item> getPlayerItems() {
         return playerItems;
@@ -258,6 +258,12 @@ public class GameEnvironment {
         alert.showAndWait();
     }
 
+    public SupportTower getSupportTowerByName(String name) {
+        if (supportTower.getName().equals(name)) {
+            return supportTower;
+        }
+        return null;
+    }
 
     public Tower getMainTowerByName(String name) {
         for (Tower tower : mainTowers) {
@@ -287,7 +293,7 @@ public class GameEnvironment {
     }
 
     public Item getItemInShopByName(String name) {
-        for (Item item : itemsInShop) {
+        for (Item item : shopItems) {
             if (item.getName().equals(name)) {
                 return item;
             }
@@ -309,12 +315,12 @@ public class GameEnvironment {
     public void buyItem(Item item) {
         setCurrentBalance(currentBalance - item.getCost());
         playerItems.add(item);
-        itemsInShop.remove(item);
+        shopItems.remove(item);
     }
     public void sellItem(Item item) {
         setCurrentBalance(currentBalance + item.getSellPrice());
         playerItems.remove(item);
-        itemsInShop.add(item);
+        shopItems.add(item);
     }
 
     public void buyTower(Tower tower) {
@@ -526,13 +532,22 @@ public class GameEnvironment {
             towersInShop.add(new SpecialForcesCamp());
         }
         if (currentRound == 3) {
-            itemsInShop.add(new AmmoCrate("Ammo Crate", 350));
+            shopItems.add(new AmmoCrate("Ammo Crate", 350));
         }
         if (currentRound == 6) {
-            itemsInShop.add(new Paratroopers("Paratroopers", 500));
+            shopItems.add(new Paratroopers("Paratroopers", 500));
         }
         if (currentRound == 10) {
-            itemsInShop.add(new MedicalSupplyDrop("Medical Supply Drop", 650));
+            shopItems.add(new MedicalSupplyDrop("Medical Supply Drop", 650));
+        }
+        if (currentRound == 5) {
+            towersInShop.add(new AmmoRelayStation());
+        }
+        if (currentRound == 8) {
+            towersInShop.add(new TroopCommandPost());
+        }
+        if (currentRound == 11) {
+            towersInShop.add(new MedicOutpost());
         }
 
     }

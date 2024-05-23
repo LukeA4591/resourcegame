@@ -8,10 +8,13 @@ public abstract class Item implements Purchasable {
     private int cost;
     private int sellPrice;
 
+    private boolean isRepairKit;
+
     public Item(String name, int cost) {
         this.name = name;
         this.cost = cost;
         this.sellPrice = cost / 2;
+        this.isRepairKit = false;
         }
 
 
@@ -29,5 +32,13 @@ public abstract class Item implements Purchasable {
     }
 
     public abstract String getDescription();
+
+    public boolean getIsRepairKit() {
+        return isRepairKit;
+    }
+    public void setIsRepairKit(boolean bool) {
+        this.isRepairKit = bool;
+    }
+
 
 }

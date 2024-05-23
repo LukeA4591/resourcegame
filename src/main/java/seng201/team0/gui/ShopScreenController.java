@@ -84,7 +84,7 @@ public class ShopScreenController {
 
     private List<ToggleButton> towerShopButtons;
     private List<ToggleButton> playerItemButtons;
-    private List<ToggleButton> itemsInShopButtons;
+    private List<ToggleButton> shopItemsButtons;
     private List<ToggleButton> playerTowerButtons;
 
     private GameEnvironment gameEnvironment;
@@ -99,7 +99,7 @@ public class ShopScreenController {
                 tower7Button, tower8Button, tower9Button);
         playerTowerButtons = List.of(playerTower1Button, playerTower2Button, playerTower3Button, playerTower4Button);
         playerItemButtons = List.of(playerItem1Button, playerItem2Button, playerItem3Button);
-        itemsInShopButtons = List.of(item1Button, item2Button, item3Button, item4Button, item5Button, item6Button);
+        shopItemsButtons = List.of(item1Button, item2Button, item3Button, item4Button, item5Button, item6Button);
 
         updatePlayerDetails();
         initializeToggleButtonGroups();
@@ -113,7 +113,7 @@ public class ShopScreenController {
             button.setOnAction(event -> displayTowerInformation(gameEnvironment.getTowerInShopByName(button.getText())));
         }
 
-        for (ToggleButton button : itemsInShopButtons) {
+        for (ToggleButton button : shopItemsButtons) {
             button.setOnAction(event -> displayItemInformation(gameEnvironment.getItemInShopByName(button.getText())));
         }
 
@@ -192,13 +192,13 @@ public class ShopScreenController {
             towerShopButtons.get(i).setDisable(true);
         }
 
-        for (int i = 0; i < gameEnvironment.getItemsInShop().size(); i++) {
-            itemsInShopButtons.get(i).setDisable(false);
-            itemsInShopButtons.get(i).setText(gameEnvironment.getItemsInShop().get(i).getName());
+        for (int i = 0; i < gameEnvironment.getShopItems().size(); i++) {
+            shopItemsButtons.get(i).setDisable(false);
+            shopItemsButtons.get(i).setText(gameEnvironment.getShopItems().get(i).getName());
         }
-        for (int i = gameEnvironment.getItemsInShop().size(); i < itemsInShopButtons.size(); i++) {
-            itemsInShopButtons.get(i).setText("Locked");
-            itemsInShopButtons.get(i).setDisable(true);
+        for (int i = gameEnvironment.getShopItems().size(); i < shopItemsButtons.size(); i++) {
+            shopItemsButtons.get(i).setText("Locked");
+            shopItemsButtons.get(i).setDisable(true);
         }
 
         for (int i = 0; i < gameEnvironment.getReserveTowers().size(); i++) {
@@ -258,7 +258,7 @@ public class ShopScreenController {
                     gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
 
                 }
-            } else if (itemsInShopButtons.contains(selectedButton)) {
+            } else if (shopItemsButtons.contains(selectedButton)) {
                 Item selectedItem = gameEnvironment.getItemInShopByName(selectedButton.getText());
 
                 if (selectedItem != null && gameEnvironment.getCurrentBalance() >= selectedItem.getCost()) {

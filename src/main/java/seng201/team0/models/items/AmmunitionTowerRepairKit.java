@@ -2,18 +2,18 @@ package seng201.team0.models.items;
 
 public class AmmunitionTowerRepairKit extends Item {
 
-    private final String towerType;
+
 
     public AmmunitionTowerRepairKit() {
         super("Ammunition Tower Repair Kit", 500);
-        this.towerType = "Ammunition";
+        setIsRepairKit(true);
     }
 
     public String getTowerType() {
-        return towerType;
+        return "Ammunition";
     }
 
     public String getDescription() {
-        return "This repair kit can repair any\nammunition towers.";
+        return "This repair kit can repair any\nammunition tower.";
     }
 }

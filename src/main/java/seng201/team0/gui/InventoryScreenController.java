@@ -100,7 +100,8 @@ public class InventoryScreenController {
         ammunitionTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(ammunitionTowerButton.getText())));
         troopsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(troopsTowerButton.getText())));
         medkitsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(medkitsTowerButton.getText())));
-        supportTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getSupportTower()));
+
+        supportTowerButton.setOnAction(event -> displaySupportTowerInformation(gameEnvironment.getSupportTower()));
 
         reserveTower1Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower1Button.getText())));
         reserveTower2Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower2Button.getText())));
@@ -115,16 +116,36 @@ public class InventoryScreenController {
 
 
     @FXML
+    private void displaySupportTowerInformation(SupportTower tower) {
+
+        if (tower != null) {
+            descriptionVBox.getChildren().clear();
+
+            descriptionVBox.getChildren().addAll(
+                    new Label("Name: " + tower.getName()),
+                    new Label("Support resource type: " + tower.getResourceType()),
+                    new Label("Reload speed boost: " + tower.getReloadSpeedBoost()),
+                    new Label("Cost: " + tower.getCost()),
+                    new Label("Sell Price: " + tower.getSellPrice()),
+                    new Label("Description: " + tower.getDescription())
+            );
+        }
+
+    }
+
+
+    @FXML
     private void displayTowerInformation(Tower tower) {
 
         descriptionVBox.getChildren().clear();
 
         descriptionVBox.getChildren().addAll(
-                new Label("Name:  " + tower.getName()),
-                new Label("Resource type:  " + tower.getResourceType()),
-                new Label("Resources per click:  " + tower.getResourceAmount()),
-                new Label("Reload speed:  " + tower.getReloadSpeed()),
-                new Label("Cost:  " + tower.getCost()),
+                new Label("Name: " + tower.getName()),
+                new Label("Resource type: " + tower.getResourceType()),
+                new Label("Resources per click: " + tower.getResourceAmount()),
+                new Label("Reload speed: " + tower.getReloadSpeed()),
+                new Label("Cost: " + tower.getCost()),
+                new Label ("Sell price: " + tower.getSellPrice()),
                 new Label("Description: " + tower.getDescription())
         );
     }
@@ -133,14 +154,25 @@ public class InventoryScreenController {
     private void displayItemInformation(Item item) {
         descriptionVBox.getChildren().clear();
 
-        descriptionVBox.getChildren().addAll(
-                new Label("Name: " + item.getName()),
-                new Label("Affects: " + item.getTowerType() + " Towers"),
-                new Label("Resource Boost: 1.5x multiplier"),
-                new Label("Cost: " + item.getCost()),
-                new Label("Sell Price: " + item.getSellPrice()),
-                new Label("Description: " + item.getDescription())
-        );
+        if (!item.getIsRepairKit()) {
+            descriptionVBox.getChildren().addAll(
+                    new Label("Name: " + item.getName()),
+                    new Label("Affects: " + item.getTowerType() + " Towers"),
+                    new Label("Resource boost: 1.5x multiplier"),
+                    new Label("Cost: " + item.getCost()),
+                    new Label("Sell price: " + item.getSellPrice()),
+                    new Label("Description: " + item.getDescription())
+            );
+        }
+        else {
+            descriptionVBox.getChildren().addAll(
+                    new Label("Name: " + item.getName()),
+                    new Label("Repairs: " + item.getTowerType() + " Towers"),
+                    new Label("Cost: " + item.getCost()),
+                    new Label("Sell price: " + item.getSellPrice()),
+                    new Label("Description: " + item.getDescription())
+            );
+        }
     }
 
 
