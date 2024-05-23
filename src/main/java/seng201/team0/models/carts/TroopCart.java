@@ -1,29 +1,29 @@
 package seng201.team0.models.carts;
 
 public class TroopCart extends Cart {
-    private int soldierCapacity;
+    private int troopCapacity;
     private String resourceType;
 
     public TroopCart(int size, int speed) {
         super(size, speed);
-        this.soldierCapacity = 0;
-        this.resourceType = "Troop";
+        this.troopCapacity = 0;
+        this.resourceType = "Troops";
     }
     public String getResourceType(){
         return resourceType;
     }
 
-    public int getSoldierCapacity() {
-        return soldierCapacity;
+    public int getTroopCapacity() {
+        return troopCapacity;
     }
 
-    public void setSoldierCapacity(int soldierCapacity) {
-        this.soldierCapacity = soldierCapacity;
+    public void setTroopCapacity(int troopCapacity) {
+        this.troopCapacity = troopCapacity;
     }
 
     @Override
     public void fillCart() {
         // Implementation specific to TroopCart
-        System.out.println("Filling Troop Cart with " + soldierCapacity + " soldiers. Cart size: " + getSize());
+        System.out.println("Filling Troop Cart with " + troopCapacity + " soldiers. Cart size: " + getSize());
     }
 }

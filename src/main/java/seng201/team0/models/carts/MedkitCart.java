@@ -7,21 +7,21 @@ public class MedkitCart extends Cart {
     public MedkitCart(int size, int speed) {
         super(size, speed);
         this.medkitCount = 0;
-        this.resourceType = "Med-Kit";
+        this.resourceType = "Medkits";
     }
     public String getResourceType(){
         return resourceType;
     }
 
-    public int getMedkitCount() {
+    public int getMedkitCapacity() {
         return medkitCount;
     }
 
-    public void setMedkitCount(int medkitCount) {
+    public void setMedkitCapacity(int medkitCount) {
         this.medkitCount = medkitCount;
     }
 
-    @Override
+
     public void fillCart() {
         // Implementation specific to MedkitCart
         System.out.println("Filling Medkit Cart with " + medkitCount + " medkits.");

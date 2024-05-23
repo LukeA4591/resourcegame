@@ -362,21 +362,27 @@ public class InventoryScreenController {
 
                 if (selectedTower.isBroken()) {
 
-                    Item repairkit;
+                    Item repairKit = null;
 
                     for (ToggleButton button : itemToggleButtons) {
 
                         if (gameEnvironment.getPlayerItems().contains(gameEnvironment.getPlayerItemByName(button.getText())) &&
                                 gameEnvironment.getPlayerItemByName(button.getText()).getTowerType().equals(selectedTower.getResourceType())) {
-                            repairkit = gameEnvironment.getPlayerItemByName(button.getText());
+                            repairKit = gameEnvironment.getPlayerItemByName(button.getText());
 
-                            gameEnvironment.useRepairKit(repairkit, selectedTower);
-                        } else {
-                            gameEnvironment.showAlert("No Valid Repairkit", "No repairkits are available to repair this tower", Alert.AlertType.ERROR);
+                            gameEnvironment.useRepairKit(repairKit, selectedTower);
+
+                            selectedButton.setText("Locked");
+                            selectedButton.setDisable(true);
                         }
                     }
+
+                         if (repairKit == null){
+                            gameEnvironment.showAlert("No Valid Repair Kit", "No repair kits are available to repair this tower", Alert.AlertType.ERROR);
+                        }
+
                 } else {
-                    gameEnvironment.showAlert("Tower Not Broken", "There is no need to use a repairkit on this tower because it is not broken.", Alert.AlertType.ERROR);
+                    gameEnvironment.showAlert("Tower Not Broken", "There is no need to use a repair kit on this tower because it is not broken.", Alert.AlertType.ERROR);
                 }
             }
             }

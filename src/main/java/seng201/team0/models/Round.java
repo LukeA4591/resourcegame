@@ -49,7 +49,7 @@ public class Round {
 
         switch (roundType) {
 
-            case "Close-Quarters Combat":
+            case "Artillery Barrage":
                 for (int i = 0; i < numberOfCarts; i++) {
                     ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
                     medKitCarts.add(new MedkitCart(50 + 10 * roundNumber, 0));
@@ -59,7 +59,7 @@ public class Round {
                 }
                 break;
 
-            case "Standard Warfare":
+            case "Ground Offensive":
                 for (int i = 0; i < numberOfCarts; i++) {
                     ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
                     medKitCarts.add(new MedkitCart(50 + 10 * roundNumber, 0));
@@ -67,7 +67,7 @@ public class Round {
                 }
                 break;
 
-            case "Sniper Combat":
+            case "Rescue Operation":
                 for (int i = 0; i < numberOfCarts + 1; i++) {
                     ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
                 }

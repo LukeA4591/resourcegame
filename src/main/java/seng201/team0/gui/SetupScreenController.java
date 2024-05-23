@@ -1,6 +1,7 @@
 package seng201.team0.gui;
 
 import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 
 import javafx.scene.control.*;
@@ -15,18 +16,18 @@ public class SetupScreenController {
     @FXML
     private ComboBox<String> difficultyBox;
     @FXML
-    private Label selectedPlayerName;
-    @FXML
-    private Label selectedRoundNumber;
-    @FXML
-    private Label selectedDifficulty;
-
+    private VBox detailsVBox;
     private String name;
     private int rounds;
     private String difficulty;
     private boolean informationUpdated;
 
-    private GameEnvironment gameEnvironment;
+
+    private double startingMoney;
+    private int trackDistance;
+    private int lives;
+
+    private final GameEnvironment gameEnvironment;
 
     public SetupScreenController(GameEnvironment tempEnvironment) {
         this.informationUpdated = false;
@@ -38,16 +39,43 @@ public class SetupScreenController {
 
     }
     @FXML
-    public void updateSelections() {
+    private void updateSelections() {
 
         this.name = playerName.getText();
         this.rounds = (int) roundSlider.getValue();
         this.difficulty = difficultyBox.getValue();
 
         if (nameChecker(name) && difficultyChecker()) {
-            selectedPlayerName.setText("Player's Name: " + name);
-            selectedRoundNumber.setText("Rounds Selected: " + rounds);
-            selectedDifficulty.setText("Difficulty Selected: " + difficulty);
+
+            switch (difficulty) {
+                case "Recruit":
+                    this.startingMoney = 1300;
+                    this.trackDistance = 1000;
+                    this.lives = 3;
+                    break;
+                case "Major":
+                    this.startingMoney = 1000;
+                    this.trackDistance = 900;
+                    this.lives = 2;
+                    break;
+                case "Commander":
+                    this.startingMoney = 700;
+                    this.trackDistance = 800;
+                    this.lives = 1;
+                    break;
+
+            }
+            detailsVBox.getChildren().clear();
+            detailsVBox.getChildren().addAll(
+                    new Label("Player Name: " + name),
+                    new Label("Rounds Selected: " + rounds),
+                    new Label("Difficulty Selected: " + difficulty),
+                    new Label("Starting Money: $" + startingMoney),
+                    new Label("Track Distance: " + trackDistance + " metres"),
+                    new Label("Lives: " + lives)
+            );
+
+            detailsVBox.setSpacing(5);
             informationUpdated = true;
         }
     }
@@ -59,7 +87,7 @@ public class SetupScreenController {
     @FXML
     private void onProceedClicked() {
         if (informationUpdated) {
-            gameEnvironment.startGame(name, rounds, difficulty);
+            gameEnvironment.initializeGame(name, rounds, difficulty, startingMoney, trackDistance, lives);
             gameEnvironment.closeSetupScreen();
         }
         else
@@ -67,7 +95,7 @@ public class SetupScreenController {
     }
 
 
-    public boolean nameChecker(String name) {
+    private boolean nameChecker(String name) {
         if (name.length() > 15 || name.length() < 3 || !name.matches("^[0-9a-zA-Z]*$")) {
             gameEnvironment.showAlert("Invalid Name", "Name must be 3-15 characters long and not contain special characters.", Alert.AlertType.ERROR);
             return false;
@@ -76,7 +104,7 @@ public class SetupScreenController {
             return true;
     }
 
-    public boolean difficultyChecker() {
+    private boolean difficultyChecker() {
         if (difficultyBox.getValue() == null) {
             gameEnvironment.showAlert("Invalid Difficulty", "Please select a difficulty.", Alert.AlertType.ERROR);
             return false;

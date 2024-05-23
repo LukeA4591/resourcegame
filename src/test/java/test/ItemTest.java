@@ -5,25 +5,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng201.team0.models.items.*;
-import seng201.team0.models.towers.*;
 
 public class ItemTest {
 
     private Item ammoCrate;
     private Item ammunitionTowerRepairKit;
     private Item medicalSupplyDrop;
-    private Item medkitsTowerRepairKit;
+    private Item medkitTowerRepairKit;
     private Item paratroopers;
-    private Item troopsTowerRepairKit;
+    private Item troopTowerRepairKit;
 
     @BeforeEach
     public void init() {
         ammoCrate = new AmmoCrate();
         ammunitionTowerRepairKit = new AmmunitionTowerRepairKit();
         medicalSupplyDrop = new MedicalSupplyDrop();
-        medkitsTowerRepairKit = new MedkitsTowerRepairKit();
+        medkitTowerRepairKit = new MedkitTowerRepairKit();
         paratroopers = new Paratroopers();
-        troopsTowerRepairKit = new TroopsTowerRepairKit();
+        troopTowerRepairKit = new TroopTowerRepairKit();
     }
 
     @Test
@@ -31,8 +30,8 @@ public class ItemTest {
         assertNotNull(ammoCrate);
         assertNotNull(ammunitionTowerRepairKit);
         assertNotNull(medicalSupplyDrop);
-        assertNotNull(medkitsTowerRepairKit);
+        assertNotNull(medkitTowerRepairKit);
         assertNotNull(paratroopers);
-        assertNotNull(troopsTowerRepairKit);
+        assertNotNull(troopTowerRepairKit);
     }
 }

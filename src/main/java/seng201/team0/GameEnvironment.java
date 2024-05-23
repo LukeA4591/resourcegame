@@ -26,6 +26,7 @@ public class GameEnvironment {
     private String gameDifficulty;
     private double currentBalance;
     private int livesLeft;
+    private int trackDistance;
 
 
     private final List<Tower> mainTowers;
@@ -71,8 +72,8 @@ public class GameEnvironment {
 
     public void initializeItems() {
         shopItems.add(new AmmunitionTowerRepairKit());
-        shopItems.add(new MedkitsTowerRepairKit());
-        shopItems.add(new TroopsTowerRepairKit());
+        shopItems.add(new MedkitTowerRepairKit());
+        shopItems.add(new TroopTowerRepairKit());
     }
 
 
@@ -132,26 +133,14 @@ public class GameEnvironment {
 
 
 
-    public void startGame(String name, int rounds, String gameDifficulty) {
+    public void initializeGame(String name, int rounds, String gameDifficulty, double startingMoney, int trackDistance, int lives) {
 
         this.playerName = name;
         this.gameRounds = rounds;
         this.gameDifficulty = gameDifficulty;
-
-        switch (gameDifficulty) {
-            case "Recruit":
-                setCurrentBalance(1500.00);
-                livesLeft = 3;
-                break;
-            case "Major":
-                setCurrentBalance(1000.00);
-                livesLeft = 2;
-                break;
-            case "Commander":
-                setCurrentBalance(500.00);
-                livesLeft = 1;
-                break;
-        }
+        setCurrentBalance(startingMoney);
+        this.trackDistance = trackDistance;
+        this.livesLeft = lives;
 
     }
 
@@ -578,17 +567,17 @@ public class GameEnvironment {
         int numTroopCarts = carts.get(2);
         for (Tower tower : mainTowers){
             String resourcetype = tower.getResourceType();
-            if (resourcetype == "Medkits") {
+            if (resourcetype.equals("Medkits")) {
                 for (int i = 0; i < numMedCarts; i++){
                     tower.levelUp();
                 }
             }
-            if (resourcetype == "Ammunition") {
+            if (resourcetype.equals("Ammunition")) {
                 for (int i = 0; i < numAmmoCarts; i++) {
                     tower.levelUp();
                 }
             }
-            if (resourcetype == "Troops"){
+            if (resourcetype.equals("Troops")){
                 for (int i = 0; i < numTroopCarts; i++){
                     tower.levelUp();
                 }

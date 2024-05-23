@@ -77,8 +77,8 @@ public class GameScreenController {
     private ProgressBar medKitProgressBar;
     @FXML
     private ProgressBar roundTimerProgressBar;
-    private String difficulty;
-    private GameEnvironment gameEnvironment;
+    private String roundMode;
+    private final GameEnvironment gameEnvironment;
     private int numMedCarts;
     private int numAmmoCarts;
     private int numTroopCarts;
@@ -98,7 +98,7 @@ public class GameScreenController {
 
     @FXML
     public void initialize() {
-        roundModeComboBox.getItems().addAll("Close-Quarters Combat", "Standard Warfare", "Sniper Combat");
+        roundModeComboBox.getItems().addAll("Artillery Barrage", "Ground Offensive", "Rescue Operation");
         ammoProgressBar.setProgress(0);
         troopProgressBar.setProgress(0);
         medKitProgressBar.setProgress(0);
@@ -142,7 +142,8 @@ public class GameScreenController {
         if (gameEnvironment.getSupportTower() != null) {
             tower4NameLabel.setText(gameEnvironment.getSupportTower().getName());
         }
-        else {tower4NameLabel.setText("Locked");
+        else {
+            tower4NameLabel.setText("Locked");
         }
 
     }
@@ -171,20 +172,33 @@ public class GameScreenController {
 
     @FXML
     private void onSelectRoundModeClicked(){
-        this.difficulty = roundModeComboBox.getValue();
-        if (difficulty == null){
-            gameEnvironment.showAlert("Invalid Difficulty", 
-                    "Please chose a diffuculty for your next round", Alert.AlertType.ERROR);
+        this.roundMode = roundModeComboBox.getValue();
+        if (roundMode == null){
+            gameEnvironment.showAlert("Invalid Round Mode",
+                    "Please chose a mode for your next round", Alert.AlertType.ERROR);
         } else {
-            roundModeLabel.setText("Difficulty: " + difficulty);
+            roundModeLabel.setText("Round Mode: " + roundMode);
             newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
-                    difficulty, gameEnvironment);
+                    roundMode, gameEnvironment);
             ArrayList<Integer> numCarts = newRound.getNumCarts();
             numAmmoCarts = numCarts.get(0);
             numMedCarts = numCarts.get(1);
             numTroopCarts = numCarts.get(2);
-            roundInfoLabel1.setText(numAmmoCarts + " Ammunition Carts, " + numMedCarts + " Med-kit carts, " +
-                    numTroopCarts + " Troop carts");
+            roundInfoLabel1.setText(numAmmoCarts + " Ammunition Carts | " + numMedCarts + " Medkit Carts | " +
+                    numTroopCarts + " Troop Carts");
+
+            switch (roundMode) {
+                case "Artillery Barrage":
+                    roundInfoLabel2.setText("+2 Ammunition Tower Levels | +1 Troop Tower Levels | +1 Medkit Tower Levels");
+                    break;
+                case "Ground Offensive":
+                    roundInfoLabel2.setText("+1 Ammunition Tower Levels | +2 Troop Tower Levels | +1 Medkit Tower Levels");
+                    break;
+                case "Rescue Operation":
+                    roundInfoLabel2.setText("+1 Ammunition Tower Levels | +1 Troop Tower Levels | +2 Medkit Tower Levels");
+                    break;
+            }
+
 
 
 
@@ -236,7 +250,7 @@ public class GameScreenController {
     @FXML
     private void onStartRoundButtonClicked() {
 
-        if (difficulty != null){
+        if (roundMode != null){
 
             if (!gameEnvironment.isMainTowerBroken()) {
 
@@ -244,6 +258,7 @@ public class GameScreenController {
                 selectRoundModeButton.setVisible(false);
                 roundModeLabel.setVisible(false);
                 roundInfoLabel1.setVisible(false);
+                roundInfoLabel2.setVisible(false);
                 shopButton.setVisible(false);
                 inventoryButton.setVisible(false);
                 startRoundButton.setVisible(false);
@@ -268,8 +283,8 @@ public class GameScreenController {
             }
         }
         else {
-            gameEnvironment.showAlert("Invalid Difficulty",
-                    "Please choose a difficulty for your next round", Alert.AlertType.ERROR);
+            gameEnvironment.showAlert("Invalid Round Mode",
+                    "Please choose a Round Mode for your next round", Alert.AlertType.ERROR);
         }
     }
     private void disableButtonForTime(Button button, double seconds) {
@@ -328,9 +343,8 @@ public class GameScreenController {
             int roundWinPrize = gameEnvironment.roundWinPrize();
             gameEnvironment.showAlert("Round Completed!",
                     "Congratulations you have beaten round " + gameEnvironment.getCurrentRound() +
-                            " and you have won $" + roundWinPrize + "! \n Your towers " +
-                            " now gather 10% more resources and reload" +
-                            " 10% faster per cart filled" , Alert.AlertType.INFORMATION);
+                            " and you have won $" + roundWinPrize + "! \nYour towers " +
+                            "have now leveled up!", Alert.AlertType.INFORMATION);
             if (gameEnvironment.isGameWon()){
                 gameEnvironment.setGameWon(true);
                 gameEnvironment.launchEndGameScreen();
