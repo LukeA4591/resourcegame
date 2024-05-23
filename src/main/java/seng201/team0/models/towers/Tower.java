@@ -64,7 +64,12 @@ public abstract class Tower implements Purchasable {
         return level;
     }
     public void setLevel(Integer level) {
-        this.level = level;
+        if (level >= MAX_LEVEL) {
+            this.level = MAX_LEVEL;
+        }
+        else {
+            this.level = level;
+        }
     }
 
     public int getCost() {

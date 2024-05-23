@@ -14,7 +14,7 @@ public abstract class SupportTower extends Tower {
 
     public void removeReloadSpeedBoost(Tower tower) {
         if (tower.getResourceType().equals(this.getResourceType())) {
-            tower.setReloadSpeed(tower.getReloadSpeed() - this.getReloadSpeed());
+            tower.setReloadSpeed(tower.getReloadSpeed() + this.getReloadSpeed());
         }
     }
     public double getReloadSpeedBoost() {
