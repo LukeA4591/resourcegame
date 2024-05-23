@@ -132,22 +132,26 @@ public class InventoryScreenController {
         }
 
     }
-
-
     @FXML
     private void displayTowerInformation(Tower tower) {
 
-        descriptionVBox.getChildren().clear();
+        if (tower instanceof SupportTower) {
+            displaySupportTowerInformation((SupportTower) tower);
+        }
+        else {
 
-        descriptionVBox.getChildren().addAll(
-                new Label("Name: " + tower.getName()),
-                new Label("Resource type: " + tower.getResourceType()),
-                new Label("Resources per click: " + tower.getResourceAmount()),
-                new Label("Reload speed: " + tower.getReloadSpeed()),
-                new Label("Cost: " + tower.getCost()),
-                new Label ("Sell price: " + tower.getSellPrice()),
-                new Label("Description: " + tower.getDescription())
-        );
+            descriptionVBox.getChildren().clear();
+
+            descriptionVBox.getChildren().addAll(
+                    new Label("Name: " + tower.getName()),
+                    new Label("Resource type: " + tower.getResourceType()),
+                    new Label("Resources per click: " + tower.getResourceAmount()),
+                    new Label("Reload speed: " + tower.getReloadSpeed()),
+                    new Label("Cost: " + tower.getCost()),
+                    new Label("Sell price: " + tower.getSellPrice()),
+                    new Label("Description: " + tower.getDescription())
+            );
+        }
     }
 
     @FXML
@@ -188,7 +192,7 @@ public class InventoryScreenController {
         }
 
         reserveTowerToggleButtons = List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button, reserveTower4Button);
-        mainTowerToggleButtons = List.of(ammunitionTowerButton,troopsTowerButton, medkitsTowerButton);
+        mainTowerToggleButtons = List.of(ammunitionTowerButton,troopsTowerButton, medkitsTowerButton, supportTowerButton);
         itemToggleButtons = List.of(item1Button, item2Button, item3Button);
     }
 
@@ -272,6 +276,8 @@ public class InventoryScreenController {
         Tower reserveTower = null;
 
         if (selectedMainTowerButton != null && selectedReserveTowerButton != null) {
+
+
 
             for (Tower tower : gameEnvironment.getMainTowers()) {
                 if (tower.getName().equals(selectedMainTowerButton.getText())) {

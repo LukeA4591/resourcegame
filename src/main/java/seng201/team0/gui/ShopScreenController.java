@@ -8,6 +8,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import seng201.team0.GameEnvironment;
+import seng201.team0.models.towers.SupportTower;
 import seng201.team0.models.towers.Tower;
 import seng201.team0.models.items.Item;
 
@@ -246,6 +247,7 @@ public class ShopScreenController {
                         selectedButton.setText("Purchased");
                         selectedButton.setDisable(true);
                         updateToggleButtons();
+
 
                         for (Item item : gameEnvironment.getPlayerItems()) {
                             gameEnvironment.applyItemEffect(item);

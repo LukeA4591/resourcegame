@@ -237,16 +237,36 @@ public class GameEnvironment {
 
     public void swapTowers(Tower mainTower, Tower reserveTower) {
 
-        if (mainTower.getResourceType().equals(reserveTower.getResourceType())) {
+        if (mainTower instanceof SupportTower && reserveTower instanceof SupportTower) {
 
-            int mainIndex = mainTowers.indexOf(mainTower);
             int reserveIndex = reserveTowers.indexOf(reserveTower);
 
-            mainTowers.set(mainIndex, reserveTower);
+            for (Tower tower : mainTowers) {
+                ((SupportTower) mainTower).removeReloadSpeedBoost(tower);
+
+                ((SupportTower) reserveTower).applyReloadSpeedBoost(tower);
+            }
+            for (Tower tower : reserveTowers) {
+                ((SupportTower) mainTower).removeReloadSpeedBoost(tower);
+
+                ((SupportTower) reserveTower).applyReloadSpeedBoost(tower);
+            }
+
             reserveTowers.set(reserveIndex, mainTower);
+            supportTower = (SupportTower) reserveTower;
         }
         else {
-            showAlert("Incompatible Towers", "Towers must be of the same resource type to swap.", Alert.AlertType.ERROR);
+
+            if (mainTower.getResourceType().equals(reserveTower.getResourceType())) {
+
+                int mainIndex = mainTowers.indexOf(mainTower);
+                int reserveIndex = reserveTowers.indexOf(reserveTower);
+
+                mainTowers.set(mainIndex, reserveTower);
+                reserveTowers.set(reserveIndex, mainTower);
+            } else {
+                showAlert("Incompatible Towers", "Towers must be of the same resource type to swap.", Alert.AlertType.ERROR);
+            }
         }
 
     }
@@ -258,12 +278,6 @@ public class GameEnvironment {
         alert.showAndWait();
     }
 
-    public SupportTower getSupportTowerByName(String name) {
-        if (supportTower.getName().equals(name)) {
-            return supportTower;
-        }
-        return null;
-    }
 
     public Tower getMainTowerByName(String name) {
         for (Tower tower : mainTowers) {
