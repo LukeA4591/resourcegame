@@ -270,7 +270,7 @@ public class GameScreenController {
                     "Please choose a difficulty for your next round", Alert.AlertType.ERROR);
         }
     }
-    private void disableButtonForTime(Button button, int seconds) {
+    private void disableButtonForTime(Button button, double seconds) {
         button.setDisable(true); // Disable the button
 
         // Create a Timeline to re-enable the button after the specified time
@@ -322,15 +322,21 @@ public class GameScreenController {
 
     private void endRound(boolean roundFinish){
         if (roundFinish){
+
             int roundWinPrize = gameEnvironment.roundWinPrize();
             gameEnvironment.showAlert("Round Completed!",
                     "Congratulations you have beaten round " + gameEnvironment.getCurrentRound() +
                             " and you have won " + roundWinPrize + " dollars! \n Your towers " +
                             " now gather 10% more resources and reload" +
                             " 10% faster per cart filled" , Alert.AlertType.INFORMATION);
-            gameEnvironment.setCurrentRound(gameEnvironment.getCurrentRound() + 1);
-            gameEnvironment.upGradeTowers(newRound.getNumCarts());
-            gameEnvironment.refreshGameScreen();
+            if (gameEnvironment.isGameWon()){
+                gameEnvironment.setGameWon(true);
+                gameEnvironment.launchEndGameScreen();
+            } else {
+                gameEnvironment.setCurrentRound(gameEnvironment.getCurrentRound() + 1);
+                gameEnvironment.upGradeTowers(newRound.getNumCarts());
+                gameEnvironment.refreshGameScreen();
+            }
         } else {
             gameEnvironment.loseLife();
             if (gameEnvironment.isGameLost()){

@@ -191,6 +191,7 @@ public class GameEnvironment {
     public boolean isGameLost() {
         return livesLeft <= 0;
     }
+    public boolean isGameWon () { return currentRound >= gameRounds; }
 
     public void setSupportTower(SupportTower tower) {
         supportTower = tower;
