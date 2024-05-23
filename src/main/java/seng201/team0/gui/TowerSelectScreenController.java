@@ -81,7 +81,8 @@ public class TowerSelectScreenController {
                 new Label("Resource type: " + tower.getResourceType()),
                 new Label("Resources per click: " + tower.getResourceAmount()),
                 new Label("Reload speed: " + tower.getReloadSpeed() + " seconds"),
-                new Label("Cost: " + tower.getCost()),
+                new Label("Cost: $" + tower.getCost()),
+                new Label("Sell Price: $"),
                 new Label("Description: " + tower.getDescription())
         );
     }

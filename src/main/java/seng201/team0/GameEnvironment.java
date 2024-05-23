@@ -336,7 +336,6 @@ public class GameEnvironment {
     }
     public void sellTower(Tower tower) {
         setCurrentBalance(currentBalance + tower.getSellPrice());
-        tower.setLevel(1);
         reserveTowers.remove(tower);
 
 
@@ -362,9 +361,17 @@ public class GameEnvironment {
             return new SpecialForcesCamp();
         } else if (tower instanceof FieldHospital) {
             return new FieldHospital();
+        } else if (tower instanceof AmmoRelayStation) {
+            return new AmmoRelayStation();
+        } else if (tower instanceof MedicOutpost) {
+            return new MedicOutpost();
+        } else if (tower instanceof TroopCommandPost) {
+            return new TroopCommandPost();
         }
+
             return null;
     }
+
 
     public void applyItemEffect(Item item) {
         if (!item.getIsRepairKit()){
@@ -395,7 +402,6 @@ public class GameEnvironment {
             }
         }
     }
-
 
 
     public boolean shouldTriggerRandomEvent() {

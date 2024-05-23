@@ -34,4 +34,17 @@ public class ItemTest {
         assertNotNull(paratroopers);
         assertNotNull(troopTowerRepairKit);
     }
+
+    @Test
+    public void isRepairKit() {
+        assertTrue(ammunitionTowerRepairKit.getIsRepairKit());
+        assertTrue(medkitTowerRepairKit.getIsRepairKit());
+        assertTrue(troopTowerRepairKit.getIsRepairKit());
+        assertFalse(ammoCrate.getIsRepairKit());
+        assertFalse(paratroopers.getIsRepairKit());
+        assertFalse(medicalSupplyDrop.getIsRepairKit());
+    }
+
+
+
 }

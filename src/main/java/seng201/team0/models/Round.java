@@ -15,7 +15,7 @@ public class Round {
     private double trackDistance;
     private int roundNumber;
     private String difficulty;
-    private String roundType;
+    private String roundMode;
     private GameEnvironment gameEnvironment;
 
     private int medKitsCollected;
@@ -29,11 +29,11 @@ public class Round {
     private Tower troopTower;
     private int cartSpeed;
 
-    public Round(int roundNumber, String difficulty, String roundType, GameEnvironment gameEnvironment) {
+    public Round(int roundNumber, String difficulty, String roundMode, GameEnvironment gameEnvironment) {
 
         this.roundNumber = roundNumber;
         this.difficulty = difficulty;
-        this.roundType = roundType;
+        this.roundMode = roundMode;
         this.gameEnvironment = gameEnvironment;
 
         this.ammunitionCarts = new ArrayList<>();
@@ -48,7 +48,7 @@ public class Round {
         ammunitionCollected = 0;
         troopsCollected = 0;
         cartSpeed = gameEnvironment.getTrackDistance() / (30 - gameEnvironment.getCurrentRound());
-        switch (roundType) {
+        switch (roundMode) {
             case "Artillery Barrage":
                 for (int i = 0; i < numberOfCarts; i++) {
                     troopCarts.add(new TroopCart(50 + 10 * roundNumber, cartSpeed));

@@ -1,6 +1,7 @@
 package seng201.team0.models.items;
 
 import seng201.team0.models.Purchasable;
+import seng201.team0.models.towers.Tower;
 
 public abstract class Item implements Purchasable {
 
@@ -39,6 +40,8 @@ public abstract class Item implements Purchasable {
     public void setIsRepairKit(boolean bool) {
         this.isRepairKit = bool;
     }
+
+
 
 
 }

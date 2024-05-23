@@ -382,8 +382,8 @@ public class InventoryScreenController {
 
                             gameEnvironment.useRepairKit(repairKit, selectedTower);
 
-                            selectedButton.setText("Locked");
-                            selectedButton.setDisable(true);
+                            button.setText("Locked");
+                            button.setDisable(true);
                         }
                     }
 
