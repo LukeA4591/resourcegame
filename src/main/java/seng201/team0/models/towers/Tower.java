@@ -11,6 +11,7 @@ public abstract class Tower implements Purchasable {
     private int cost;
     private int sellPrice;
     private boolean isBroken;
+    private static final int MAX_LEVEL = 6;
 
     public Tower(String name, double resourceAmount, double reloadSpeed, String resourceType, int cost,
             int level) {
@@ -91,9 +92,24 @@ public abstract class Tower implements Purchasable {
     }
 
     public void levelUp() {
-        level++;
-        reloadSpeed *= 0.95;
-        resourceAmount *= 1.05;
+
+        if (level + 1 >= MAX_LEVEL) {
+            this.level = MAX_LEVEL;
+        }
+        else {
+            level++;
+            reloadSpeed *= 0.95;
+            resourceAmount *= 1.05;
+        }
+    }
+
+    public String getLevelRepresentation() {
+        if (this.level >= MAX_LEVEL) {
+            return "MAX LEVEL";
+        }
+        else {
+            return "Level: " + level;
+        }
     }
 
 

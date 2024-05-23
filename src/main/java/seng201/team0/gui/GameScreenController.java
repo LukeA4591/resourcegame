@@ -79,9 +79,9 @@ public class GameScreenController {
     private ProgressBar roundTimerProgressBar;
     private String roundMode;
     private final GameEnvironment gameEnvironment;
-    private int numMedCarts;
-    private int numAmmoCarts;
-    private int numTroopCarts;
+    private int numberOfMedkitCarts;
+    private int numberOfAmmunitionCarts;
+    private  int numberOfTroopCarts;
     private int medKitsCollected;
     private int ammunitionCollected;
     private int troopsCollected;
@@ -181,11 +181,11 @@ public class GameScreenController {
             newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
                     roundMode, gameEnvironment);
             ArrayList<Integer> numCarts = newRound.getNumCarts();
-            numAmmoCarts = numCarts.get(0);
-            numMedCarts = numCarts.get(1);
-            numTroopCarts = numCarts.get(2);
-            roundInfoLabel1.setText(numAmmoCarts + " Ammunition Carts | " + numMedCarts + " Medkit Carts | " +
-                    numTroopCarts + " Troop Carts");
+            numberOfAmmunitionCarts = numCarts.get(0);
+            numberOfMedkitCarts = numCarts.get(1);
+            numberOfTroopCarts = numCarts.get(2);
+            roundInfoLabel1.setText(numberOfAmmunitionCarts + " Ammunition Carts | " + numberOfMedkitCarts + " Medkit Carts | " +
+                    numberOfTroopCarts + " Troop Carts");
 
             switch (roundMode) {
                 case "Artillery Barrage":
@@ -215,7 +215,7 @@ public class GameScreenController {
             checkRoundDone();
         } else {
             ammoProgressBar.setProgress((double) ammunitionCollected / ammunitionNeeded);
-            disableButtonForTime(loadSupplyTruckButton, newRound.getAmmoTowerReload());
+            disableButtonForTime(loadSupplyTruckButton, newRound.getAmmunitionTowerReload());
         }
     }
     @FXML
@@ -243,7 +243,7 @@ public class GameScreenController {
             checkRoundDone();
         } else {
             medKitProgressBar.setProgress((double) medKitsCollected / medKitsNeeded);
-            disableButtonForTime(loadAmbulanceButton, newRound.getMedTowerReload());
+            disableButtonForTime(loadAmbulanceButton, newRound.getMedkitTowerReload());
         }
     }
 

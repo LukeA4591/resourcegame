@@ -562,23 +562,23 @@ public class GameEnvironment {
         return prize;
     }
     public void levelUpTowers(ArrayList<Integer> carts){
-        int numAmmoCarts = carts.get(0);
-        int numMedCarts = carts.get(1);
-        int numTroopCarts = carts.get(2);
+        int numberOfAmmunitionCarts = carts.get(0);
+        int numberOfMedkitCarts = carts.get(1);
+        int numberOfTroopCarts = carts.get(2);
         for (Tower tower : mainTowers){
-            String resourcetype = tower.getResourceType();
-            if (resourcetype.equals("Medkits")) {
-                for (int i = 0; i < numMedCarts; i++){
+            String resourceType = tower.getResourceType();
+            if (resourceType.equals("Medkits")) {
+                for (int i = 0; i < numberOfMedkitCarts; i++){
                     tower.levelUp();
                 }
             }
-            if (resourcetype.equals("Ammunition")) {
-                for (int i = 0; i < numAmmoCarts; i++) {
+            if (resourceType.equals("Ammunition")) {
+                for (int i = 0; i < numberOfAmmunitionCarts; i++) {
                     tower.levelUp();
                 }
             }
-            if (resourcetype.equals("Troops")){
-                for (int i = 0; i < numTroopCarts; i++){
+            if (resourceType.equals("Troops")){
+                for (int i = 0; i < numberOfTroopCarts; i++){
                     tower.levelUp();
                 }
             }

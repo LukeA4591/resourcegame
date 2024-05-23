@@ -26,6 +26,9 @@ public class InventoryScreenController {
     private Label infoLabel;
 
     @FXML
+    private Label towerLevelLabel;
+
+    @FXML
     private ToggleButton ammunitionTowerButton;
     @FXML
     private ToggleButton troopsTowerButton;
@@ -139,6 +142,8 @@ public class InventoryScreenController {
             displaySupportTowerInformation((SupportTower) tower);
         }
         else {
+
+            towerLevelLabel.setText(tower.getLevelRepresentation());
 
             descriptionVBox.getChildren().clear();
 

@@ -201,6 +201,11 @@
                   <Insets />
                </GridPane.margin>
             </Button>
+            <Label fx:id="towerLevelLabel" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
     </children>
