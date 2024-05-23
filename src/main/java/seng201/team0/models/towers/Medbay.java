@@ -4,7 +4,7 @@ public class Medbay extends Tower {
 
     
     public Medbay() {
-        super("Medbay",  20, 2, "Medkits", 150, 1);
+        super("Medbay",  25, 2.5, "Medkits", 150, 1);
     }
 
     public String getDescription() {

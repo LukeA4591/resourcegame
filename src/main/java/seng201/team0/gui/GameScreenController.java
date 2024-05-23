@@ -276,7 +276,7 @@ public class GameScreenController {
                 medKitsNeeded = newRound.getMedKitsRequired();
                 ammunitionNeeded = newRound.getAmmunitionRequired();
                 troopsNeeded = newRound.getTroopsRequired();
-                startProgressTimer(25);
+                startProgressTimer(gameEnvironment.getTrackDistance() / newRound.getCartSpeed());
             }
             else {
                 gameEnvironment.showAlert("Main Tower is Broken", "Round cannot be played with a broken tower", Alert.AlertType.ERROR);

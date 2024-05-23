@@ -10,11 +10,11 @@ public abstract class Item implements Purchasable {
 
     private boolean isRepairKit;
 
-    public Item(String name, int cost) {
+    public Item(String name, int cost, boolean isRepairKit) {
         this.name = name;
         this.cost = cost;
         this.sellPrice = cost / 2;
-        this.isRepairKit = false;
+        this.isRepairKit = isRepairKit;
         }
 
 

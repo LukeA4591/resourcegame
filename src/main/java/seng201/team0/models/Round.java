@@ -27,6 +27,7 @@ public class Round {
     private Tower medkitTower;
     private Tower ammunitionTower;
     private Tower troopTower;
+    private int cartSpeed;
 
     public Round(int roundNumber, String difficulty, String roundType, GameEnvironment gameEnvironment) {
 
@@ -46,36 +47,35 @@ public class Round {
         medKitsCollected = 0;
         ammunitionCollected = 0;
         troopsCollected = 0;
-
+        cartSpeed = gameEnvironment.getTrackDistance() / (30 - gameEnvironment.getCurrentRound());
         switch (roundType) {
-
             case "Artillery Barrage":
                 for (int i = 0; i < numberOfCarts; i++) {
-                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, 0));
-                    medkitCarts.add(new MedkitCart(50 + 10 * roundNumber, 0));
+                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, cartSpeed));
+                    medkitCarts.add(new MedkitCart(50 + 10 * roundNumber, cartSpeed));
                 }
                 for (int i = 0; i < numberOfCarts + 1; i++) {
-                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
+                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, cartSpeed));
                 }
                 break;
 
             case "Ground Offensive":
                 for (int i = 0; i < numberOfCarts; i++) {
-                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
-                    medkitCarts.add(new MedkitCart(50 + 10 * roundNumber, 0));
+                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, cartSpeed));
+                    medkitCarts.add(new MedkitCart(50 + 10 * roundNumber, cartSpeed));
                 }
                 for (int i = 0; i < numberOfCarts + 1; i++) {
-                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, 0));
+                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, cartSpeed));
                 }
                 break;
 
             case "Rescue Operation":
                 for (int i = 0; i < numberOfCarts; i++) {
-                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, 0));
-                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, 0));
+                    ammunitionCarts.add(new AmmunitionCart(50 + 10 * roundNumber, cartSpeed));
+                    troopCarts.add(new TroopCart(50 + 10 * roundNumber, cartSpeed));
                 }
                 for (int i = 0; i < numberOfCarts + 1; i++) {
-                    medkitCarts.add(new MedkitCart(50 + 10 * roundNumber, 0));
+                    medkitCarts.add(new MedkitCart(50 + 10 * roundNumber, cartSpeed));
                 }
                 break;
         }
@@ -138,4 +138,5 @@ public class Round {
     public int getTroopTowerReload(){
         return (int) troopTower.getReloadSpeed();
     }
+    public int getCartSpeed() { return cartSpeed; }
 }

@@ -5,8 +5,7 @@ public class AmmunitionTowerRepairKit extends Item {
 
 
     public AmmunitionTowerRepairKit() {
-        super("Ammunition Tower Repair Kit", 500);
-        setIsRepairKit(true);
+        super("Ammunition Tower Repair Kit", 500, true);
     }
 
     public String getTowerType() {

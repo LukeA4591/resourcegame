@@ -4,7 +4,7 @@ public class Armoury extends Tower {
 
 
     public Armoury() {
-        super("Armoury", 15, 1.5, "Ammunition", 150, 1);
+        super("Armoury", 20, 2, "Ammunition", 150, 1);
 
     }
 

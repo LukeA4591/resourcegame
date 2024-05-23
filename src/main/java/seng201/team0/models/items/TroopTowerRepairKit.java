@@ -3,8 +3,7 @@ package seng201.team0.models.items;
 public class TroopTowerRepairKit extends Item {
 
     public TroopTowerRepairKit() {
-        super("Troop Tower Repair Kit", 500);
-        setIsRepairKit(true);
+        super("Troop Tower Repair Kit", 500, true);
     }
 
     public String getDescription() {

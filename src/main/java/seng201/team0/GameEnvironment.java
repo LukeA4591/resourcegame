@@ -189,6 +189,8 @@ public class GameEnvironment {
         return supportTower;
     }
 
+    public int getTrackDistance(){ return trackDistance; }
+
     public boolean getGameWon() {
         return gameWon;
     }
@@ -365,29 +367,31 @@ public class GameEnvironment {
     }
 
     public void applyItemEffect(Item item) {
-
-        for (Tower tower : mainTowers) {
-            if (item.getTowerType().equals(tower.getResourceType())) {
-                tower.setResourceAmount((int) (tower.getResourceAmount() * 1.5));
+        if (!item.getIsRepairKit()){
+            for (Tower tower : mainTowers) {
+                if (item.getTowerType().equals(tower.getResourceType())) {
+                    tower.setResourceAmount((int) (tower.getResourceAmount() * 1.5));
+                }
             }
-        }
-        for (Tower tower : reserveTowers) {
-            if (item.getTowerType().equals(tower.getResourceType())) {
-                tower.setResourceAmount((int) (tower.getResourceAmount() * 1.5));
+            for (Tower tower : reserveTowers) {
+                if (item.getTowerType().equals(tower.getResourceType())) {
+                    tower.setResourceAmount((int) (tower.getResourceAmount() * 1.5));
+                }
             }
         }
     }
 
     public void removeItemEffect(Item item) {
-
-        for (Tower tower : mainTowers) {
-            if (item.getTowerType().equals(tower.getResourceType())) {
-                tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
+        if (!item.getIsRepairKit()) {
+            for (Tower tower : mainTowers) {
+                if (item.getTowerType().equals(tower.getResourceType())) {
+                    tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
+                }
             }
-        }
-        for (Tower tower : reserveTowers) {
-            if (item.getTowerType().equals(tower.getResourceType())) {
-                tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
+            for (Tower tower : reserveTowers) {
+                if (item.getTowerType().equals(tower.getResourceType())) {
+                    tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
+                }
             }
         }
     }

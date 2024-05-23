@@ -9,21 +9,5 @@ public class AmmunitionCart extends Cart {
         this.ammunitionCapacity = 0;
         this.resourceType = "Ammunition";
     }
-
-    public int getAmmunitionCapacity() {
-        return ammunitionCapacity;
-    }
-    public String getResourceType(){
-        return resourceType;
-    }
-
-    public void setAmmunitionCapacity(int ammunitionCapacity) {
-        this.ammunitionCapacity = ammunitionCapacity;
-    }
-
-    @Override
-    public void fillCart() {
-        // Implementation specific to AmmunitionCart
-        System.out.println("Filling Ammunition Cart with " + ammunitionCapacity + " units of ammunition.");
-    }
+    public String getResourceType(){ return resourceType; }
 }

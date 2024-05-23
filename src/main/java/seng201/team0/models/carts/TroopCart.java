@@ -12,18 +12,4 @@ public class TroopCart extends Cart {
     public String getResourceType(){
         return resourceType;
     }
-
-    public int getTroopCapacity() {
-        return troopCapacity;
-    }
-
-    public void setTroopCapacity(int troopCapacity) {
-        this.troopCapacity = troopCapacity;
-    }
-
-    @Override
-    public void fillCart() {
-        // Implementation specific to TroopCart
-        System.out.println("Filling Troop Cart with " + troopCapacity + " soldiers. Cart size: " + getSize());
-    }
 }

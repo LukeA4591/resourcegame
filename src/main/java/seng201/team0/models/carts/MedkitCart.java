@@ -12,18 +12,4 @@ public class MedkitCart extends Cart {
     public String getResourceType(){
         return resourceType;
     }
-
-    public int getMedkitCapacity() {
-        return medkitCount;
-    }
-
-    public void setMedkitCapacity(int medkitCount) {
-        this.medkitCount = medkitCount;
-    }
-
-
-    public void fillCart() {
-        // Implementation specific to MedkitCart
-        System.out.println("Filling Medkit Cart with " + medkitCount + " medkits.");
-    }
 }

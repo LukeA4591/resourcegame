@@ -49,17 +49,17 @@ public class SetupScreenController {
 
             switch (difficulty) {
                 case "Recruit":
-                    this.startingMoney = 1300;
+                    this.startingMoney = 1000;
                     this.trackDistance = 1000;
                     this.lives = 3;
                     break;
                 case "Major":
-                    this.startingMoney = 1000;
+                    this.startingMoney = 800;
                     this.trackDistance = 900;
                     this.lives = 2;
                     break;
                 case "Commander":
-                    this.startingMoney = 700;
+                    this.startingMoney = 600;
                     this.trackDistance = 800;
                     this.lives = 1;
                     break;

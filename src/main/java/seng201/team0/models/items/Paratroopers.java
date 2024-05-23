@@ -3,7 +3,7 @@ package seng201.team0.models.items;
 public class Paratroopers extends Item {
 
     public Paratroopers() {
-        super("Paratroopers", 650);
+        super("Paratroopers", 650, false);
     }
 
     public String getTowerType() {

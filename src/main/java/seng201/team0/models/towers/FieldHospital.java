@@ -4,7 +4,7 @@ public class FieldHospital extends Tower{
 
 
     public FieldHospital() {
-        super("Field Hospital", 35, 1.4, "Medkits", 1200, 1);
+        super("Field Hospital", 35, 1.6, "Medkits", 1200, 1);
     }
 
     public String getDescription() {

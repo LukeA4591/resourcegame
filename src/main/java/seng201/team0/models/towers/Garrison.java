@@ -4,7 +4,7 @@ public class Garrison extends Tower {
 
 
     public Garrison() {
-        super("Garrison", 20, 2, "Troops", 150, 1);
+        super("Garrison", 25, 2.5, "Troops", 150, 1);
     }
 
     public String getDescription() {

@@ -4,7 +4,7 @@ public class AmmoCrate extends Item {
 
 
     public AmmoCrate() {
-        super("Ammo Crate", 350);
+        super("Ammo Crate", 350, false);
     }
 
     public String getTowerType() {

@@ -131,14 +131,25 @@ public class ShopScreenController {
     private void displayItemInformation(Item item) {
         descriptionVBox.getChildren().clear();
 
-        descriptionVBox.getChildren().addAll(
-                new Label("Name: " + item.getName()),
-                new Label("Affects: " + item.getTowerType() + " Towers"),
-                new Label("Resource Boost: 1.5x multiplier"),
-                new Label("Cost: " + item.getCost()),
-                new Label("Sell Price: " + item.getSellPrice()),
-                new Label("Description: " + item.getDescription())
-        );
+        if (!item.getIsRepairKit()) {
+            descriptionVBox.getChildren().addAll(
+                    new Label("Name: " + item.getName()),
+                    new Label("Affects: " + item.getTowerType() + " Towers"),
+                    new Label("Resource boost: 1.5x multiplier"),
+                    new Label("Cost: " + item.getCost()),
+                    new Label("Sell price: " + item.getSellPrice()),
+                    new Label("Description: " + item.getDescription())
+            );
+        }
+        else {
+            descriptionVBox.getChildren().addAll(
+                    new Label("Name: " + item.getName()),
+                    new Label("Repairs: " + item.getTowerType() + " Towers"),
+                    new Label("Cost: " + item.getCost()),
+                    new Label("Sell price: " + item.getSellPrice()),
+                    new Label("Description: " + item.getDescription())
+            );
+        }
     }
 
     @FXML
@@ -150,7 +161,7 @@ public class ShopScreenController {
                 new Label("Name:  " + tower.getName()),
                 new Label("Resource type:  " + tower.getResourceType()),
                 new Label("Resources per click:  " + tower.getResourceAmount()),
-                new Label("Reload speed:  " + tower.getReloadSpeed() + " seconds"),
+                new Label(String.format("Reload speed: %.2f seconds", tower.getReloadSpeed())),
                 new Label("Cost:  " + tower.getCost()),
                 new Label("Sell price: " + tower.getSellPrice()),
                 new Label("Description: " + tower.getDescription())

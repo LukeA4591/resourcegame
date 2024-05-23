@@ -154,7 +154,7 @@ public class InventoryScreenController {
                     new Label("Name: " + tower.getName()),
                     new Label("Resource type: " + tower.getResourceType()),
                     new Label("Resources per click: " + tower.getResourceAmount()),
-                    new Label("Reload speed: " + tower.getReloadSpeed() + " seconds"),
+                    new Label(String.format("Reload speed: %.2f seconds", tower.getReloadSpeed())),
                     new Label("Cost: " + tower.getCost()),
                     new Label("Sell price: " + tower.getSellPrice()),
                     new Label("Description: " + tower.getDescription())

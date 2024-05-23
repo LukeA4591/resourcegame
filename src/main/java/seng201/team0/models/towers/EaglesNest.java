@@ -4,7 +4,7 @@ public class EaglesNest extends Tower {
 
 
     public EaglesNest() {
-        super("Eagle's Nest", 30, 1.5, "Ammunition", 800, 1);
+        super("Eagle's Nest", 30, 1.6, "Ammunition", 800, 1);
     }
 
     public String getDescription() {
