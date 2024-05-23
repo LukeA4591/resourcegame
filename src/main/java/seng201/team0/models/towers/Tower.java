@@ -7,7 +7,7 @@ public abstract class Tower implements Purchasable {
     private double resourceAmount;
     private double reloadSpeed;
     private String resourceType;
-    private Integer level;
+    private int level;
     private int cost;
     private int sellPrice;
     private boolean isBroken;
@@ -24,6 +24,7 @@ public abstract class Tower implements Purchasable {
         this.sellPrice = cost / 2;
         this.isBroken = false;
     }
+
 
     public String getName() {
         return name;
@@ -91,8 +92,8 @@ public abstract class Tower implements Purchasable {
 
     public void levelUp() {
         level++;
-        reloadSpeed *= 0.9;
-        resourceAmount *= 1.1;
+        reloadSpeed *= 0.95;
+        resourceAmount *= 1.05;
     }
 
 

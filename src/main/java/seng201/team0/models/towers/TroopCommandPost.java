@@ -7,6 +7,6 @@ public class TroopCommandPost extends SupportTower {
     }
 
     public String getDescription() {
-        return "Enhances the reload speed\nof troop towers.";
+        return "Enhances the reload\nspeed of troop towers.";
     }
 }

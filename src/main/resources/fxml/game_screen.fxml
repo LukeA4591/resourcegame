@@ -171,9 +171,9 @@
                   </Label>
                </children>
             </GridPane>
-            <Button fx:id="loadSupplyTruckButton" mnemonicParsing="false" onAction="#onLoadSupplyTruckButton" text="Load Supply Truck" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button fx:id="loadHumveeButton" mnemonicParsing="false" onAction="#onLoadHumveeButton" text="Load Humvee" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button fx:id="loadAmbulanceButton" mnemonicParsing="false" onAction="#onLoadAmbulanceButton" text="Load Ambulance" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="loadSupplyTruckButton" mnemonicParsing="false" onAction="#onLoadSupplyTruckButtonClicked" text="Load Supply Truck" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="loadHumveeButton" mnemonicParsing="false" onAction="#onLoadHumveeButtonClicked" text="Load Humvee" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button fx:id="loadAmbulanceButton" mnemonicParsing="false" onAction="#onLoadAmbulanceButtonClicked" text="Load Ambulance" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <Button fx:id="shopButton" mnemonicParsing="false" onAction="#onShopButtonClicked" text="Shop" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="10.0" />
@@ -185,27 +185,22 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Button>
-            <Label fx:id="selectDifficultyLabel" text="Select round difficulty:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <Label fx:id="roundInfoLabel1" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets bottom="10.0" left="5.0" top="5.0" />
+                  <Insets bottom="25.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="cartInfoLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets bottom="15.0" />
-               </GridPane.margin>
-            </Label>
-            <ComboBox fx:id="roundDifficultyBox" prefWidth="150.0" promptText="Choose diffciculty:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <ComboBox fx:id="roundModeComboBox" prefHeight="26.0" prefWidth="166.0" promptText="Choose Round Mode:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </ComboBox>
-            <Button fx:id="selectDifficultyButton" mnemonicParsing="false" onAction="#onDisplayDifficulty" text="Select difficulty" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <Button fx:id="selectRoundModeButton" mnemonicParsing="false" onAction="#onSelectRoundModeClicked" text="Select Round Mode" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </Button>
-            <Label fx:id="difficultyLabel" text="Difficulty:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Label fx:id="roundModeLabel" text="Round mode:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="15.0" />
                </GridPane.margin>
@@ -250,6 +245,7 @@
                   <Insets right="15.0" />
                </GridPane.margin>
             </Label>
+            <Label fx:id="roundInfoLabel2" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
    </children>

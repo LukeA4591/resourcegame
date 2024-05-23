@@ -245,12 +245,12 @@ public class GameEnvironment {
             for (Tower tower : mainTowers) {
                 ((SupportTower) mainTower).removeReloadSpeedBoost(tower);
 
-                ((SupportTower) reserveTower).applyReloadSpeedBoost(tower);
+                ((SupportTower) reserveTower).boostReloadSpeed(tower);
             }
             for (Tower tower : reserveTowers) {
                 ((SupportTower) mainTower).removeReloadSpeedBoost(tower);
 
-                ((SupportTower) reserveTower).applyReloadSpeedBoost(tower);
+                ((SupportTower) reserveTower).boostReloadSpeed(tower);
             }
 
             reserveTowers.set(reserveIndex, mainTower);

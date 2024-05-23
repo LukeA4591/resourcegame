@@ -39,11 +39,11 @@ public class GameScreenController {
     @FXML
     private Label tower4NameLabel;
     @FXML
-    private Label selectDifficultyLabel;
+    private Label roundModeLabel;
     @FXML
-    private Label difficultyLabel;
+    private Label roundInfoLabel1;
     @FXML
-    private Label cartInfoLabel;
+    private Label roundInfoLabel2;
     @FXML
     private Label roundTimerLabel;
     @FXML
@@ -66,9 +66,9 @@ public class GameScreenController {
     @FXML
     private Button startRoundButton;
     @FXML
-    private Button selectDifficultyButton;
+    private Button selectRoundModeButton;
     @FXML
-    private ComboBox<String> roundDifficultyBox;
+    private ComboBox<String> roundModeComboBox;
     @FXML
     private ProgressBar ammoProgressBar;
     @FXML
@@ -98,7 +98,7 @@ public class GameScreenController {
 
     @FXML
     public void initialize() {
-        roundDifficultyBox.getItems().addAll("Close-Quarters Combat", "Standard Warfare", "Sniper Combat");
+        roundModeComboBox.getItems().addAll("Close-Quarters Combat", "Standard Warfare", "Sniper Combat");
         ammoProgressBar.setProgress(0);
         troopProgressBar.setProgress(0);
         medKitProgressBar.setProgress(0);
@@ -170,25 +170,28 @@ public class GameScreenController {
 
 
     @FXML
-    private void onDisplayDifficulty(){
-        this.difficulty = roundDifficultyBox.getValue();
+    private void onSelectRoundModeClicked(){
+        this.difficulty = roundModeComboBox.getValue();
         if (difficulty == null){
             gameEnvironment.showAlert("Invalid Difficulty", 
                     "Please chose a diffuculty for your next round", Alert.AlertType.ERROR);
         } else {
-            difficultyLabel.setText("Difficulty: " + difficulty);
+            roundModeLabel.setText("Difficulty: " + difficulty);
             newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
                     difficulty, gameEnvironment);
             ArrayList<Integer> numCarts = newRound.getNumCarts();
             numAmmoCarts = numCarts.get(0);
             numMedCarts = numCarts.get(1);
             numTroopCarts = numCarts.get(2);
-            cartInfoLabel.setText(numAmmoCarts + " Ammunition Carts, " + numMedCarts + " Med-kit carts, " +
+            roundInfoLabel1.setText(numAmmoCarts + " Ammunition Carts, " + numMedCarts + " Med-kit carts, " +
                     numTroopCarts + " Troop carts");
+
+
+
         }
     }
     @FXML
-    private void onLoadSupplyTruckButton(){
+    private void onLoadSupplyTruckButtonClicked(){
         newRound.increaseAmmunitionCollected();
         ammunitionCollected = newRound.getAmmunitionCollected();
         if (ammunitionCollected >= ammunitionNeeded) {
@@ -202,7 +205,7 @@ public class GameScreenController {
         }
     }
     @FXML
-    private void onLoadHumveeButton(){
+    private void onLoadHumveeButtonClicked(){
         newRound.increaseTroopsCollected();
         troopsCollected = newRound.getTroopsCollected();
         if (troopsCollected >= troopsNeeded){
@@ -216,7 +219,7 @@ public class GameScreenController {
         }
     }
     @FXML
-    private void onLoadAmbulanceButton(){
+    private void onLoadAmbulanceButtonClicked(){
         newRound.increaseMedKitsCollected();
         medKitsCollected = newRound.getMedKitsCollected();
         if (medKitsCollected >= medKitsNeeded){
@@ -237,11 +240,10 @@ public class GameScreenController {
 
             if (!gameEnvironment.isMainTowerBroken()) {
 
-                selectDifficultyLabel.setVisible(false);
-                roundDifficultyBox.setVisible(false);
-                selectDifficultyButton.setVisible(false);
-                difficultyLabel.setVisible(false);
-                cartInfoLabel.setVisible(false);
+                roundModeComboBox.setVisible(false);
+                selectRoundModeButton.setVisible(false);
+                roundModeLabel.setVisible(false);
+                roundInfoLabel1.setVisible(false);
                 shopButton.setVisible(false);
                 inventoryButton.setVisible(false);
                 startRoundButton.setVisible(false);

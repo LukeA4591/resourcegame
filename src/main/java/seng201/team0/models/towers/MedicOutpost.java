@@ -5,7 +5,8 @@ public class MedicOutpost extends SupportTower {
     public MedicOutpost() {
         super("Medic Outpost", 0.3, "Medkits", 600);
     }
+
     public String getDescription() {
-        return "Enhances the reload speed\nof medkit towers.";
+        return "Enhances the reload\nspeed of medkit towers";
     }
 }
