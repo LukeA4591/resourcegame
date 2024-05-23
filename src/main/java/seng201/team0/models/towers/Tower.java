@@ -37,7 +37,7 @@ public abstract class Tower implements Purchasable {
     public double getResourceAmount() {
         return resourceAmount;
     }
-    public void setResourceAmount(int resourceAmount) {
+    public void setResourceAmount(double resourceAmount) {
         this.resourceAmount = resourceAmount;
     }
 
@@ -45,7 +45,12 @@ public abstract class Tower implements Purchasable {
         return reloadSpeed;
     }
     public void setReloadSpeed(double reloadSpeed) {
-        this.reloadSpeed = reloadSpeed;
+        if (reloadSpeed <= 1) {
+            this.reloadSpeed = 1;
+        }
+        else {
+            this.reloadSpeed = reloadSpeed;
+        }
     }
 
     public String getResourceType() {
@@ -98,8 +103,8 @@ public abstract class Tower implements Purchasable {
         }
         else {
             level++;
-            reloadSpeed *= 0.95;
-            resourceAmount *= 1.05;
+            setReloadSpeed(reloadSpeed - 0.05);
+            setResourceAmount(resourceAmount + 2);
         }
     }
 

@@ -150,7 +150,7 @@ public class ShopScreenController {
                 new Label("Name:  " + tower.getName()),
                 new Label("Resource type:  " + tower.getResourceType()),
                 new Label("Resources per click:  " + tower.getResourceAmount()),
-                new Label("Reload speed:  " + tower.getReloadSpeed()),
+                new Label("Reload speed:  " + tower.getReloadSpeed() + " seconds"),
                 new Label("Cost:  " + tower.getCost()),
                 new Label("Sell price: " + tower.getSellPrice()),
                 new Label("Description: " + tower.getDescription())
@@ -171,8 +171,9 @@ public class ShopScreenController {
     private void initializeToggleButtonGroups() {
 
         List<ToggleButton> buttons = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button,
-                tower6Button, tower7Button, tower8Button, tower9Button, item1Button, item2Button, item3Button, playerItem1Button, 
-                playerItem2Button, playerItem3Button, playerTower1Button, playerTower2Button, playerTower3Button, playerTower3Button);
+                tower6Button, tower7Button, tower8Button, tower9Button, item1Button, item2Button, item3Button, item4Button,
+                 item5Button, item6Button, playerItem1Button, playerItem2Button, playerItem3Button, playerTower1Button,
+                playerTower2Button, playerTower3Button, playerTower4Button);
 
         for (ToggleButton button : buttons) {
             button.setToggleGroup(toggleButtons);
@@ -206,7 +207,7 @@ public class ShopScreenController {
             playerTowerButtons.get(i).setDisable(false);
             playerTowerButtons.get(i).setText(gameEnvironment.getReserveTowers().get(i).getName());
 
-            if (gameEnvironment.getReserveTowers().get(i).isBroken()) {
+            if (gameEnvironment.getReserveTowers().get(i).isBroken()) { //causes crash I think
                 playerTowerButtons.get(i).setDisable(true);
             }
 
@@ -247,6 +248,10 @@ public class ShopScreenController {
                         selectedButton.setText("Purchased");
                         selectedButton.setDisable(true);
                         updateToggleButtons();
+
+                        if (selectedTower instanceof SupportTower && gameEnvironment.getSupportTower() == null) {
+                            gameEnvironment.setSupportTower((SupportTower) selectedTower);
+                        }
 
 
                         for (Item item : gameEnvironment.getPlayerItems()) {

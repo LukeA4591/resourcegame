@@ -45,4 +45,10 @@ public class TowerTest {
         assertNotNull(fieldHospital);
     }
 
+    @Test
+    public void testSellPrice() {
+        assertEquals(armoury.getCost() / 2, armoury.getSellPrice());
+    }
+
+
 }

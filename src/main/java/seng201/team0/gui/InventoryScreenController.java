@@ -97,6 +97,7 @@ public class InventoryScreenController {
 
     }
 
+
     @FXML
     private void initializeDescriptions() {
 
@@ -121,13 +122,15 @@ public class InventoryScreenController {
     @FXML
     private void displaySupportTowerInformation(SupportTower tower) {
 
+        towerLevelLabel.setText("");
+
         if (tower != null) {
             descriptionVBox.getChildren().clear();
 
             descriptionVBox.getChildren().addAll(
                     new Label("Name: " + tower.getName()),
                     new Label("Support resource type: " + tower.getResourceType()),
-                    new Label("Reload speed boost: " + tower.getReloadSpeedBoost()),
+                    new Label("Reload speed boost: " + tower.getReloadSpeedBoost() + " seconds"),
                     new Label("Cost: " + tower.getCost()),
                     new Label("Sell Price: " + tower.getSellPrice()),
                     new Label("Description: " + tower.getDescription())
@@ -151,7 +154,7 @@ public class InventoryScreenController {
                     new Label("Name: " + tower.getName()),
                     new Label("Resource type: " + tower.getResourceType()),
                     new Label("Resources per click: " + tower.getResourceAmount()),
-                    new Label("Reload speed: " + tower.getReloadSpeed()),
+                    new Label("Reload speed: " + tower.getReloadSpeed() + " seconds"),
                     new Label("Cost: " + tower.getCost()),
                     new Label("Sell price: " + tower.getSellPrice()),
                     new Label("Description: " + tower.getDescription())
@@ -162,6 +165,8 @@ public class InventoryScreenController {
     @FXML
     private void displayItemInformation(Item item) {
         descriptionVBox.getChildren().clear();
+
+        towerLevelLabel.setText("");
 
         if (!item.getIsRepairKit()) {
             descriptionVBox.getChildren().addAll(

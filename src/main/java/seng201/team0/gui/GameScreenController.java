@@ -127,15 +127,15 @@ public class GameScreenController {
             switch (tower.getResourceType()) {
                 case "Ammunition":
                     tower1NameLabel.setText(tower.getName());
-                    tower1LevelLabel.setText("Level " + tower.getLevel());
+                    tower1LevelLabel.setText(tower.getLevelRepresentation());
 
                 case "Troops":
                     tower2NameLabel.setText(tower.getName());
-                    tower2LevelLabel.setText("Level " + tower.getLevel());
+                    tower2LevelLabel.setText(tower.getLevelRepresentation());
 
                 case "Medkits":
                     tower3NameLabel.setText(tower.getName());
-                    tower3LevelLabel.setText("Level " + tower.getLevel());
+                    tower3LevelLabel.setText(tower.getLevelRepresentation());
             }
         }
 
@@ -184,8 +184,8 @@ public class GameScreenController {
             numberOfAmmunitionCarts = numCarts.get(0);
             numberOfMedkitCarts = numCarts.get(1);
             numberOfTroopCarts = numCarts.get(2);
-            roundInfoLabel1.setText(numberOfAmmunitionCarts + " Ammunition Carts | " + numberOfMedkitCarts + " Medkit Carts | " +
-                    numberOfTroopCarts + " Troop Carts");
+            roundInfoLabel1.setText(numberOfAmmunitionCarts + " Ammunition Carts | " + numberOfTroopCarts + " Troop Carts | " +
+                    numberOfMedkitCarts + " Medkit Carts");
 
             switch (roundMode) {
                 case "Artillery Barrage":
@@ -374,5 +374,6 @@ public class GameScreenController {
                 gameEnvironment.refreshGameScreen();
             }
         }
+
     }
 }
