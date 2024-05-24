@@ -15,7 +15,7 @@ import seng201.team0.models.Round;
 import seng201.team0.models.towers.Tower;
 
 /**
- * Controller class for the game screen.
+ * Controller class for the game screen where the main gameplay functionality is carried out.
  */
 public class GameScreenController {
     /**
