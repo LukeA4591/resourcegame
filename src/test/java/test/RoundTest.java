@@ -2,14 +2,18 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import javafx.scene.control.Alert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng201.team0.GameEnvironment;
+import seng201.team0.gui.AlertHandler;
 import seng201.team0.models.Round;
 import seng201.team0.models.towers.Armoury;
 import seng201.team0.models.towers.Barracks;
 import seng201.team0.models.towers.MedicalTent;
 import seng201.team0.models.towers.Tower;
+
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -23,12 +27,16 @@ public class RoundTest {
     private Tower ammunitionTower;
     private Tower troopTower;
 
+    private AlertHandler alertHandler;
 
     @BeforeEach
     public void init() {
+
+        alertHandler = mock(AlertHandler.class);
+
         gameEnvironment = new GameEnvironment(gameEnvironment1 -> {}, gameEnvironment2 -> {},
                 gameEnvironment3 -> {}, gameEnvironment4 -> {}, gameEnvironment5 -> {}, gameEnvironment6 -> {},
-                () -> {});
+                () -> {}, alertHandler);
 
         medkitTower = new MedicalTent();
         ammunitionTower = new Armoury();
@@ -94,8 +102,6 @@ public class RoundTest {
         ammunitionRound.increaseMedKitsCollected();
         assertEquals(originalAmmunition + ammunitionTower.getResourceAmount(), ammunitionRound.getMedKitsCollected());
     }
-
-
 
 
 }

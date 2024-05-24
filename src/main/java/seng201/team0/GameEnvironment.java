@@ -1,6 +1,7 @@
 package seng201.team0;
 
 import javafx.scene.control.Alert;
+import seng201.team0.gui.AlertHandler;
 import seng201.team0.models.RandomEvent;
 import seng201.team0.models.items.*;
 import seng201.team0.models.towers.*;
@@ -9,6 +10,8 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class GameEnvironment {
+
+    private AlertHandler alertHandler;
 
 
     private final Consumer<GameEnvironment> setupScreenLauncher;
@@ -47,8 +50,9 @@ public class GameEnvironment {
     public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher,
                            Consumer<GameEnvironment> gameScreenLauncher, Consumer<GameEnvironment> shopScreenLauncher,
                            Consumer<GameEnvironment> inventoryScreenLauncher, Consumer<GameEnvironment> endGameScreenLauncher,
-                           Runnable clearScreen) {
+                           Runnable clearScreen, AlertHandler alertHandler) {
 
+        this.alertHandler = alertHandler;
         this.clearScreen = clearScreen;
         this.setupScreenLauncher = setupScreenLauncher;
         this.towerSelectScreenLauncher = towerSelectScreenLauncher;
@@ -249,7 +253,7 @@ public class GameEnvironment {
         }
         else {
 
-            if (mainTower.getResourceType().equals(reserveTower.getResourceType())) {
+            if (mainTower.getResourceType().equals(reserveTower.getResourceType()) && !(reserveTower instanceof SupportTower)) {
 
                 int mainIndex = mainTowers.indexOf(mainTower);
                 int reserveIndex = reserveTowers.indexOf(reserveTower);
@@ -264,10 +268,7 @@ public class GameEnvironment {
     }
 
     public void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.showAndWait();
+        alertHandler.showAlert(title, message, alertType);
     }
 
 
@@ -337,8 +338,6 @@ public class GameEnvironment {
     public void sellTower(Tower tower) {
         setCurrentBalance(currentBalance + tower.getSellPrice());
         reserveTowers.remove(tower);
-
-
         towersInShop.add(createNewInstance(tower));
     }
 

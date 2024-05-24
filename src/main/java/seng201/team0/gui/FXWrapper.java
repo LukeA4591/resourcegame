@@ -1,15 +1,17 @@
 package seng201.team0.gui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import seng201.team0.GameEnvironment;
 
 import java.io.IOException;
 
-public class FXWrapper {
+public class FXWrapper implements AlertHandler {
     @FXML
     private Pane pane;
     private Stage stage;
@@ -17,7 +19,8 @@ public class FXWrapper {
     public void init(Stage stage) {
         this.stage = stage;
         new GameEnvironment(this::launchSetupScreen, this::launchTowerSelectScreen, this::launchGameScreen,
-                this::launchShopScreen, this::launchInventoryScreen, this::launchEndGameScreen, this::clearPane);
+                this::launchShopScreen, this::launchInventoryScreen, this::launchEndGameScreen, this::clearPane,
+                this);
     }
 
     public void clearPane() {
@@ -94,6 +97,16 @@ public class FXWrapper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void showAlert(String title, String message, Alert.AlertType alertType) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(alertType);
+            alert.setTitle(title);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
     }
 
 }
