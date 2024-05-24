@@ -16,86 +16,210 @@ import seng201.team0.models.towers.Tower;
 
 import java.util.ArrayList;
 
-
+/**
+ * Controller class for the game screen.
+ */
 public class GameScreenController {
-
+    /**
+     * Label for displaying player name.
+     */
     @FXML
     private Label playerNameLabel;
+    /**
+     * label for displaying game difficulty.
+     */
     @FXML
     private Label gameDifficultyLabel;
+    /**
+     * label for displaying round count.
+     */
     @FXML
     private Label roundCounterLabel;
+    /**
+     * label for displaying current balance.
+     */
     @FXML
     private Label currentBalanceLabel;
+    /**
+     * label for displaying lives left.
+     */
     @FXML
     private Label livesLeftLabel;
-
+    /**
+     * Label for displaying tower 1 name.
+     */
     @FXML
     private Label tower1NameLabel;
+    /**
+     * Label for displaying tower 1 level.
+     */
     @FXML
     private Label tower1LevelLabel;
+    /**
+     * Label for displaying tower 2 name.
+     */
     @FXML
     private Label tower2NameLabel;
+    /**
+     * Label for displaying tower 2 level.
+     */
     @FXML
     private Label tower2LevelLabel;
+    /**
+     * Label for displaying tower 3 name.
+     */
     @FXML
     private Label tower3NameLabel;
+    /**
+     * Label for displaying tower 3 level.
+     */
     @FXML
     private Label tower3LevelLabel;
+    /**
+     * Label for displaying tower 4 name.
+     */
     @FXML
     private Label tower4NameLabel;
+    /**
+     * Label for displaying the round mode.
+     */
     @FXML
     private Label roundModeLabel;
+    /**
+     * label for displaying the round info.
+     */
     @FXML
     private Label roundInfoLabel1;
+    /**
+     * label for displaying the round info.
+     */
     @FXML
     private Label roundInfoLabel2;
+    /**
+     * label to help display the round timer.
+     */
     @FXML
     private Label roundTimerLabel;
+    /**
+     * label to help display the fill supply truck button.
+     */
     @FXML
     private Label fillSupplyTruckLabel;
+    /**
+     * label to help display the fill humvee button.
+     */
     @FXML
     private Label fillHumveeLabel;
+    /**
+     * label to help display the fill ambulance button.
+     */
     @FXML
     private Label fillAmbulanceLabel;
-
+    /**
+     * button to fill the supply truck.
+     */
     @FXML
     private Button loadSupplyTruckButton;
+    /**
+     * button to fill the humvee.
+     */
     @FXML
     private Button loadHumveeButton;
+    /**
+     * button to fill the ambulance.
+     */
     @FXML
     private Button loadAmbulanceButton;
+    /**
+     * button to access the shop.
+     */
     @FXML
     private Button shopButton;
+    /**
+     * button to access the inventory
+     */
     @FXML
     private Button inventoryButton;
+    /**
+     * button to start the round.
+     */
     @FXML
     private Button startRoundButton;
+    /**
+     * button to select the round mode.
+     */
     @FXML
     private Button selectRoundModeButton;
+    /**
+     * combobox to view the round mode options.
+     */
     @FXML
     private ComboBox<String> roundModeComboBox;
+    /**
+     * progress bar to show progress in filling ammunition carts.
+     */
     @FXML
     private ProgressBar ammoProgressBar;
+    /**
+     * progress bar to show progress in filling the troop carts.
+     */
     @FXML
     private ProgressBar troopProgressBar;
+    /**
+     * progress bar to show progress in filling the med-kit carts.
+     */
     @FXML
     private ProgressBar medKitProgressBar;
+    /**
+     * progress bar to display the round time.
+     */
     @FXML
     private ProgressBar roundTimerProgressBar;
+    /**
+     * String to hold the current round mode.
+     */
     private String roundMode;
+    /**
+     * create a game environment variable
+     */
     private final GameEnvironment gameEnvironment;
+    /**
+     * store the med-kits needed for the round
+     */
     private int medKitsNeeded;
+    /**
+     * store the ammunition needed for the round
+     */
     private int ammunitionNeeded;
+    /**
+     * store the troops needed for the round
+     */
     private int troopsNeeded;
+    /**
+     * create a round variable.
+     */
     private Round newRound;
+    /**
+     * create variable to ensure that endround isn't called twice
+     */
     private boolean called = true;
+    /**
+     * variable to ensure that floating point arithmetic error doesn't effect round.
+     */
     int count;
 
+    /**
+     * Constructor for GameScreen Controller.
+     *
+     * @param tempEnvironment the game environment containing the games state
+     */
     public GameScreenController(final GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
     }
 
+    /**
+     * Initializes the game screen. Sets the visibility of components used during the round to false.
+     */
     @FXML
     public void initialize() {
         roundModeComboBox.getItems().addAll("Artillery Barrage", "Ground Offensive", "Rescue Operation");
@@ -119,7 +243,9 @@ public class GameScreenController {
 
 
     }
-
+    /**
+     * Update labels for the towers in game screen.
+     */
     @FXML
     private void updateTowerLabels() {
 
@@ -149,7 +275,9 @@ public class GameScreenController {
 
     }
 
-
+    /**
+     * Updates the player details displayed on the game screen.
+     */
     @FXML
     private void updatePlayerDetails() {
         playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
@@ -160,17 +288,26 @@ public class GameScreenController {
         livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
     }
 
+    /**
+     * Handles the event when shop button is clicked.
+     */
     @FXML
     private void onShopButtonClicked() {
         gameEnvironment.closeGameScreen(false);
     }
 
+    /**
+     * Handles the event when inventory button is clicked.
+     */
     @FXML
     private void onInventoryButtonClicked() {
         gameEnvironment.closeGameScreen(true);
     }
 
-
+    /**
+     * Handles the event when select round mode is clicked. If no round mode has been chosen display an alert.
+     * If a round mode has been chosen, Initialise the round and number of carts then display the information.
+     */
     @FXML
     private void onSelectRoundModeClicked() {
         this.roundMode = roundModeComboBox.getValue();
@@ -205,6 +342,12 @@ public class GameScreenController {
             }
         }
     }
+
+    /**
+     * Handles the event when load supply truck button is clicked. Adds ammunition to the total already collected.
+     * Checks if ammunition collected is more or equal to ammunition needed. If it is, disable button and display text.
+     * If not display new collected ammunition in progress bar.
+     */
     @FXML
     private void onLoadSupplyTruckButtonClicked() {
         newRound.increaseAmmunitionCollected();
@@ -221,6 +364,12 @@ public class GameScreenController {
             disableButtonForTime(loadSupplyTruckButton, newRound.getAmmunitionTowerReload());
         }
     }
+
+    /**
+     * Handles the event when load humvee button is clicked. Adds troops to the total already collected.
+     * Checks if troops collected is more or equal to troops needed. If it is, disable button and display text.
+     * If not display new collected troops in progress bar.
+     */
     @FXML
     private void onLoadHumveeButtonClicked() {
         newRound.increaseTroopsCollected();
@@ -235,6 +384,12 @@ public class GameScreenController {
             disableButtonForTime(loadHumveeButton, newRound.getTroopTowerReload());
         }
     }
+
+    /**
+     * Handles the event when load ambulance button is clicked. Adds med-kits to the total already collected.
+     * Checks if med-kits collected is more or equal to med-kits needed. If it is, disable button and display text.
+     * If not display new collected med-kits in progress bar.
+     */
     @FXML
     private void onLoadAmbulanceButtonClicked() {
         newRound.increaseMedKitsCollected();
@@ -250,6 +405,10 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * Handles the event when start round button is clicked. Sets the visibility for all controls not needed in
+     * the round to false. Sets all others to true. Starts the round timer.
+     */
     @FXML
     private void onStartRoundButtonClicked() {
 
@@ -291,6 +450,14 @@ public class GameScreenController {
                     "Please choose a Round Mode for your next round", Alert.AlertType.ERROR);
         }
     }
+
+    /**
+     * disables a button for an amount of time, seconds. Disables the button then creates a new Timeline instance
+     * the Timeline contains a KeyFrame instance that uses Duration.millis to pause for parameter seconds.
+     * Button is then enabled.
+     * @param button button to be diabled for some time
+     * @param seconds disables button for set amount of time
+     */
     private void disableButtonForTime(final Button button, final double seconds) {
         button.setDisable(true); // Disable the button
 
@@ -304,6 +471,13 @@ public class GameScreenController {
         timeline.play(); // Start the timeline
     }
 
+    /**
+     * Called when the round starts. Takes a duration in seconds and displays the time interval on a progress bar.
+     * First creates a Timline instance. A Timline takes a KeyFrames intance. The keyframe instance takes 2 parameters,
+     * time, and event. This keyframe performs every 1 second, the event is updating the progress bar by 1 second. This
+     * is repeated howe many seconds are in the round.
+     * @param durationInSeconds The time for the total progress timer to take.
+     */
     private void startProgressTimer(final int durationInSeconds) {
         count = 0;
 
@@ -325,7 +499,10 @@ public class GameScreenController {
         timeline.play();
     }
 
-
+    /**
+     * This event is called when a cart is filled or the round timer finishes. If all three carts are full, set
+     * roundWon to true. If the timer finishes set the round to lost.
+     */
     private void checkRoundDone() {
         Platform.runLater(() -> {
             if (medKitProgressBar.getProgress() == 1 &&
@@ -340,6 +517,12 @@ public class GameScreenController {
         );
     }
 
+    /**
+     * Handles when the round is finished. If round is won, display alert and check if it was the final round.
+     * If round is lost display alert and lose a life and check if the game is lost. This method also initialises a
+     * random event.
+     * @param roundWon true if the round was won, otherwise false.
+     */
     private void endRound(final boolean roundWon) {
 
         if (roundWon) {
