@@ -19,33 +19,64 @@ import java.util.List;
  * ,and repair and remove broken towers.
  */
 public class InventoryScreenController {
-
+    /**
+     * Label to display the player's name.
+     */
     @FXML
     private Label playerNameLabel;
+    /**
+     * Label to display the game difficulty.
+     */
     @FXML
     private Label gameDifficultyLabel;
+    /**
+     * Label to display the game round count.
+     */
     @FXML
     private Label roundCounterLabel;
+    /**
+     * Label to display the player's current balance.
+     */
     @FXML
     private Label currentBalanceLabel;
+    /**
+     * Label to display the player's lives left.
+     */
     @FXML
     private Label livesLeftLabel;
-
+    /**
+     * Label to display whether swap mode is enabled or disabled.
+     */
     @FXML
     private Label infoLabel;
-
+    /**
+     * Label to display the towers levels.
+     */
     @FXML
     private Label towerLevelLabel;
-
+    /**
+     * ToggleButton for selecting the ammunition tower.
+     */
     @FXML
     private ToggleButton ammunitionTowerButton;
+    /**
+     * ToggleButton for selecting the troops tower button.
+     */
     @FXML
     private ToggleButton troopsTowerButton;
+    /**
+     * ToggleButton for selecting the medkits tower button.
+     */
     @FXML
     private ToggleButton medkitsTowerButton;
+    /**
+     * ToggleButton for selecting the support tower button.
+     */
     @FXML
     private ToggleButton supportTowerButton;
-
+    /**
+     * ToggleButtons for selecting the reserve towers.
+     */
     @FXML
     private ToggleButton reserveTower1Button;
     @FXML
@@ -54,35 +85,66 @@ public class InventoryScreenController {
     private ToggleButton reserveTower3Button;
     @FXML
     private ToggleButton reserveTower4Button;
-
+    /**
+     * ToggleButtons for selecting the items.
+     */
     @FXML
     private ToggleButton item1Button;
     @FXML
     private ToggleButton item2Button;
     @FXML
     private ToggleButton item3Button;
-
-
+    /**
+     * Button for repairing a selected broken tower.
+     */
     @FXML
     private Button repairTowerButton;
+    /**
+     * Button for removing a selected broken tower from the inventory.
+     */
     @FXML
     private Button removeTowerButton;
+    /**
+     * Button for handling returning to the game screen.
+     */
     @FXML
     private Button returnButton;
-
+    /**
+     * VBox for showing tower and item information.
+     */
     @FXML
     private VBox descriptionVBox;
-
+    /**
+     * ToggleGroup for all ToggleButtons.
+     */
     private final ToggleGroup allToggleButtonsGroup = new ToggleGroup();
+    /**
+     * ToggleGroup for all main tower ToggleButtons.
+     */
     private final ToggleGroup mainTowersToggleGroup = new ToggleGroup();
+    /**
+     * ToggleGroup for all reserve tower ToggleButtons.
+     */
     private final ToggleGroup reserveTowersToggleGroup = new ToggleGroup();
-
+    /**
+     * List of reserve tower ToggleButtons.
+     */
     private List<ToggleButton> reserveTowerToggleButtons;
+    /**
+     * List of main tower ToggleButtons.
+     */
     private List<ToggleButton> mainTowerToggleButtons;
+    /**
+     * List of item ToggleButtons.
+     */
     private List<ToggleButton> itemToggleButtons;
-
+    /**
+     * Boolean for determining whether tower swap mode is enabled or disabled.
+     */
     private boolean swappingTowers = false;
-
+    /**
+     * The game environment managing the game's state.
+     */
     private final GameEnvironment gameEnvironment;
 
     /**
@@ -120,7 +182,6 @@ public class InventoryScreenController {
                 troopsTowerButton.getText())));
         medkitsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(
                 medkitsTowerButton.getText())));
-
         supportTowerButton.setOnAction(event -> displaySupportTowerInformation(gameEnvironment.getSupportTower()));
 
         reserveTower1Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(
@@ -479,6 +540,7 @@ public class InventoryScreenController {
 
                     Item repairKit = null;
 
+                    // Finding if there is a repair kit item.
                     for (ToggleButton button : itemToggleButtons) {
 
                         if (gameEnvironment.getPlayerItems().contains(gameEnvironment.getPlayerItemByName(
@@ -554,6 +616,7 @@ public class InventoryScreenController {
             if (selectedTower != null) {
                 if (selectedTower.isBroken()) {
 
+                    // Checks that the selected tower is not in main towers.
                     if (!gameEnvironment.getMainTowers().contains(selectedTower)) {
                         gameEnvironment.removeTower(selectedTower);
                     } else {

@@ -10,12 +10,19 @@ import javafx.scene.control.Label;
  * Controller class for the end game screen. Shows the game result and statistics.
  */
 public class EndGameScreenController {
-
+    /**
+     * Label that shows the games result
+     */
     @FXML
     private Label gameResultLabel;
+    /**
+     * VBox that displays end game statistics.
+     */
     @FXML
     private VBox statsVBox;
-
+    /**
+     * game environment which manages the game's state.
+     */
     private final GameEnvironment gameEnvironment;
 
     /**
@@ -65,8 +72,5 @@ public class EndGameScreenController {
 
         statsVBox.setSpacing(5);
         statsVBox.setAlignment(Pos.CENTER);
-
-
-
     }
 }

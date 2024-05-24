@@ -15,11 +15,17 @@ import java.util.Random;
 /**
  * FXWrapper class manages the screens in the application and handles alerts.
  * It also initializes the game environment which is responsible for keeping track of the game's state.
+ * Code for launching screens is reused and repurposed from Tutorial 2.
  */
 public class FXWrapper implements AlertHandler {
-
+    /**
+     * Pane for the application to be run on.
+     */
     @FXML
     private Pane pane;
+    /**
+     * Primary stage for the application.
+     */
     private Stage stage;
 
     /**
@@ -33,12 +39,14 @@ public class FXWrapper implements AlertHandler {
                 this::launchShopScreen, this::launchInventoryScreen, this::launchEndGameScreen, this::clearPane,
                 this, new Random());
     }
+
     /**
      * Clears the plane between screens.
      */
     public void clearPane() {
         pane.getChildren().removeAll(pane.getChildren());
     }
+
     /**
      * Launches the setup screen.
      *
@@ -55,6 +63,7 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
+
     /**
      * Launches the tower select screen.
      *
@@ -71,6 +80,7 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
+
     /**
      * Launches the game screen.
      *
@@ -88,6 +98,7 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
+
     /**
      * Launches the shop screen.
      *
@@ -104,6 +115,7 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
+
     /**
      * Launches the inventory screen.
      *
@@ -120,6 +132,7 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
+
     /**
      * Launches the end game screen.
      *
