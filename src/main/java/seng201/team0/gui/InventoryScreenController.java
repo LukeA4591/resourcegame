@@ -1,11 +1,15 @@
 package seng201.team0.gui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.items.Item;
-import seng201.team0.models.towers.*;
+import seng201.team0.models.towers.Tower;
 import seng201.team0.models.towers.SupportTower;
 
 import java.util.List;
@@ -81,7 +85,7 @@ public class InventoryScreenController {
 
     private final GameEnvironment gameEnvironment;
 
-    public InventoryScreenController(GameEnvironment tempEnvironment) {
+    public InventoryScreenController(final GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
 
     }
@@ -129,7 +133,7 @@ public class InventoryScreenController {
 
 
     @FXML
-    private void displaySupportTowerInformation(SupportTower tower) {
+    private void displaySupportTowerInformation(final SupportTower tower) {
 
         towerLevelLabel.setText("");
 
@@ -137,7 +141,7 @@ public class InventoryScreenController {
 
     }
 
-    static void displaySupportTowerInformation(SupportTower tower, VBox descriptionVBox) {
+    static void displaySupportTowerInformation(final SupportTower tower, final VBox descriptionVBox) {
 
         if (tower != null) {
             descriptionVBox.getChildren().clear();
@@ -154,7 +158,7 @@ public class InventoryScreenController {
     }
 
     @FXML
-    private void displayTowerInformation(Tower tower) {
+    private void displayTowerInformation(final Tower tower) {
 
         if (tower instanceof SupportTower) {
             displaySupportTowerInformation((SupportTower) tower);
@@ -167,7 +171,7 @@ public class InventoryScreenController {
         }
     }
 
-    static void displayTowerInformation(Tower tower, VBox descriptionVBox) {
+    static void displayTowerInformation(final Tower tower, final VBox descriptionVBox) {
         descriptionVBox.getChildren().clear();
 
         descriptionVBox.getChildren().addAll(
@@ -182,7 +186,7 @@ public class InventoryScreenController {
     }
 
     @FXML
-    private void displayItemInformation(Item item) {
+    private void displayItemInformation(final Item item) {
         descriptionVBox.getChildren().clear();
 
         towerLevelLabel.setText("");
@@ -190,7 +194,7 @@ public class InventoryScreenController {
         displayItemInformation(item, descriptionVBox);
     }
 
-    static void displayItemInformation(Item item, VBox descriptionVBox) {
+    static void displayItemInformation(final Item item, final VBox descriptionVBox) {
         if (!item.getIsRepairKit()) {
             descriptionVBox.getChildren().addAll(
                     new Label("Name: " + item.getName()),
@@ -270,7 +274,7 @@ public class InventoryScreenController {
         troopsTowerButton.setToggleGroup(mainTowersToggleGroup);
         medkitsTowerButton.setToggleGroup(mainTowersToggleGroup);
 
-        List<ToggleButton> reserveButtons= List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button,
+        List<ToggleButton> reserveButtons = List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button,
                 reserveTower4Button);
 
         for (ToggleButton button : reserveButtons) {
@@ -330,7 +334,7 @@ public class InventoryScreenController {
                 }
             }
 
-            if (mainTower != null && reserveTower!= null) {
+            if (mainTower != null && reserveTower != null) {
                 gameEnvironment.swapTowers(mainTower, reserveTower);
                 updateButtons();
             }
@@ -418,20 +422,22 @@ public class InventoryScreenController {
                         }
                     }
 
-                         if (repairKit == null){
-                            gameEnvironment.showAlert("No Valid Repair Kit", "No repair kits are " +
-                                    "available to repair this tower", Alert.AlertType.ERROR);
-                        }
+                    if (repairKit == null) {
+                        gameEnvironment.showAlert("No Valid Repair Kit", "No repair kits are " +
+                                "available to repair this tower", Alert.AlertType.ERROR);
+                    }
 
                 } else {
                     gameEnvironment.showAlert("Tower Not Broken", "There is no need to use a repair " +
                             "kit on this tower because it is not broken.", Alert.AlertType.ERROR);
                 }
             }
-            }
-            else {gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
-                "for repairing", Alert.AlertType.ERROR);}
         }
+        else {
+            gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
+                    "for repairing", Alert.AlertType.ERROR);
+        }
+    }
 
     @FXML
     private Tower getSelectedTower(ToggleButton selectedButton) {
@@ -477,13 +483,10 @@ public class InventoryScreenController {
                 }
             }
         }
-                else
-                {
-                    gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
-                            "for removal", Alert.AlertType.ERROR);
-
-
+        else {
+            gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
+                    "for removal", Alert.AlertType.ERROR);
             }
-        }
+    }
 }
 

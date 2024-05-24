@@ -55,9 +55,10 @@ public class GameEnvironment {
 
 
     public GameEnvironment(final Consumer<GameEnvironment> setupScreenLauncher, final Consumer<GameEnvironment>
-            towerSelectScreenLauncher, final Consumer<GameEnvironment> gameScreenLauncher, final Consumer<GameEnvironment>
-            shopScreenLauncher, final Consumer<GameEnvironment> inventoryScreenLauncher, final Consumer<GameEnvironment>
-            endGameScreenLauncher, final Runnable clearScreen, final AlertHandler alertHandler, final Random random) {
+            towerSelectScreenLauncher, final Consumer<GameEnvironment> gameScreenLauncher,
+            final Consumer<GameEnvironment> shopScreenLauncher, final Consumer<GameEnvironment> inventoryScreenLauncher,
+            final Consumer<GameEnvironment> endGameScreenLauncher, final Runnable clearScreen, final AlertHandler
+            alertHandler, final Random random) {
 
         this.alertHandler = alertHandler;
         this.clearScreen = clearScreen;
@@ -98,7 +99,8 @@ public class GameEnvironment {
     }
 
     public void launchTowerSelectScreen() {
-        towerSelectScreenLauncher.accept(this);}
+        towerSelectScreenLauncher.accept(this);
+    }
     public void closeTowerSelectScreen() {
         clearScreen.run();
         launchGameScreen();
@@ -116,7 +118,7 @@ public class GameEnvironment {
             launchShopScreen();
         }
     }
-    public void refreshGameScreen(){
+    public void refreshGameScreen() {
         clearScreen.run();
         launchGameScreen();
     }
@@ -364,7 +366,7 @@ public class GameEnvironment {
         towersInShop.add(createNewInstance(tower));
     }
 
-    public Tower createNewInstance(Tower tower) {
+    public Tower createNewInstance(final Tower tower) {
         if (tower instanceof Armoury) {
             return new Armoury();
         } else if (tower instanceof Barracks) {

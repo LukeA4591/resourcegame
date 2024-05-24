@@ -92,7 +92,7 @@ public class ShopScreenController {
 
     private final GameEnvironment gameEnvironment;
 
-    public ShopScreenController(GameEnvironment tempEnvironment) {
+    public ShopScreenController(final GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
     }
 
@@ -131,7 +131,7 @@ public class ShopScreenController {
     }
 
     @FXML
-    private void displaySupportTowerInformation(SupportTower tower) {
+    private void displaySupportTowerInformation(final SupportTower tower) {
 
         towerLevelLabel.setText("");
 
@@ -141,7 +141,7 @@ public class ShopScreenController {
 
 
     @FXML
-    private void displayItemInformation(Item item) {
+    private void displayItemInformation(final Item item) {
         descriptionVBox.getChildren().clear();
 
         towerLevelLabel.setText("");
@@ -150,7 +150,7 @@ public class ShopScreenController {
     }
 
     @FXML
-    private void displayTowerInformation(Tower tower) {
+    private void displayTowerInformation(final Tower tower) {
 
         if (tower instanceof SupportTower) {
             displaySupportTowerInformation((SupportTower) tower);
@@ -213,7 +213,7 @@ public class ShopScreenController {
             playerTowerButtons.get(i).setDisable(false);
             playerTowerButtons.get(i).setText(gameEnvironment.getReserveTowers().get(i).getName());
 
-            if (gameEnvironment.getReserveTowers().get(i).isBroken()) { //causes crash I think
+            if (gameEnvironment.getReserveTowers().get(i).isBroken()) {
                 playerTowerButtons.get(i).setDisable(true);
             }
 
@@ -276,7 +276,7 @@ public class ShopScreenController {
                         gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money" +
                                 " to " +
                                 "purchase this tower.", Alert.AlertType.ERROR);
-                }
+                    }
 
                 }
             } else if (shopItemsButtons.contains(selectedButton)) {

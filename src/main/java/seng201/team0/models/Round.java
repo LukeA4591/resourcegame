@@ -4,7 +4,9 @@ import seng201.team0.GameEnvironment;
 import seng201.team0.models.carts.*;
 import seng201.team0.models.towers.Tower;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Round {
 
@@ -27,7 +29,7 @@ public class Round {
     private Tower troopTower;
     private int cartSpeed;
 
-    public Round(int roundNumber, String roundMode, GameEnvironment gameEnvironment) {
+    public Round(final int roundNumber, final String roundMode, final GameEnvironment gameEnvironment) {
 
         this.roundNumber = roundNumber;
         this.roundMode = roundMode;
@@ -77,16 +79,16 @@ public class Round {
                 break;
         }
 
-        for (Cart medKitCart : medkitCarts){
+        for (Cart medKitCart : medkitCarts) {
             medKitsRequired += medKitCart.getSize();
         }
-        for (Cart ammunitionCart : ammunitionCarts){
+        for (Cart ammunitionCart : ammunitionCarts) {
             ammunitionRequired += ammunitionCart.getSize();
         }
-        for (Cart troopCart : troopCarts){
+        for (Cart troopCart : troopCarts) {
             troopsRequired += troopCart.getSize();
         }
-        for (Tower tower : gameEnvironment.getMainTowers()){
+        for (Tower tower : gameEnvironment.getMainTowers()) {
             switch (tower.getResourceType()) {
                 case "Medkits" -> this.medkitTower = tower;
                 case "Ammunition" -> this.ammunitionTower = tower;
@@ -94,39 +96,48 @@ public class Round {
             }
         }
     }
-    public ArrayList<Integer> getNumCarts(){
+
+    public ArrayList<Integer> getNumCarts() {
         return new ArrayList<>(List.of(ammunitionCarts.size(),
                 medkitCarts.size(), troopCarts.size()));
     }
-    public int getMedKitsCollected(){
+    public int getMedKitsCollected() {
         return medKitsCollected;
     }
-    public int getTroopsCollected(){
+    public int getTroopsCollected() {
         return troopsCollected;
     }
-    public int getAmmunitionCollected(){
+    public int getAmmunitionCollected() {
         return ammunitionCollected;
     }
-    public void increaseMedKitsCollected(){
+    public void increaseMedKitsCollected() {
         medKitsCollected += (int) medkitTower.getResourceAmount();
     }
-    public void increaseAmmunitionCollected(){
+    public void increaseAmmunitionCollected() {
         ammunitionCollected += (int) ammunitionTower.getResourceAmount();
     }
-    public void increaseTroopsCollected(){
+    public void increaseTroopsCollected() {
         troopsCollected += (int) troopTower.getResourceAmount();
     }
-    public int getMedKitsRequired(){
+    public int getMedKitsRequired() {
         return medKitsRequired;
     }
-    public int getAmmunitionRequired(){
+    public int getAmmunitionRequired() {
         return ammunitionRequired;
     }
-    public int getTroopsRequired(){
+    public int getTroopsRequired() {
         return troopsRequired;
     }
-    public double getMedkitTowerReload(){ return medkitTower.getReloadSpeed(); }
-    public double getAmmunitionTowerReload(){ return ammunitionTower.getReloadSpeed(); }
-    public double getTroopTowerReload(){ return troopTower.getReloadSpeed(); }
-    public int getCartSpeed() { return cartSpeed; }
+    public double getMedkitTowerReload() {
+        return medkitTower.getReloadSpeed();
+    }
+    public double getAmmunitionTowerReload() {
+        return ammunitionTower.getReloadSpeed();
+    }
+    public double getTroopTowerReload() {
+        return troopTower.getReloadSpeed();
+    }
+    public int getCartSpeed() {
+        return cartSpeed;
+    }
 }

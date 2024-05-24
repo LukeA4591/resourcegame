@@ -253,7 +253,7 @@ public class GameScreenController {
     @FXML
     private void onStartRoundButtonClicked() {
 
-        if (roundMode != null){
+        if (roundMode != null) {
 
             if (!gameEnvironment.isMainTowerBroken()) {
 
@@ -340,7 +340,7 @@ public class GameScreenController {
         );
     }
 
-    private void endRound(final boolean roundWon){
+    private void endRound(final boolean roundWon) {
 
         if (roundWon) {
 

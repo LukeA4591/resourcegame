@@ -3,11 +3,14 @@ package seng201.team0.gui;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
-import seng201.team0.models.towers.*;
-import javafx.scene.control.Alert.*;
+import seng201.team0.models.towers.Tower;
+import javafx.scene.control.Alert;
 
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import seng201.team0.models.towers.gametowers.*;
+
 
 public class TowerSelectScreenController {
 
@@ -42,7 +45,7 @@ public class TowerSelectScreenController {
 
     private final GameEnvironment gameEnvironment;
 
-    public TowerSelectScreenController(GameEnvironment tempEnvironment) {
+    public TowerSelectScreenController(final GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
     }
 
@@ -74,7 +77,7 @@ public class TowerSelectScreenController {
 
     }
     @FXML
-    public void displayTowerInformation(Tower tower) {
+    public void displayTowerInformation(final Tower tower) {
 
         towerStatsVBox.getChildren().clear();
         towerStatsVBox.getChildren().addAll(
@@ -94,8 +97,10 @@ public class TowerSelectScreenController {
             storeTowers();
             gameEnvironment.closeTowerSelectScreen();
         }
-        else gameEnvironment.showAlert("Invalid Tower Selection", "Please select your three starting" +
-                " towers.", AlertType.ERROR);
+        else {
+            gameEnvironment.showAlert("Invalid Tower Selection", "Please select your three starting" +
+                    " towers.", Alert.AlertType.ERROR);
+        }
     }
 
 
@@ -131,10 +136,6 @@ public class TowerSelectScreenController {
         }
 
     }
-
-
-
-
 
 
 }
