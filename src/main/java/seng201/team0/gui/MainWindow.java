@@ -28,7 +28,7 @@ public class MainWindow extends Application {
         baseController.init(primaryStage);
 
         primaryStage.setTitle("FX Wrapper");
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 750, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
