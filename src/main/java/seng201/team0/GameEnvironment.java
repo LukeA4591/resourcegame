@@ -422,10 +422,18 @@ public class GameEnvironment {
         RandomEvent event = getRandomEvent();
 
         switch (event) {
-            case ENEMY_AIR_STRIKE -> enemyAirStrike();
-            case ENEMY_AMBUSH -> enemyAmbush();
-            case COMMUNICATIONS_BREAKDOWN -> communicationsBreakdown();
-            case MEDICAL_SUPPLY_LINE_SABOTAGE -> medicalSupplyLineSabotage();
+            case ENEMY_AIR_STRIKE:
+                enemyAirStrike();
+                break;
+            case ENEMY_AMBUSH:
+                enemyAmbush();
+                break;
+            case COMMUNICATIONS_BREAKDOWN:
+                communicationsBreakdown();
+                break;
+            case MEDICAL_SUPPLY_LINE_SABOTAGE:
+                medicalSupplyLineSabotage();
+                break;
         }
     }
 
@@ -455,7 +463,8 @@ public class GameEnvironment {
 
     public void communicationsBreakdown() {
 
-        List<Tower> allTowers = mainTowers;
+        List<Tower> allTowers = new ArrayList<>();
+        allTowers.addAll(mainTowers);
         allTowers.addAll(reserveTowers);
 
         List<Tower> possibleTowers = new ArrayList<>();
@@ -476,7 +485,8 @@ public class GameEnvironment {
 
     public void medicalSupplyLineSabotage() {
 
-        List<Tower> allTowers = mainTowers;
+        List<Tower> allTowers = new ArrayList<>();
+        allTowers.addAll(mainTowers);
         allTowers.addAll(reserveTowers);
 
         List<Tower> possibleTowers = new ArrayList<>();
@@ -496,7 +506,8 @@ public class GameEnvironment {
 
     public void enemyAmbush() {
 
-        List<Tower> allTowers = mainTowers;
+        List<Tower> allTowers = new ArrayList<>();
+        allTowers.addAll(mainTowers);
 
         if (!reserveTowers.isEmpty()) {
             allTowers.addAll(reserveTowers);

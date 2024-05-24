@@ -99,7 +99,6 @@ public class GameScreenController {
 
     @FXML
     public void initialize() {
-
         roundModeComboBox.getItems().addAll("Artillery Barrage", "Ground Offensive", "Rescue Operation");
         ammoProgressBar.setProgress(0);
         troopProgressBar.setProgress(0);
@@ -337,6 +336,7 @@ public class GameScreenController {
     }
 
     private void endRound(boolean roundWon){
+
         if (roundWon) {
 
             if (gameEnvironment.shouldTriggerRandomEvent()) {
