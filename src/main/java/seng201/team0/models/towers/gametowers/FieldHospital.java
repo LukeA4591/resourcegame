@@ -1,6 +1,8 @@
-package seng201.team0.models.towers;
+package seng201.team0.models.towers.gametowers;
 
-public class FieldHospital extends Tower{
+import seng201.team0.models.towers.Tower;
+
+public class FieldHospital extends Tower {
 
 
     public FieldHospital() {

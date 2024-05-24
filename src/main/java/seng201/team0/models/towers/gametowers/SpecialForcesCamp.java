@@ -1,6 +1,8 @@
-package seng201.team0.models.towers;
+package seng201.team0.models.towers.gametowers;
 
-public class SpecialForcesCamp extends Tower{
+import seng201.team0.models.towers.Tower;
+
+public class SpecialForcesCamp extends Tower {
 
     private static final double DEFAULT_RESOURCE_AMOUNT = 10.0;
     private static final double DEFAULT_RELOAD_SPEED = 1.5;

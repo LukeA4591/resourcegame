@@ -5,6 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng201.team0.models.towers.*;
+import seng201.team0.models.towers.gametowers.Armoury;
+import seng201.team0.models.towers.gametowers.Barracks;
+import seng201.team0.models.towers.gametowers.MedicalTent;
+import seng201.team0.models.towers.gametowers.SpecialForcesCamp;
+import seng201.team0.models.towers.supporttowers.AmmoRelayStation;
+import seng201.team0.models.towers.supporttowers.MedicOutpost;
+import seng201.team0.models.towers.supporttowers.TroopCommandPost;
 
 public class SupportTowerTest {
 

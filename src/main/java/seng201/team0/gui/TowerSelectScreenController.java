@@ -7,6 +7,7 @@ import seng201.team0.models.towers.*;
 import javafx.scene.control.Alert.*;
 
 import javafx.scene.control.*;
+import seng201.team0.models.towers.gametowers.*;
 
 public class TowerSelectScreenController {
 

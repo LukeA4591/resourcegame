@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng201.team0.models.towers.*;
+import seng201.team0.models.towers.gametowers.*;
 
 public class TowerTest {
 

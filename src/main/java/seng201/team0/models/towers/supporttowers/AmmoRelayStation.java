@@ -1,4 +1,6 @@
-package seng201.team0.models.towers;
+package seng201.team0.models.towers.supporttowers;
+
+import seng201.team0.models.towers.SupportTower;
 
 public class AmmoRelayStation extends SupportTower {
 

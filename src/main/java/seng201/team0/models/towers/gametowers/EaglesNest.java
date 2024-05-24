@@ -1,4 +1,6 @@
-package seng201.team0.models.towers;
+package seng201.team0.models.towers.gametowers;
+
+import seng201.team0.models.towers.Tower;
 
 public class EaglesNest extends Tower {
 

@@ -2,22 +2,20 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import javafx.scene.control.Alert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seng201.team0.GameEnvironment;
 import seng201.team0.gui.AlertHandler;
 import seng201.team0.models.Round;
-import seng201.team0.models.towers.Armoury;
-import seng201.team0.models.towers.Barracks;
-import seng201.team0.models.towers.MedicalTent;
+import seng201.team0.models.towers.gametowers.Armoury;
+import seng201.team0.models.towers.gametowers.Barracks;
+import seng201.team0.models.towers.gametowers.MedicalTent;
 import seng201.team0.models.towers.Tower;
 
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.function.Consumer;
 
 public class RoundTest {
     private GameEnvironment gameEnvironment;
