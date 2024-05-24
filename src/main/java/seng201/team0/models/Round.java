@@ -5,7 +5,6 @@ import seng201.team0.models.carts.*;
 import seng201.team0.models.towers.Tower;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * round class that handles round calculations for one round.
@@ -14,9 +13,9 @@ public class Round {
     /**
      * create a list of type Cart for each resource.
      */
-    private final List<Cart> ammunitionCarts;
-    private final List<Cart> medkitCarts;
-    private final List<Cart> troopCarts;
+    private final ArrayList<Cart> ammunitionCarts;
+    private final ArrayList<Cart> medkitCarts;
+    private final ArrayList<Cart> troopCarts;
     /**
      * current round.
      */
@@ -157,9 +156,16 @@ public class Round {
      * Create a list of the amount of carts required for each resource.
      * @return a list of the amount of each type of cart.
      */
-    public ArrayList<Integer> getNumCarts() {
-        return new ArrayList<>(List.of(ammunitionCarts.size(),
-                medkitCarts.size(), troopCarts.size()));
+    public ArrayList<Cart> getMedkitCarts() {
+        return medkitCarts;
+    }
+
+    public ArrayList<Cart> getAmmunitionCarts(){
+        return ammunitionCarts;
+    }
+
+    public ArrayList<Cart> getTroopCarts() {
+        return troopCarts;
     }
 
     /**

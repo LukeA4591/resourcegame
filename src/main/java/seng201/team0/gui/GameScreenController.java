@@ -14,8 +14,6 @@ import javafx.animation.KeyFrame;
 import seng201.team0.models.Round;
 import seng201.team0.models.towers.Tower;
 
-import java.util.ArrayList;
-
 /**
  * Controller class for the game screen.
  */
@@ -222,11 +220,14 @@ public class GameScreenController {
      */
     @FXML
     public void initialize() {
+        // display round modes in combo box
         roundModeComboBox.getItems().addAll("Artillery Barrage", "Ground Offensive", "Rescue Operation");
+        // set progress bars to 0
         ammoProgressBar.setProgress(0);
         troopProgressBar.setProgress(0);
         medKitProgressBar.setProgress(0);
         roundTimerProgressBar.setProgress(0);
+        // set visibility of round controls to false
         ammoProgressBar.setVisible(false);
         troopProgressBar.setVisible(false);
         medKitProgressBar.setVisible(false);
@@ -235,6 +236,7 @@ public class GameScreenController {
         fillSupplyTruckLabel.setVisible(false);
         fillAmbulanceLabel.setVisible(false);
         fillHumveeLabel.setVisible(false);
+        // disable resources buttons until round starts
         loadSupplyTruckButton.setDisable(true);
         loadAmbulanceButton.setDisable(true);
         loadHumveeButton.setDisable(true);
@@ -248,9 +250,9 @@ public class GameScreenController {
      */
     @FXML
     private void updateTowerLabels() {
-
         for (Tower tower : gameEnvironment.getMainTowers()) {
             switch (tower.getResourceType()) {
+                // set tower name and level labels for each resource
                 case "Ammunition":
                     tower1NameLabel.setText(tower.getName());
                     tower1LevelLabel.setText(tower.getLevelRepresentation());
@@ -265,14 +267,13 @@ public class GameScreenController {
                     break;
             }
         }
-
+        // set support tower name
         if (gameEnvironment.getSupportTower() != null) {
             tower4NameLabel.setText(gameEnvironment.getSupportTower().getName());
         }
         else {
             tower4NameLabel.setText("Locked");
         }
-
     }
 
     /**
@@ -310,6 +311,7 @@ public class GameScreenController {
      */
     @FXML
     private void onSelectRoundModeClicked() {
+        // get round mode selected from combo box
         this.roundMode = roundModeComboBox.getValue();
         if (roundMode == null) {
             gameEnvironment.showAlert("Invalid Round Mode",
@@ -319,10 +321,9 @@ public class GameScreenController {
             gameEnvironment.setRoundMode(roundMode);
             newRound = new Round(gameEnvironment.getCurrentRound(),
                     roundMode, gameEnvironment);
-            ArrayList<Integer> numCarts = newRound.getNumCarts();
-            int numberOfAmmunitionCarts = numCarts.get(0);
-            int numberOfMedkitCarts = numCarts.get(1);
-            int numberOfTroopCarts = numCarts.get(2);
+            int numberOfAmmunitionCarts = newRound.getAmmunitionCarts().size();
+            int numberOfMedkitCarts = newRound.getMedkitCarts().size();
+            int numberOfTroopCarts = newRound.getTroopCarts().size();
             roundInfoLabel1.setText(numberOfAmmunitionCarts + " Ammunition Carts | " + numberOfTroopCarts +
                     " Troop Carts | " + numberOfMedkitCarts + " Medkit Carts");
 
@@ -350,6 +351,7 @@ public class GameScreenController {
      */
     @FXML
     private void onLoadSupplyTruckButtonClicked() {
+        // add the resources gathered by ammunition tower to round instance
         newRound.increaseAmmunitionCollected();
         int ammunitionCollected = newRound.getAmmunitionCollected();
 
@@ -372,6 +374,7 @@ public class GameScreenController {
      */
     @FXML
     private void onLoadHumveeButtonClicked() {
+        // add the resources gathered by troop tower to round instance
         newRound.increaseTroopsCollected();
         int troopsCollected = newRound.getTroopsCollected();
         if (troopsCollected >= troopsNeeded) {
@@ -392,6 +395,7 @@ public class GameScreenController {
      */
     @FXML
     private void onLoadAmbulanceButtonClicked() {
+        // add the resources gathered by med-kit tower to round instance
         newRound.increaseMedKitsCollected();
         int medKitsCollected = newRound.getMedKitsCollected();
         if (medKitsCollected >= medKitsNeeded) {
@@ -415,7 +419,7 @@ public class GameScreenController {
         if (roundMode != null) {
 
             if (!gameEnvironment.isMainTowerBroken()) {
-
+                // set visibility for game screen components not needed for the round to false
                 roundModeComboBox.setVisible(false);
                 selectRoundModeButton.setVisible(false);
                 roundModeLabel.setVisible(false);
@@ -424,6 +428,7 @@ public class GameScreenController {
                 shopButton.setVisible(false);
                 inventoryButton.setVisible(false);
                 startRoundButton.setVisible(false);
+                // set visibility for round components to true
                 ammoProgressBar.setVisible(true);
                 troopProgressBar.setVisible(true);
                 medKitProgressBar.setVisible(true);
@@ -432,6 +437,7 @@ public class GameScreenController {
                 fillSupplyTruckLabel.setVisible(true);
                 fillAmbulanceLabel.setVisible(true);
                 fillHumveeLabel.setVisible(true);
+                // enable load resource buttons
                 loadSupplyTruckButton.setDisable(false);
                 loadAmbulanceButton.setDisable(false);
                 loadHumveeButton.setDisable(false);
@@ -467,7 +473,7 @@ public class GameScreenController {
                 event -> button.setDisable(false) // Re-enable the button after the duration
 
         ));
-        timeline.setCycleCount(1); // Only run once
+        timeline.setCycleCount(1);
         timeline.play(); // Start the timeline
     }
 
@@ -483,7 +489,7 @@ public class GameScreenController {
 
         roundTimerProgressBar.setProgress(0.0);
 
-        // Define a Timeline to update progress
+        // Define a Timeline to update progress bar
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), event -> {
                     double progress = roundTimerProgressBar.getProgress() + 1.0 / durationInSeconds;
@@ -491,10 +497,10 @@ public class GameScreenController {
                     count += 1;
                     if (count == durationInSeconds) {
                         roundTimerProgressBar.setProgress(1);
-                    }
+                    } // update progress bar every second and check if it is full
                 })
         );
-        timeline.setCycleCount(durationInSeconds);
+        timeline.setCycleCount(durationInSeconds); // repeat for however many seconds in the round
         timeline.setOnFinished(event -> checkRoundDone());
         timeline.play();
     }
@@ -524,7 +530,6 @@ public class GameScreenController {
      * @param roundWon true if the round was won, otherwise false.
      */
     private void endRound(final boolean roundWon) {
-
         if (roundWon) {
 
             int roundWinBonus = gameEnvironment.getRoundWinBonus();

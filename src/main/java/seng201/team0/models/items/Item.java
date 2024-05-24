@@ -2,6 +2,9 @@ package seng201.team0.models.items;
 
 import seng201.team0.models.Purchasable;
 
+/**
+ * 
+ */
 public abstract class Item implements Purchasable {
 
     private final String name;
