@@ -113,16 +113,20 @@ public class ShopScreenController {
     private void initializeDescriptions() {
 
         for (ToggleButton button : towerShopButtons) {
-            button.setOnAction(event -> displayTowerInformation(gameEnvironment.getTowerInShopByName(button.getText())));
+            button.setOnAction(event -> displayTowerInformation(gameEnvironment.getTowerInShopByName(
+                    button.getText())));
         }
         for (ToggleButton button : shopItemsButtons) {
-            button.setOnAction(event -> displayItemInformation(gameEnvironment.getItemInShopByName(button.getText())));
+            button.setOnAction(event -> displayItemInformation(gameEnvironment.getItemInShopByName(
+                    button.getText())));
         }
         for (ToggleButton button : playerItemButtons) {
-            button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(button.getText())));
+            button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(
+                    button.getText())));
         }
         for (ToggleButton button : playerTowerButtons) {
-            button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(button.getText())));
+            button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(
+                    button.getText())));
         }
     }
 
@@ -173,9 +177,9 @@ public class ShopScreenController {
     private void initializeToggleButtonGroups() {
 
         List<ToggleButton> buttons = List.of(tower1Button, tower2Button, tower3Button, tower4Button, tower5Button,
-                tower6Button, tower7Button, tower8Button, tower9Button, item1Button, item2Button, item3Button, item4Button,
-                 item5Button, item6Button, playerItem1Button, playerItem2Button, playerItem3Button, playerTower1Button,
-                playerTower2Button, playerTower3Button, playerTower4Button);
+                tower6Button, tower7Button, tower8Button, tower9Button, item1Button, item2Button, item3Button,
+                item4Button, item5Button, item6Button, playerItem1Button, playerItem2Button, playerItem3Button,
+                playerTower1Button, playerTower2Button, playerTower3Button, playerTower4Button);
 
         for (ToggleButton button : buttons) {
             button.setToggleGroup(toggleButtons);
@@ -263,11 +267,15 @@ public class ShopScreenController {
                             }
 
                         } else {
-                            gameEnvironment.showAlert("Reserve Towers Full", "You do not have enough space in your inventory to purchase this tower.", Alert.AlertType.ERROR);
+                            gameEnvironment.showAlert("Reserve Towers Full", "You do not have enough" +
+                                    " space" +
+                                    " in your inventory to purchase this tower.", Alert.AlertType.ERROR);
                         }
                     }
                     else {
-                        gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
+                        gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money" +
+                                " to " +
+                                "purchase this tower.", Alert.AlertType.ERROR);
                 }
 
                 }
@@ -282,16 +290,20 @@ public class ShopScreenController {
                         updateToggleButtons();
                         gameEnvironment.applyItemEffect(selectedItem);
                     } else {
-                        gameEnvironment.showAlert("Item Slots Full", "You do not have enough space in your inventory to purchase this tower.", Alert.AlertType.ERROR);
+                        gameEnvironment.showAlert("Item Slots Full", "You do not have enough space in" +
+                                " your inventory to purchase this tower.", Alert.AlertType.ERROR);
                     }
                 } else {
-                    gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this item.", Alert.AlertType.ERROR);
+                    gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to" +
+                            " purchase this item.", Alert.AlertType.ERROR);
                 }
             } else {
-                gameEnvironment.showAlert("Invalid Selection", "Please select a valid tower or item to buy it.", Alert.AlertType.ERROR);
+                gameEnvironment.showAlert("Invalid Selection", "Please select a valid tower or item" +
+                        " to buy it.", Alert.AlertType.ERROR);
             }
         } else {
-            gameEnvironment.showAlert("No Selection", "Please select a tower or item to buy it.", Alert.AlertType.ERROR);
+            gameEnvironment.showAlert("No Selection", "Please select a tower or item to buy it.",
+                    Alert.AlertType.ERROR);
         }
 
     }
@@ -328,10 +340,12 @@ public class ShopScreenController {
                     gameEnvironment.removeItemEffect(selectedItem);
                 }
             } else {
-                gameEnvironment.showAlert("Invalid Selection", "Please select a valid tower or item to sell it.", Alert.AlertType.ERROR);
+                gameEnvironment.showAlert("Invalid Selection", "Please select a valid tower or item to" +
+                        " sell it.", Alert.AlertType.ERROR);
             }
         } else {
-            gameEnvironment.showAlert("No Selection", "Please select a tower or item to buy it.", Alert.AlertType.ERROR);
+            gameEnvironment.showAlert("No Selection", "Please select a tower or item to buy it.",
+                    Alert.AlertType.ERROR);
 
 
         }
