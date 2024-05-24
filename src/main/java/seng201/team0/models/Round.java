@@ -128,7 +128,7 @@ public class Round {
      * Calculates the number of carts and their speed required for the round.
      * Creates cart instances depending on the round mode.
      */
-    public void createCarts(){
+    public void createCarts() {
         int numberOfCarts = 1 + ((roundNumber - 1) / 5);
         cartSpeed = gameEnvironment.getTrackDistance() / (13 + numberOfCarts * 7);
         switch (roundMode) {
@@ -167,7 +167,7 @@ public class Round {
     /**
      * Calculates the total resources required for each resource type by iterating through all carts.
      */
-    public void resourcesRequired(){
+    public void resourcesRequired() {
         for (Cart medKitCart : medkitCarts) {
             medKitsRequired += medKitCart.getSize();
         }
@@ -182,7 +182,7 @@ public class Round {
     /**
      * Sets the main towers to variables based on their resource type.
      */
-    public void setTowers(){
+    public void setTowers() {
         for (Tower tower : gameEnvironment.getMainTowers()) {
             switch (tower.getResourceType()) {
                 case "Medkits" -> this.medkitTower = tower;

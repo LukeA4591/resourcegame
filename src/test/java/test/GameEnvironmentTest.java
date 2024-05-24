@@ -619,10 +619,12 @@ public class GameEnvironmentTest {
 
         gameEnvironment.getMainTowers().addAll(List.of(armoury, barracks, medicalTent));
 
+        gameEnvironment.setRoundMode("Rescue Operation");
+
         gameEnvironment.levelUpTowers();
 
         assertEquals(2, armoury.getLevel());
-        assertEquals(1, barracks.getLevel());
-        assertEquals(4, medicalTent.getLevel());
+        assertEquals(2, barracks.getLevel());
+        assertEquals(3, medicalTent.getLevel());
     }
 }

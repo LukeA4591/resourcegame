@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import seng201.team0.GameEnvironment;
 import seng201.team0.gui.AlertHandler;
 import seng201.team0.models.Round;
+import seng201.team0.models.carts.Cart;
 import seng201.team0.models.towers.gametowers.Armoury;
 import seng201.team0.models.towers.gametowers.Barracks;
 import seng201.team0.models.towers.gametowers.MedicalTent;
@@ -14,7 +15,6 @@ import seng201.team0.models.towers.Tower;
 
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class RoundTest {
@@ -56,26 +56,31 @@ public class RoundTest {
     }
 
     @Test
-    public void testConfigureRound() {
+    public void testCreateCarts() {
 
-        ArrayList<Integer> numCartsAmmunition = ammunitionRound.getNumCarts();
-        ArrayList<Integer> numCartsTroops = troopRound.getNumCarts();
-        ArrayList<Integer> numCartsMedkits = medkitRound.getNumCarts();
+        assertEquals(2, ammunitionRound.getAmmunitionCarts().size());
+        assertEquals(1, ammunitionRound.getMedkitCarts().size());
+        assertEquals(1, ammunitionRound.getTroopCarts().size());
 
-        assertEquals(2, numCartsAmmunition.get(0));
-        assertEquals(1, numCartsAmmunition.get(1));
-        assertEquals(1, numCartsAmmunition.get(2));
+        assertEquals(1, troopRound.getAmmunitionCarts().size());
+        assertEquals(2, troopRound.getMedkitCarts().size());
+        assertEquals(1, troopRound.getTroopCarts().size());
 
-        assertEquals(1, numCartsTroops.get(0));
-        assertEquals(2, numCartsTroops.get(1));
-        assertEquals(1, numCartsTroops.get(2));
+        assertEquals(1, medkitRound.getAmmunitionCarts().size());
+        assertEquals(1, medkitRound.getMedkitCarts().size());
+        assertEquals(2, medkitRound.getTroopCarts().size());
+    }
 
-        assertEquals(1, numCartsMedkits.get(0));
-        assertEquals(1, numCartsMedkits.get(1));
-        assertEquals(2, numCartsMedkits.get(2));
+    @Test
+    public void testResourcesRequired() {
 
+        int expectedAmmunitionRequired = ammunitionRound.getAmmunitionCarts().stream().mapToInt(Cart::getSize).sum();
+        int expectedMedkitsRequired = ammunitionRound.getMedkitCarts().stream().mapToInt(Cart::getSize).sum();
+        int expectedTroopsRequired = ammunitionRound.getTroopCarts().stream().mapToInt(Cart::getSize).sum();
 
-
+        assertEquals(expectedAmmunitionRequired, ammunitionRound.getAmmunitionRequired());
+        assertEquals(expectedMedkitsRequired, ammunitionRound.getMedKitsRequired());
+        assertEquals(expectedTroopsRequired, ammunitionRound.getTroopsRequired());
     }
 
     @Test
@@ -99,6 +104,5 @@ public class RoundTest {
         assertEquals(originalAmmunition + ammunitionTower.getResourceAmount(),
                 ammunitionRound.getMedKitsCollected());
     }
-
 
 }
