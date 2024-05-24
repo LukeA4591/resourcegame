@@ -90,16 +90,16 @@ public class GameScreenController {
     private int ammunitionNeeded;
     private int troopsNeeded;
     private Round newRound;
-    private boolean called;
+    private boolean called = true;
     int count;
 
     public GameScreenController(GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
-        called = true;
     }
 
     @FXML
     public void initialize() {
+
         roundModeComboBox.getItems().addAll("Artillery Barrage", "Ground Offensive", "Rescue Operation");
         ammoProgressBar.setProgress(0);
         troopProgressBar.setProgress(0);
@@ -335,7 +335,7 @@ public class GameScreenController {
     }
 
     private void endRound(boolean roundFinish){
-        if (roundFinish){
+        if (roundFinish) {
 
             int roundWinPrize = gameEnvironment.roundWinPrize();
             gameEnvironment.showAlert("Round Completed!",

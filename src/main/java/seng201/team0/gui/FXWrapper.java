@@ -52,6 +52,7 @@ public class FXWrapper implements AlertHandler {
     }
 
     public void launchGameScreen(GameEnvironment gameEnvironment) {
+
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/game_screen.fxml"));
             setupLoader.setControllerFactory(param -> new GameScreenController(gameEnvironment));

@@ -252,28 +252,31 @@ public class ShopScreenController {
 
                 Tower selectedTower = gameEnvironment.getTowerInShopByName(selectedButton.getText());
 
-                if (selectedTower != null && gameEnvironment.getCurrentBalance() >= selectedTower.getCost()) {
-                    if (gameEnvironment.getReserveTowers().size() < 4) {
-                        gameEnvironment.buyTower(selectedTower);
-                        updatePlayerDetails();
-                        selectedButton.setText("Purchased");
-                        selectedButton.setDisable(true);
-                        updateToggleButtons();
+                if (selectedTower instanceof SupportTower) {
+                    gameEnvironment.buyTower(selectedTower);
+                    updatePlayerDetails();
+                    updateToggleButtons();
+                }
+                else {
 
-                        if (selectedTower instanceof SupportTower && gameEnvironment.getSupportTower() == null) {
-                            gameEnvironment.setSupportTower((SupportTower) selectedTower);
+                    if (selectedTower != null && gameEnvironment.getCurrentBalance() >= selectedTower.getCost()) {
+                        if (gameEnvironment.getReserveTowers().size() < 4) {
+                            gameEnvironment.buyTower(selectedTower);
+                            updatePlayerDetails();
+                            updateToggleButtons();
+
+
+                            for (Item item : gameEnvironment.getPlayerItems()) {
+                                gameEnvironment.applyItemEffect(item);
+                            }
+
+                        } else {
+                            gameEnvironment.showAlert("Reserve Towers Full", "You do not have enough space in your inventory to purchase this tower.", Alert.AlertType.ERROR);
                         }
-
-
-                        for (Item item : gameEnvironment.getPlayerItems()) {
-                            gameEnvironment.applyItemEffect(item);
-                        }
-
-                    } else {
-                        gameEnvironment.showAlert("Reserve Towers Full", "You do not have enough space in your inventory to purchase this tower.", Alert.AlertType.ERROR);
                     }
-                } else {
-                    gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
+                    else {
+                        gameEnvironment.showAlert("Insufficient Funds", "You do not have enough money to purchase this tower.", Alert.AlertType.ERROR);
+                }
 
                 }
             } else if (shopItemsButtons.contains(selectedButton)) {
@@ -284,8 +287,6 @@ public class ShopScreenController {
                     if (gameEnvironment.getPlayerItems().size() < 3) {
                         gameEnvironment.buyItem(selectedItem);
                         updatePlayerDetails();
-                        selectedButton.setText("Purchased");
-                        selectedButton.setDisable(true);
                         updateToggleButtons();
                         gameEnvironment.applyItemEffect(selectedItem);
                     } else {

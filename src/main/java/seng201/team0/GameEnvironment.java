@@ -331,9 +331,17 @@ public class GameEnvironment {
     }
 
     public void buyTower(Tower tower) {
-        setCurrentBalance(currentBalance - tower.getCost());
-        reserveTowers.add(tower);
-        towersInShop.remove(tower);
+
+        if (supportTower == null && tower instanceof SupportTower) {
+            setCurrentBalance(currentBalance - tower.getCost());
+            towersInShop.remove(tower);
+            setSupportTower((SupportTower) tower);
+        }
+        else {
+            setCurrentBalance(currentBalance - tower.getCost());
+            reserveTowers.add(tower);
+            towersInShop.remove(tower);
+        }
     }
     public void sellTower(Tower tower) {
         setCurrentBalance(currentBalance + tower.getSellPrice());
@@ -492,7 +500,11 @@ public class GameEnvironment {
     public void enemyAmbush() {
 
         List<Tower> allTowers = mainTowers;
-        allTowers.addAll(reserveTowers);
+
+        if (!reserveTowers.isEmpty()) {
+            allTowers.addAll(reserveTowers);
+        }
+
 
         List<Tower> possibleTowers = new ArrayList<>();
 

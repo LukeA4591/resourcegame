@@ -214,7 +214,8 @@ public class GameEnvironmentTest {
 
         assertEquals(medicalSupplyDrop, gameEnvironment.getItemInShopByName(medicalSupplyDrop.getName()));
 
-        assertNull(gameEnvironment.getMainTowerByName("Medkit Tower Repair Kit"));
+
+        assertNull(gameEnvironment.getItemInShopByName("Paratroopers"));
     }
 
     @Test
@@ -232,15 +233,28 @@ public class GameEnvironmentTest {
 
         assertEquals(medicalSupplyDrop, gameEnvironment.getPlayerItemByName(medicalSupplyDrop.getName()));
 
-        assertNull(gameEnvironment.getMainTowerByName("Medkit Tower Repair Kit"));
+        assertNull(gameEnvironment.getPlayerItemByName("Medkit Tower Repair Kit"));
     }
 
     @Test
     public void testBuyItem() {
 
-        gameEnvironment.initializeItems();
+        Item ammunitionRepairKit = new AmmunitionTowerRepairKit();
 
+        gameEnvironment.buyItem(ammunitionRepairKit);
 
+        assertEquals(800 - ammunitionRepairKit.getCost(), gameEnvironment.getCurrentBalance());
+        assertTrue(gameEnvironment.getPlayerItems().contains(ammunitionRepairKit));
+        assertFalse(gameEnvironment.getShopItems().contains(ammunitionRepairKit));
+
+    }
+
+    @Test
+    public void testSellItem() {
+
+        Item ammunitionRepairKit = new AmmunitionTowerRepairKit();
+
+        gameEnvironment.sellItem(ammunitionRepairKit);
 
 
     }
