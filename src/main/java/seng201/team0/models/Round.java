@@ -7,56 +7,96 @@ import seng201.team0.models.towers.Tower;
 import java.util.ArrayList;
 
 /**
- * round class that handles round calculations for one round.
+ * Represents a round in the game, handling the round calculations and managing the resources.
  */
 public class Round {
     /**
-     * create a list of type Cart for each resource.
+     * List of ammunition carts for this round.
      */
     private final ArrayList<Cart> ammunitionCarts;
-    private final ArrayList<Cart> medkitCarts;
-    private final ArrayList<Cart> troopCarts;
+
     /**
-     * current round.
+     * List of medkit carts for this round.
+     */
+    private final ArrayList<Cart> medkitCarts;
+
+    /**
+     * List of troop carts for this round.
+     */
+    private final ArrayList<Cart> troopCarts;
+
+    /**
+     * The current round number.
      */
     private final int roundNumber;
+
     /**
-     * current round mode.
+     * The current round mode.
      */
     private final String roundMode;
+
     /**
-     * create a game environment variable
+     * The game environment containing the game's state.
      */
     private final GameEnvironment gameEnvironment;
+
     /**
-     * create a int to track resource collected for each resource.
+     * The number of medkits collected in this round.
      */
     private int medKitsCollected;
-    private int ammunitionCollected;
-    private int troopsCollected;
+
     /**
-     * create an int to hold resources needed for each resource.
+     * The number of ammunition units collected in this round.
+     */
+    private int ammunitionCollected;
+
+    /**
+     * The number of troops collected in this round.
+     */
+    private int troopsCollected;
+
+    /**
+     * The number of medkits required for this round.
      */
     private int medKitsRequired = 0;
-    private int ammunitionRequired = 0;
-    private int troopsRequired = 0;
+
     /**
-     * create a Tower for each resource
+     * The number of ammunition units required for this round.
+     */
+    private int ammunitionRequired = 0;
+
+    /**
+     * The number of troops required for this round.
+     */
+    private int troopsRequired = 0;
+
+    /**
+     * The medkit tower used in this round.
      */
     private Tower medkitTower;
-    private Tower ammunitionTower;
-    private Tower troopTower;
+
     /**
-     * create an int to store cart speed
+     * The ammunition tower used in this round.
+     */
+    private Tower ammunitionTower;
+
+    /**
+     * The troop tower used in this round.
+     */
+    private Tower troopTower;
+
+    /**
+     * The speed of the carts in this round.
      */
     private int cartSpeed;
 
     /**
-     * Constructs a round instance, initialises parameters and creates lists to hold carts for each resource.
-     * make a call to configure round.
-     * @param roundNumber the current round number.
-     * @param roundMode the current round mode.
-     * @param gameEnvironment the game environment containing the games state
+     * Constructs a Round instance, initializes parameters, and creates lists to hold carts for each resource.
+     * Calls the configureRound method to set up the round.
+     *
+     * @param roundNumber The current round number.
+     * @param roundMode The current round mode.
+     * @param gameEnvironment The game environment containing the game's state.
      */
     public Round(final int roundNumber, final String roundMode, final GameEnvironment gameEnvironment) {
 
@@ -73,7 +113,7 @@ public class Round {
     }
 
     /**
-     * Set collected resources to 0, call methods to create carts, find resources required, and set towers.
+     * Sets collected resources to 0, calculates the number of carts and resources required, and sets towers.
      */
     private void configureRound() {
         medKitsCollected = 0;
@@ -85,8 +125,8 @@ public class Round {
     }
 
     /**
-     * Calculate number of carts and cart speed required for the round. Create cart instances depending on the
-     * round mode.
+     * Calculates the number of carts and their speed required for the round.
+     * Creates cart instances depending on the round mode.
      */
     public void createCarts(){
         int numberOfCarts = 1 + ((roundNumber - 1) / 5);
@@ -125,7 +165,7 @@ public class Round {
     }
 
     /**
-     * Calculate total resources required for each resource by iterating through all carts.
+     * Calculates the total resources required for each resource type by iterating through all carts.
      */
     public void resourcesRequired(){
         for (Cart medKitCart : medkitCarts) {
@@ -140,7 +180,7 @@ public class Round {
     }
 
     /**
-     * Set main towers to variables based on resource type.
+     * Sets the main towers to variables based on their resource type.
      */
     public void setTowers(){
         for (Tower tower : gameEnvironment.getMainTowers()) {
@@ -153,111 +193,138 @@ public class Round {
     }
 
     /**
-     * Create a list of the amount of carts required for each resource.
-     * @return a list of the amount of each type of cart.
+     * Returns the list of medkit carts.
+     *
+     * @return The list of medkit carts.
      */
     public ArrayList<Cart> getMedkitCarts() {
         return medkitCarts;
     }
 
+    /**
+     * Returns the list of ammunition carts.
+     *
+     * @return The list of ammunition carts.
+     */
     public ArrayList<Cart> getAmmunitionCarts(){
         return ammunitionCarts;
     }
 
+    /**
+     * Returns the list of troop carts.
+     *
+     * @return The list of troop carts.
+     */
     public ArrayList<Cart> getTroopCarts() {
         return troopCarts;
     }
 
     /**
+     * Returns the number of medkits collected so far in this round.
      *
-     * @return return the med-kits collected so far in a round.
+     * @return The number of medkits collected.
      */
     public int getMedKitsCollected() {
         return medKitsCollected;
     }
+
     /**
+     * Returns the number of troops collected so far in this round.
      *
-     * @return return the troops collected so far in a round.
+     * @return The number of troops collected.
      */
     public int getTroopsCollected() {
         return troopsCollected;
     }
+
     /**
+     * Returns the number of ammunition units collected so far in this round.
      *
-     * @return return the ammunition collected so far in a round.
+     * @return The number of ammunition units collected.
      */
     public int getAmmunitionCollected() {
         return ammunitionCollected;
     }
 
     /**
-     * add med_kits generated to med_kits collected.
+     * Increases the number of medkits collected by the amount generated by the medkit tower.
      */
     public void increaseMedKitsCollected() {
         medKitsCollected += (int) medkitTower.getResourceAmount();
     }
 
     /**
-     * add ammunition generates to ammunition collected.
+     * Increases the number of ammunition units collected by the amount generated by the ammunition tower.
      */
     public void increaseAmmunitionCollected() {
         ammunitionCollected += (int) ammunitionTower.getResourceAmount();
     }
+
     /**
-     * add ammunition generates to troops collected.
+     * Increases the number of troops collected by the amount generated by the troop tower.
      */
     public void increaseTroopsCollected() {
         troopsCollected += (int) troopTower.getResourceAmount();
     }
 
     /**
+     * Returns the number of medkits required for this round.
      *
-     * @return the med_kits required for a round.
+     * @return The number of medkits required.
      */
     public int getMedKitsRequired() {
         return medKitsRequired;
     }
 
     /**
+     * Returns the number of ammunition units required for this round.
      *
-     * @return the ammunition required for a round.
+     * @return The number of ammunition units required.
      */
     public int getAmmunitionRequired() {
         return ammunitionRequired;
     }
 
     /**
+     * Returns the number of troops required for this round.
      *
-     * @return the troops required for a round.
+     * @return The number of troops required.
      */
     public int getTroopsRequired() {
         return troopsRequired;
     }
+
     /**
+     * Returns the reload speed for the medkit tower.
      *
-     * @return the reload speed for med-kit tower.
+     * @return The reload speed for the medkit tower.
      */
     public double getMedkitTowerReload() {
         return medkitTower.getReloadSpeed();
     }
+
     /**
+     * Returns the reload speed for the ammunition tower.
      *
-     * @return the reload speed for ammunition tower.
+     * @return The reload speed for the ammunition tower.
      */
     public double getAmmunitionTowerReload() {
         return ammunitionTower.getReloadSpeed();
     }
+
     /**
+     * Returns the reload speed for the troop tower.
      *
-     * @return the reload speed for troop tower.
+     * @return The reload speed for the troop tower.
      */
     public double getTroopTowerReload() {
         return troopTower.getReloadSpeed();
     }
 
     /**
+     * Returns the cart speed for this round.
      *
-     * @return the cart speed for the round.
+     * @return The cart speed.
      */
     public int getCartSpeed() {
         return cartSpeed;

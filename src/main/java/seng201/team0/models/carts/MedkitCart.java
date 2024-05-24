@@ -4,6 +4,10 @@ package seng201.team0.models.carts;
  * A cart that holds resource type med-kit.
  */
 public class MedkitCart extends Cart {
+
+    /**
+     * The type of resource this cart holds, which is "Med-kits".
+     */
     private final String resourceType;
 
     /**
@@ -16,8 +20,9 @@ public class MedkitCart extends Cart {
         this.resourceType = "Medkits";
     }
     /**
+     * Gets the type of resource this cart holds.
      *
-     * @return get cart resource type/
+     * @return The resource type, which is "Med-kits".
      */
     public String getResourceType() {
         return resourceType;

@@ -4,6 +4,10 @@ package seng201.team0.models.carts;
  * A cart that holds resource type ammunition
  */
 public class AmmunitionCart extends Cart {
+
+    /**
+     * The type of resource this cart holds, which is "Ammunition".
+     */
     private final String resourceType;
 
     /**
@@ -17,8 +21,9 @@ public class AmmunitionCart extends Cart {
     }
 
     /**
+     * Gets the type of resource this cart holds.
      *
-     * @return get cart resource type
+     * @return The resource type, which is "Ammunition".
      */
     public String getResourceType() {
         return resourceType;
