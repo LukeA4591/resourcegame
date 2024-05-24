@@ -4,7 +4,7 @@ public abstract class Cart {
     private int size;
     private int speed;
 
-    public Cart(int size, int speed) {
+    public Cart(final int size, final int speed) {
         this.size = size;
         this.speed = speed;
     }
@@ -13,7 +13,7 @@ public abstract class Cart {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(final int size) {
         this.size = size;
     }
 
@@ -21,7 +21,7 @@ public abstract class Cart {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(final int speed) {
         this.speed = speed;
     }
 

@@ -1,15 +1,23 @@
 package seng201.team0.gui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.items.Item;
-import seng201.team0.models.towers.*;
+import seng201.team0.models.towers.Tower;
 import seng201.team0.models.towers.SupportTower;
 
 import java.util.List;
-
+/**
+ * Controller class for the inventory. It manages the player's towers and items.
+ * It allows the player view their inventory and to swap towers between main and reserve groups
+ * ,and repair and remove broken towers.
+ */
 public class InventoryScreenController {
 
     @FXML
@@ -75,17 +83,22 @@ public class InventoryScreenController {
 
     private boolean swappingTowers = false;
 
-
-
-
-
     private final GameEnvironment gameEnvironment;
 
-    public InventoryScreenController(GameEnvironment tempEnvironment) {
+    /**
+     * Constructs the InventoryScreenController with the specified game environment.
+     *
+     * @param tempEnvironment the game environment that manages the state of the game.
+     */
+    public InventoryScreenController(final GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
 
     }
 
+    /**
+     * Initializes the InventoryScreenController by initializing toggle buttons, updating player details,
+     * updating buttons, and initializing the descriptions of towers and items.
+     */
     @FXML
     public void initialize() {
 
@@ -95,8 +108,9 @@ public class InventoryScreenController {
         initializeDescriptions();
 
     }
-
-
+    /**
+     * Initializes the descriptions for towers and items upon their respective toggle buttons being selected.
+     */
     @FXML
     private void initializeDescriptions() {
 
@@ -126,18 +140,28 @@ public class InventoryScreenController {
                 item3Button.getText())));
 
     }
-
-
+    /**
+     * Displays information of the selected support tower.
+     * Factored as such to allow reuse of the method in ShopScreenController.
+     *
+     * @param tower the selected tower which description is to be displayed.
+     */
     @FXML
-    private void displaySupportTowerInformation(SupportTower tower) {
+    private void displaySupportTowerInformation(final SupportTower tower) {
 
         towerLevelLabel.setText("");
 
         displaySupportTowerInformation(tower, descriptionVBox);
 
     }
-
-    static void displaySupportTowerInformation(SupportTower tower, VBox descriptionVBox) {
+    /**
+     * Displays the selected support towers information in the description VBox.
+     *
+     * @param tower the selected support tower.
+     * @param descriptionVBox the VBox to display the support tower information in.
+     */
+    @FXML
+    static void displaySupportTowerInformation(final SupportTower tower, final VBox descriptionVBox) {
 
         if (tower != null) {
             descriptionVBox.getChildren().clear();
@@ -153,8 +177,14 @@ public class InventoryScreenController {
         }
     }
 
+    /**
+     * Displays the information of the selected tower.
+     * Factored as such to allow for reuse of the code in ShopScreenController.
+     *
+     * @param tower the selected tower to have its description displayed.
+     */
     @FXML
-    private void displayTowerInformation(Tower tower) {
+    private void displayTowerInformation(final Tower tower) {
 
         if (tower instanceof SupportTower) {
             displaySupportTowerInformation((SupportTower) tower);
@@ -167,7 +197,14 @@ public class InventoryScreenController {
         }
     }
 
-    static void displayTowerInformation(Tower tower, VBox descriptionVBox) {
+    /**
+     * Displays the selected tower's description in the description VBox.
+     *
+     * @param tower the selected tower to have its information displayed.
+     * @param descriptionVBox the VBox to display the tower information in.
+     */
+    @FXML
+    static void displayTowerInformation(final Tower tower, final VBox descriptionVBox) {
         descriptionVBox.getChildren().clear();
 
         descriptionVBox.getChildren().addAll(
@@ -181,8 +218,14 @@ public class InventoryScreenController {
         );
     }
 
+    /**
+     * Displays the selected item's information
+     * Factored as such to allow for reuse of the code in ShopScreenController.
+     *
+     * @param item the selected item to have its information displayed.
+     */
     @FXML
-    private void displayItemInformation(Item item) {
+    private void displayItemInformation(final Item item) {
         descriptionVBox.getChildren().clear();
 
         towerLevelLabel.setText("");
@@ -190,7 +233,14 @@ public class InventoryScreenController {
         displayItemInformation(item, descriptionVBox);
     }
 
-    static void displayItemInformation(Item item, VBox descriptionVBox) {
+    /**
+     * Displays the selected item's information in the description VBox.
+     *
+     * @param item the item to have its information displayed.
+     * @param descriptionVBox the VBox which shows the item's information.
+     */
+    @FXML
+    static void displayItemInformation(final Item item, final VBox descriptionVBox) {
         if (!item.getIsRepairKit()) {
             descriptionVBox.getChildren().addAll(
                     new Label("Name: " + item.getName()),
@@ -212,7 +262,10 @@ public class InventoryScreenController {
         }
     }
 
-
+    /**
+     * Initializes the separate ToggleButton lists reserveTowerToggleButtons, mainTowerToggleButtons
+     * , itemToggleButtons, as well as the allToggleButtonsGroup.
+     */
     @FXML
     private void initializeToggleButtons() {
 
@@ -232,6 +285,10 @@ public class InventoryScreenController {
         itemToggleButtons = List.of(item1Button, item2Button, item3Button);
     }
 
+    /**
+     * Updates the player's details in the inventory such as their name, game difficulty, round count, current balance
+     * , and lives left.
+     */
     @FXML
     private void updatePlayerDetails() {
         playerNameLabel.setText("Player Name: " + gameEnvironment.getPlayerName());
@@ -242,12 +299,18 @@ public class InventoryScreenController {
         livesLeftLabel.setText("Lives Left: " + gameEnvironment.getLivesLeft());
     }
 
+    /**
+     * Handles clicking the return button by closing the inventory screen.
+     */
     @FXML
     private void onReturnButtonClicked() {
         gameEnvironment.closeInventoryScreen();
     }
 
-
+    /**
+     * Handles clicking the swap towers button by allowing them to swap towers between the main
+     * and reserve groups.
+     */
     @FXML
     private void onSwapTowersButtonClicked() {
 
@@ -259,9 +322,11 @@ public class InventoryScreenController {
             disableSwapping();
 
         }
-
     }
 
+    /**
+     * Enables swapping towers mode by setting toggle groups and disabling other buttons.
+     */
     @FXML
     private void enableSwapping() {
         swappingTowers = true;
@@ -270,7 +335,7 @@ public class InventoryScreenController {
         troopsTowerButton.setToggleGroup(mainTowersToggleGroup);
         medkitsTowerButton.setToggleGroup(mainTowersToggleGroup);
 
-        List<ToggleButton> reserveButtons= List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button,
+        List<ToggleButton> reserveButtons = List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button,
                 reserveTower4Button);
 
         for (ToggleButton button : reserveButtons) {
@@ -284,6 +349,9 @@ public class InventoryScreenController {
         removeTowerButton.setDisable(true);
     }
 
+    /**
+     * Disables swapping towers mode by setting a toggle group and enabling other buttons.
+     */
     @FXML
     private void disableSwapping() {
         swappingTowers = false;
@@ -301,9 +369,11 @@ public class InventoryScreenController {
 
         repairTowerButton.setDisable(false);
         removeTowerButton.setDisable(false);
-
     }
 
+    /**
+     * Swaps the selected towers by calling gameEnvironment and updating the UI.
+     */
     @FXML
     private void swapSelectedTowers() {
 
@@ -330,7 +400,7 @@ public class InventoryScreenController {
                 }
             }
 
-            if (mainTower != null && reserveTower!= null) {
+            if (mainTower != null && reserveTower != null) {
                 gameEnvironment.swapTowers(mainTower, reserveTower);
                 updateButtons();
             }
@@ -338,11 +408,12 @@ public class InventoryScreenController {
         else {
             gameEnvironment.showAlert("Invalid Tower Selection", "You must select two towers to" +
                     " swap them.", Alert.AlertType.ERROR);
-
         }
-
     }
 
+    /**
+     * Updates the states of the buttons depending on the players towers and items.
+     */
     @FXML
     private void updateButtons() {
 
@@ -386,6 +457,11 @@ public class InventoryScreenController {
         }
     }
 
+    /**
+     * Handles clicking the repair tower button by allowing a tower to be repaired and calling to gameEnvironment
+     * to repair the selected tower.
+     * Shows alerts if needed to inform player if the action can or cannot be completed.
+     */
     @FXML
     private void onRepairTowerButtonClicked() {
 
@@ -418,21 +494,29 @@ public class InventoryScreenController {
                         }
                     }
 
-                         if (repairKit == null){
-                            gameEnvironment.showAlert("No Valid Repair Kit", "No repair kits are " +
-                                    "available to repair this tower", Alert.AlertType.ERROR);
-                        }
+                    if (repairKit == null) {
+                        gameEnvironment.showAlert("No Valid Repair Kit", "No repair kits are " +
+                                "available to repair this tower", Alert.AlertType.ERROR);
+                    }
 
                 } else {
                     gameEnvironment.showAlert("Tower Not Broken", "There is no need to use a repair " +
                             "kit on this tower because it is not broken.", Alert.AlertType.ERROR);
                 }
             }
-            }
-            else {gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
-                "for repairing", Alert.AlertType.ERROR);}
         }
+        else {
+            gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
+                    "for repairing", Alert.AlertType.ERROR);
+        }
+    }
 
+    /**
+     * Returns the selected tower based off of the selected button.
+     *
+     * @param selectedButton the button the player has selected.
+     * @return the selectedTower or null if no tower is selected.
+     */
     @FXML
     private Tower getSelectedTower(ToggleButton selectedButton) {
 
@@ -451,6 +535,11 @@ public class InventoryScreenController {
         return selectedTower;
     }
 
+    /**
+     * Handles clicking the remove tower button by allowing a broken tower to be removed from the player's inventory.
+     * Calls to gameEnvironment to remove the tower and shows alerts if needed to inform the player if it
+     * is not necessary for the tower to be removed.
+     */
     @FXML
     private void onRemoveTowerButtonClicked() {
 
@@ -477,13 +566,10 @@ public class InventoryScreenController {
                 }
             }
         }
-                else
-                {
-                    gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
-                            "for removal", Alert.AlertType.ERROR);
-
-
+        else {
+            gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
+                    "for removal", Alert.AlertType.ERROR);
             }
-        }
+    }
 }
 

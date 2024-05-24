@@ -4,7 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
+import javafx.scene.control.Alert;
+
 
 
 public class SetupScreenController {
@@ -29,7 +34,7 @@ public class SetupScreenController {
 
     private final GameEnvironment gameEnvironment;
 
-    public SetupScreenController(GameEnvironment tempEnvironment) {
+    public SetupScreenController(final GameEnvironment tempEnvironment) {
         this.informationUpdated = false;
         this.gameEnvironment = tempEnvironment;
     }
@@ -90,20 +95,22 @@ public class SetupScreenController {
             gameEnvironment.initializeGame(name, rounds, difficulty, startingMoney, trackDistance, lives);
             gameEnvironment.closeSetupScreen();
         }
-        else
+        else {
             gameEnvironment.showAlert("Information not Updated", "Please update your information" +
                     " before continuing.", Alert.AlertType.ERROR);
+        }
     }
 
 
-    private boolean nameChecker(String name) {
+    private boolean nameChecker(final String name) {
         if (name.length() > 15 || name.length() < 3 || !name.matches("^[0-9a-zA-Z]*$")) {
             gameEnvironment.showAlert("Invalid Name", "Name must be 3-15 characters long and not" +
                     " contain special characters.", Alert.AlertType.ERROR);
             return false;
         }
-        else
+        else {
             return true;
+        }
     }
 
     private boolean difficultyChecker() {
@@ -112,8 +119,9 @@ public class SetupScreenController {
                     Alert.AlertType.ERROR);
             return false;
         }
-        else
+        else {
             return true;
+        }
     }
 
 

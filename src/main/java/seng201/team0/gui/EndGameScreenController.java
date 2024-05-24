@@ -6,6 +6,9 @@ import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 import javafx.scene.control.Label;
 
+/**
+ * Controller class for the end game screen. Shows the game result and statistics.
+ */
 public class EndGameScreenController {
 
     @FXML
@@ -15,10 +18,18 @@ public class EndGameScreenController {
 
     private final GameEnvironment gameEnvironment;
 
+    /**
+     * Constructs an EndGameScreenController with the specified game environment.
+     *
+     * @param tempEnvironment the game environment containing the game's state.
+     */
     public EndGameScreenController(final GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
     }
 
+    /**
+     * Initializes the end game screen by setting label texts and colours.
+     */
     @FXML
     public void initialize() {
 
@@ -30,12 +41,12 @@ public class EndGameScreenController {
             gameResultLabel.setText("DEFEAT");
             gameResultLabel.setStyle("-fx-text-fill: red");
         }
-
         setStatsVBox();
-
     }
 
-
+    /**
+     * Sets up the statistics of the end game screen with the player's name, rounds, final balance, and difficulty.
+     */
     @FXML
     public void setStatsVBox() {
 

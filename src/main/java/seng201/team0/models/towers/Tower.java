@@ -13,8 +13,8 @@ public abstract class Tower implements Purchasable {
     private boolean isBroken;
     private static final int MAX_LEVEL = 6;
 
-    public Tower(String name, double resourceAmount, double reloadSpeed, String resourceType, int cost,
-            int level) {
+    public Tower(final String name, final double resourceAmount, final double reloadSpeed, final String resourceType,
+                 final int cost, final int level) {
 
         this.name = name;
         this.resourceAmount = resourceAmount;
@@ -30,21 +30,21 @@ public abstract class Tower implements Purchasable {
     public String getName() {
         return name;
     }
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public double getResourceAmount() {
         return resourceAmount;
     }
-    public void setResourceAmount(double resourceAmount) {
+    public void setResourceAmount(final double resourceAmount) {
         this.resourceAmount = resourceAmount;
     }
 
     public double getReloadSpeed() {
         return reloadSpeed;
     }
-    public void setReloadSpeed(double reloadSpeed) {
+    public void setReloadSpeed(final double reloadSpeed) {
         if (reloadSpeed <= 1) {
             this.reloadSpeed = 1;
         }
@@ -60,7 +60,7 @@ public abstract class Tower implements Purchasable {
     public Integer getLevel() {
         return level;
     }
-    public void setLevel(Integer level) {
+    public void setLevel(final Integer level) {
         if (level >= MAX_LEVEL) {
             this.level = MAX_LEVEL;
         }

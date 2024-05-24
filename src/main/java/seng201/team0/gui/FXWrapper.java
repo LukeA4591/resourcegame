@@ -12,22 +12,38 @@ import seng201.team0.GameEnvironment;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * FXWrapper class manages the screens in the application and handles alerts.
+ * It also initializes the game environment which is responsible for keeping track of the game's state.
+ */
 public class FXWrapper implements AlertHandler {
+
     @FXML
     private Pane pane;
     private Stage stage;
 
+    /**
+     * Initializes the FXWrapper with the primary stage of the application.
+     *
+     * @param stage the primary stage of the application.
+     */
     public void init(final Stage stage) {
         this.stage = stage;
         new GameEnvironment(this::launchSetupScreen, this::launchTowerSelectScreen, this::launchGameScreen,
                 this::launchShopScreen, this::launchInventoryScreen, this::launchEndGameScreen, this::clearPane,
                 this, new Random());
     }
-
+    /**
+     * Clears the plane between screens.
+     */
     public void clearPane() {
         pane.getChildren().removeAll(pane.getChildren());
     }
-
+    /**
+     * Launches the setup screen.
+     *
+     * @param gameEnvironment the game environment which manages the game's state.
+     */
     public void launchSetupScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/setup_screen.fxml"));
@@ -39,7 +55,11 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Launches the tower select screen.
+     *
+     * @param gameEnvironment the game environment which manages the game's state.
+     */
     public void launchTowerSelectScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/tower_select_screen.fxml"));
@@ -51,7 +71,11 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Launches the game screen.
+     *
+     * @param gameEnvironment the game environment which manages the game's state.
+     */
     public void launchGameScreen(final GameEnvironment gameEnvironment) {
 
         try {
@@ -64,7 +88,11 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Launches the shop screen.
+     *
+     * @param gameEnvironment the game environment which manages the game's state.
+     */
     public void launchShopScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/shop_screen.fxml"));
@@ -76,7 +104,11 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Launches the inventory screen.
+     *
+     * @param gameEnvironment the game environment which manages the game's state.
+     */
     public void launchInventoryScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/inventory_screen.fxml"));
@@ -88,7 +120,11 @@ public class FXWrapper implements AlertHandler {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Launches the end game screen.
+     *
+     * @param gameEnvironment the game environment which manages the game's state.
+     */
     public void launchEndGameScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/end_game_screen.fxml"));
@@ -101,6 +137,13 @@ public class FXWrapper implements AlertHandler {
         }
     }
 
+    /**
+     * Shows an alert with a title, message, and alert type.
+     *
+     * @param title the title of the alert.
+     * @param message the content message of the alert.
+     * @param alertType the type of the alert.
+     */
     @Override
     public void showAlert(final String title, final String message, final Alert.AlertType alertType) {
         Platform.runLater(() -> {

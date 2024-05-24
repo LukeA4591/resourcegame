@@ -20,7 +20,7 @@ public class MainWindow extends Application {
      * @throws IOException if there is an issue loading fxml file
      */
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(final Stage primaryStage) throws IOException {
         FXMLLoader baseLoader = new FXMLLoader(getClass().getResource("/fxml/fx_wrapper.fxml"));
         Parent root = baseLoader.load();
 
@@ -38,7 +38,7 @@ public class MainWindow extends Application {
      * errors out and does not run
      * @param args command line arguments
      */
-    public static void launchWrapper(String [] args) {
+    public static void launchWrapper(final String [] args) {
         launch(args);
     }
 
