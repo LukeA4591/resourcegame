@@ -108,7 +108,7 @@ public abstract class Tower implements Purchasable {
         }
         else {
             level++;
-            setReloadSpeed(reloadSpeed - 0.1);
+            setReloadSpeed(reloadSpeed - 0.05);
             setResourceAmount(resourceAmount + 2);
         }
     }

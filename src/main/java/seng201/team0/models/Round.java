@@ -47,7 +47,7 @@ public class Round {
         medKitsCollected = 0;
         ammunitionCollected = 0;
         troopsCollected = 0;
-        cartSpeed = gameEnvironment.getTrackDistance() / (30 - gameEnvironment.getCurrentRound());
+        cartSpeed = gameEnvironment.getTrackDistance() / (13 + numberOfCarts * 7);
         switch (roundMode) {
             case "Artillery Barrage":
                 for (int i = 0; i < numberOfCarts; i++) {
@@ -129,14 +129,8 @@ public class Round {
     public int getTroopsRequired(){
         return troopsRequired;
     }
-    public int getMedkitTowerReload(){
-        return (int) medkitTower.getReloadSpeed();
-    }
-    public int getAmmunitionTowerReload(){
-        return (int) ammunitionTower.getReloadSpeed();
-    }
-    public int getTroopTowerReload(){
-        return (int) troopTower.getReloadSpeed();
-    }
+    public double getMedkitTowerReload(){ return medkitTower.getReloadSpeed(); }
+    public double getAmmunitionTowerReload(){ return ammunitionTower.getReloadSpeed(); }
+    public double getTroopTowerReload(){ return troopTower.getReloadSpeed(); }
     public int getCartSpeed() { return cartSpeed; }
 }

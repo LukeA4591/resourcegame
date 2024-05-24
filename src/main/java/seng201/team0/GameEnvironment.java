@@ -80,9 +80,6 @@ public class GameEnvironment {
         shopItems.add(new TroopTowerRepairKit());
     }
 
-
-
-
     public void launchSetupScreen() {
         setupScreenLauncher.accept(this);
     }

@@ -130,14 +130,15 @@ public class GameScreenController {
                 case "Ammunition":
                     tower1NameLabel.setText(tower.getName());
                     tower1LevelLabel.setText(tower.getLevelRepresentation());
-
+                    break;
                 case "Troops":
                     tower2NameLabel.setText(tower.getName());
                     tower2LevelLabel.setText(tower.getLevelRepresentation());
-
+                    break;
                 case "Medkits":
                     tower3NameLabel.setText(tower.getName());
                     tower3LevelLabel.setText(tower.getLevelRepresentation());
+                    break;
             }
         }
 
@@ -291,12 +292,14 @@ public class GameScreenController {
 
         // Create a Timeline to re-enable the button after the specified time
         Timeline timeline = new Timeline(new KeyFrame(
-                Duration.seconds(seconds),
+                Duration.millis(seconds * 1000),
                 event -> button.setDisable(false) // Re-enable the button after the duration
+
         ));
         timeline.setCycleCount(1); // Only run once
         timeline.play(); // Start the timeline
     }
+
     private void startProgressTimer(int durationInSeconds) {
         count = 0;
 
@@ -327,7 +330,6 @@ public class GameScreenController {
                 called = false;
                 endRound(true);
             } else if (called && roundTimerProgressBar.getProgress() >= 1) {
-                System.out.println("called");
                 endRound(false);
             }
         }
