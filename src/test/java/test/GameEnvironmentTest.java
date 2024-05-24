@@ -10,6 +10,7 @@ import seng201.team0.models.towers.*;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.items.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -410,14 +411,14 @@ public class GameEnvironmentTest {
     @Test
     public void testEnemyAirStrike() {
 
-        Tower armoury = new Armoury();
-        gameEnvironment.getMainTowers().add(armoury);
+        Tower mainTower = new Armoury();
+        gameEnvironment.getMainTowers().add(mainTower);
         gameEnvironment.enemyAirStrike();
 
-        assertTrue(armoury.isBroken());
+        assertTrue(mainTower.isBroken());
 
-        Tower specialForcesCamp = new SpecialForcesCamp();
-        gameEnvironment.getReserveTowers().add(specialForcesCamp);
+        Tower reserveTower = new SpecialForcesCamp();
+        gameEnvironment.getReserveTowers().add(reserveTower);
 
 
         gameEnvironment = spy(gameEnvironment);
@@ -426,23 +427,195 @@ public class GameEnvironmentTest {
             gameEnvironment.enemyAirStrike();
         }
 
-        assertTrue(specialForcesCamp.isBroken());
+        assertTrue(reserveTower.isBroken());
     }
 
     @Test
     public void testCommunicationsBreakdown() {
+
+        Tower mainTower = new Barracks();
+        gameEnvironment.getMainTowers().add(mainTower);
+        double originalReloadSpeed = mainTower.getReloadSpeed();
+
+        gameEnvironment.communicationsBreakdown();
+
+        assertEquals(originalReloadSpeed + 0.15, mainTower.getReloadSpeed());
+
+        gameEnvironment.getMainTowers().remove(mainTower);
+
+        Tower reserveTower = new Garrison();
+        gameEnvironment.getReserveTowers().add(reserveTower);
+        originalReloadSpeed = reserveTower.getReloadSpeed();
+
+        gameEnvironment.communicationsBreakdown();
+
+        assertEquals(originalReloadSpeed + 0.15, reserveTower.getReloadSpeed());
 
     }
 
     @Test
     public void testMedicalSupplyLineSabotage() {
 
+        Tower mainTower = new MedicalTent();
+        gameEnvironment.getMainTowers().add(mainTower);
+        double originalReloadSpeed = mainTower.getReloadSpeed();
+
+        gameEnvironment.medicalSupplyLineSabotage();
+
+        assertEquals(originalReloadSpeed + 0.15, mainTower.getReloadSpeed());
+
+        gameEnvironment.getMainTowers().remove(mainTower);
+
+        Tower reserveTower = new Medbay();
+        gameEnvironment.getReserveTowers().add(reserveTower);
+        originalReloadSpeed = reserveTower.getReloadSpeed();
+
+        gameEnvironment.medicalSupplyLineSabotage();
+
+        assertEquals(originalReloadSpeed + 0.15, reserveTower.getReloadSpeed());
+
     }
 
     @Test
     public void testEnemyAmbush() {
 
+        Tower mainTower = new Armoury();
+        gameEnvironment.getMainTowers().add(mainTower);
+        double originalReloadSpeed = mainTower.getReloadSpeed();
+
+        gameEnvironment.enemyAmbush();
+
+        assertEquals(originalReloadSpeed + 0.15, mainTower.getReloadSpeed());
+
+        gameEnvironment.getMainTowers().remove(mainTower);
+
+        Tower reserveTower = new Arsenal();
+        gameEnvironment.getReserveTowers().add(reserveTower);
+        originalReloadSpeed = reserveTower.getReloadSpeed();
+
+        gameEnvironment.enemyAmbush();
+
+        assertEquals(originalReloadSpeed + 0.15, reserveTower.getReloadSpeed());
+
     }
 
+    @Test
+    public void testUseRepairKit() {
+        Tower armoury = new Armoury();
+        armoury.breakTower();
+        Item ammunitionTowerRepairKit = new AmmunitionTowerRepairKit();
 
+        gameEnvironment.getMainTowers().add(armoury);
+        gameEnvironment.getPlayerItems().add(ammunitionTowerRepairKit);
+
+        gameEnvironment.useRepairKit(ammunitionTowerRepairKit, armoury);
+
+        assertFalse(armoury.isBroken());
+        assertFalse(gameEnvironment.getPlayerItems().contains(ammunitionTowerRepairKit));
+    }
+
+    @Test
+    public void testRemoveTower() {
+
+        Tower armoury = new Armoury();
+
+        gameEnvironment.getReserveTowers().add(armoury);
+        gameEnvironment.removeTower(armoury);
+
+        assertFalse(gameEnvironment.getReserveTowers().contains(armoury));
+
+    }
+
+    @Test
+    public void isMainTowerBroken() {
+
+        assertFalse(gameEnvironment.isMainTowerBroken());
+
+        Tower armoury = new Armoury();
+        Tower barracks = new Barracks();
+        Tower medicalTent = new MedicalTent();
+
+        gameEnvironment.getMainTowers().addAll(List.of(armoury, barracks, medicalTent));
+
+        assertFalse(gameEnvironment.isMainTowerBroken());
+
+        barracks.breakTower();
+
+        assertTrue(gameEnvironment.isMainTowerBroken());
+    }
+
+    @Test
+    public void testUpdateShopPostRound() {
+
+        gameEnvironment.setCurrentRound(3);
+        gameEnvironment.updateShopPostRound();
+        assertTrue(gameEnvironment.getShopItems().stream().anyMatch(item -> item instanceof AmmoCrate));
+
+        gameEnvironment.setCurrentRound(4);
+        gameEnvironment.updateShopPostRound();
+        assertTrue(gameEnvironment.getTowersInShop().stream().anyMatch(tower -> tower instanceof EaglesNest));
+
+        gameEnvironment.setCurrentRound(5);
+        gameEnvironment.updateShopPostRound();
+        assertTrue(gameEnvironment.getTowersInShop().stream().anyMatch(tower -> tower instanceof AmmoRelayStation));
+
+        gameEnvironment.setCurrentRound(6);
+        gameEnvironment.updateShopPostRound();
+        assertTrue(gameEnvironment.getShopItems().stream().anyMatch(item -> item instanceof Paratroopers));
+
+        gameEnvironment.setCurrentRound(8);
+        gameEnvironment.updateShopPostRound();
+        assertTrue(gameEnvironment.getTowersInShop().stream().anyMatch(tower -> tower instanceof FieldHospital));
+        assertTrue(gameEnvironment.getTowersInShop().stream().anyMatch(tower -> tower instanceof TroopCommandPost));
+
+        gameEnvironment.setCurrentRound(10);
+        gameEnvironment.updateShopPostRound();
+        assertTrue(gameEnvironment.getShopItems().stream().anyMatch(item -> item instanceof MedicalSupplyDrop));
+
+        gameEnvironment.setCurrentRound(11);
+        gameEnvironment.updateShopPostRound();
+        assertTrue(gameEnvironment.getTowersInShop().stream().anyMatch(tower -> tower instanceof MedicOutpost));
+
+        gameEnvironment.setCurrentRound(12);
+        gameEnvironment.updateShopPostRound();
+        assertTrue(gameEnvironment.getTowersInShop().stream().anyMatch(tower -> tower instanceof SpecialForcesCamp));
+
+    }
+
+    @Test
+    public void testGetRoundWinBonus() {
+
+        gameEnvironment.setCurrentRound(1);
+        int bonus = gameEnvironment.getRoundWinBonus();
+        assertEquals(200, bonus);
+        assertEquals(1000, gameEnvironment.getCurrentBalance());
+
+        gameEnvironment.setCurrentRound(7);
+        bonus = gameEnvironment.getRoundWinBonus();
+        assertEquals(320, bonus);
+        assertEquals(1320, gameEnvironment.getCurrentBalance());
+
+        gameEnvironment.setCurrentRound(14);
+        bonus = gameEnvironment.getRoundWinBonus();
+        assertEquals(460, bonus);
+        assertEquals(1780, gameEnvironment.getCurrentBalance());
+
+    }
+
+    @Test
+    public void testLevelUpTowers() {
+        Tower armoury = new Armoury();
+        Tower barracks = new Barracks();
+        Tower medicalTent = new MedicalTent();
+
+        gameEnvironment.getMainTowers().addAll(List.of(armoury, barracks, medicalTent));
+
+        ArrayList<Integer> carts = new ArrayList<>(List.of(1, 3, 0));
+
+        gameEnvironment.levelUpTowers(carts);
+
+        assertEquals(2, armoury.getLevel());
+        assertEquals(1, barracks.getLevel());
+        assertEquals(4, medicalTent.getLevel());
+    }
 }

@@ -124,15 +124,15 @@ public abstract class Tower implements Purchasable {
 
 
     public void communicationsBreakdown() {
-        reloadSpeed *= 1.2;
+        reloadSpeed += 0.15;
     }
 
     public void medicalSupplyLineSabotage() {
-        reloadSpeed *= 1.2;
+        reloadSpeed += 0.15;
     }
 
     public void enemyAmbush() {
-        reloadSpeed *= 1.2;
+        reloadSpeed += 0.15;
     }
 
 }

@@ -594,7 +594,7 @@ public class GameEnvironment {
 
     }
 
-    public int roundWinPrize(){
+    public int getRoundWinBonus(){
         int prize = 200 + (currentRound - 1) * 20;
         currentBalance += prize;
         return prize;

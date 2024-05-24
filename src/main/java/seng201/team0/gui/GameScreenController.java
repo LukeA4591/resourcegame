@@ -343,10 +343,10 @@ public class GameScreenController {
                 gameEnvironment.initiateRandomEvent();
             }
 
-            int roundWinPrize = gameEnvironment.roundWinPrize();
+            int roundWinBonus = gameEnvironment.getRoundWinBonus();
             gameEnvironment.showAlert("Round Completed!",
                     "Congratulations you have beaten round " + gameEnvironment.getCurrentRound() +
-                            " and you have won $" + roundWinPrize + "! \nYour towers " +
+                            " and you have won $" + roundWinBonus + "! \nYour towers " +
                             "have now leveled up!", Alert.AlertType.INFORMATION);
 
             if (gameEnvironment.isGameWon()){
