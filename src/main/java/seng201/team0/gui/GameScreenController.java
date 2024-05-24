@@ -1,5 +1,6 @@
 package seng201.team0.gui;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
 import seng201.team0.GameEnvironment;
@@ -90,6 +91,7 @@ public class GameScreenController {
     private int troopsNeeded;
     private Round newRound;
     private boolean called;
+    int count;
 
     public GameScreenController(GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
@@ -189,7 +191,8 @@ public class GameScreenController {
 
             switch (roundMode) {
                 case "Artillery Barrage":
-                    roundInfoLabel2.setText("+2 Ammunition Tower Levels | +1 Troop Tower Levels | +1 Medkit Tower Levels");
+                    roundInfoLabel2.setText("+" + numberOfAmmunitionCarts + " Ammunition Tower Levels | +" +
+                            numberOfTroopCarts +" Troop Tower Levels | +" + numberOfMedkitCarts + " Medkit Tower Levels");
                     break;
                 case "Ground Offensive":
                     roundInfoLabel2.setText("+1 Ammunition Tower Levels | +2 Troop Tower Levels | +1 Medkit Tower Levels");
@@ -198,10 +201,6 @@ public class GameScreenController {
                     roundInfoLabel2.setText("+1 Ammunition Tower Levels | +1 Troop Tower Levels | +2 Medkit Tower Levels");
                     break;
             }
-
-
-
-
         }
     }
     @FXML
@@ -299,42 +298,40 @@ public class GameScreenController {
         timeline.play(); // Start the timeline
     }
     private void startProgressTimer(int durationInSeconds) {
-        // Reset progress
-        double progress = 0.0;
-        roundTimerProgressBar.setProgress(progress);
+        count = 0;
 
-        // Define a Task to update progress
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                for (int i = 0; i < durationInSeconds; i++) {
-                    Thread.sleep(1000); // Sleep for 1 second
-                    updateProgress(i + 1, durationInSeconds);
-                }
-                return null;
-            }
-            @Override
-            protected void succeeded() {
-                super.succeeded();
-                // Call your function here
-                checkRoundDone();
-            }
-        };
-        // Bind the progress of the task to the ProgressBar
-        roundTimerProgressBar.progressProperty().bind(task.progressProperty());
-        // Run the task in a background thread
-        new Thread(task).start();
-    }
+        roundTimerProgressBar.setProgress(0.0);
+
+        // Define a Timeline to update progress
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    double progress = roundTimerProgressBar.getProgress() + 1.0 / durationInSeconds;
+                    roundTimerProgressBar.setProgress(progress);
+                    count += 1;
+                    if (count == durationInSeconds){
+                        roundTimerProgressBar.setProgress(1);
+                    }
+                })
+        );
+        timeline.setCycleCount(durationInSeconds);
+        timeline.setOnFinished(event -> checkRoundDone());
+        timeline.play();
+        }
+
 
     private void checkRoundDone(){
-        if (medKitProgressBar.getProgress() == 1 &&
-                ammoProgressBar.getProgress() == 1 &&
-                troopProgressBar.getProgress() == 1 && called){
-            called = false;
-            endRound(true);
-        } else if (called && roundTimerProgressBar.getProgress() == 1){
-            endRound(false);
+        Platform.runLater(() -> {
+            if (medKitProgressBar.getProgress() == 1 &&
+                    ammoProgressBar.getProgress() == 1 &&
+                    troopProgressBar.getProgress() == 1 && called) {
+                called = false;
+                endRound(true);
+            } else if (called && roundTimerProgressBar.getProgress() >= 1) {
+                System.out.println("called");
+                endRound(false);
+            }
         }
+        );
     }
 
     private void endRound(boolean roundFinish){
