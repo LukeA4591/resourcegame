@@ -17,7 +17,7 @@ public class FXWrapper implements AlertHandler {
     private Pane pane;
     private Stage stage;
 
-    public void init(Stage stage) {
+    public void init(final Stage stage) {
         this.stage = stage;
         new GameEnvironment(this::launchSetupScreen, this::launchTowerSelectScreen, this::launchGameScreen,
                 this::launchShopScreen, this::launchInventoryScreen, this::launchEndGameScreen, this::clearPane,
@@ -28,7 +28,7 @@ public class FXWrapper implements AlertHandler {
         pane.getChildren().removeAll(pane.getChildren());
     }
 
-    public void launchSetupScreen(GameEnvironment gameEnvironment) {
+    public void launchSetupScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/setup_screen.fxml"));
             setupLoader.setControllerFactory(param -> new SetupScreenController(gameEnvironment));
@@ -40,7 +40,7 @@ public class FXWrapper implements AlertHandler {
         }
     }
 
-    public void launchTowerSelectScreen(GameEnvironment gameEnvironment) {
+    public void launchTowerSelectScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/tower_select_screen.fxml"));
             setupLoader.setControllerFactory(param -> new TowerSelectScreenController(gameEnvironment));
@@ -52,7 +52,7 @@ public class FXWrapper implements AlertHandler {
         }
     }
 
-    public void launchGameScreen(GameEnvironment gameEnvironment) {
+    public void launchGameScreen(final GameEnvironment gameEnvironment) {
 
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/game_screen.fxml"));
@@ -65,7 +65,7 @@ public class FXWrapper implements AlertHandler {
         }
     }
 
-    public void launchShopScreen(GameEnvironment gameEnvironment) {
+    public void launchShopScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/shop_screen.fxml"));
             setupLoader.setControllerFactory(param -> new ShopScreenController(gameEnvironment));
@@ -77,7 +77,7 @@ public class FXWrapper implements AlertHandler {
         }
     }
 
-    public void launchInventoryScreen(GameEnvironment gameEnvironment) {
+    public void launchInventoryScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/inventory_screen.fxml"));
             setupLoader.setControllerFactory(param -> new InventoryScreenController(gameEnvironment));
@@ -89,7 +89,7 @@ public class FXWrapper implements AlertHandler {
         }
     }
 
-    public void launchEndGameScreen(GameEnvironment gameEnvironment) {
+    public void launchEndGameScreen(final GameEnvironment gameEnvironment) {
         try {
             FXMLLoader setupLoader = new FXMLLoader(getClass().getResource("/fxml/end_game_screen.fxml"));
             setupLoader.setControllerFactory(param -> new EndGameScreenController(gameEnvironment));
@@ -102,7 +102,7 @@ public class FXWrapper implements AlertHandler {
     }
 
     @Override
-    public void showAlert(String title, String message, Alert.AlertType alertType) {
+    public void showAlert(final String title, final String message, final Alert.AlertType alertType) {
         Platform.runLater(() -> {
             Alert alert = new Alert(alertType);
             alert.setTitle(title);

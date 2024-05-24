@@ -96,7 +96,8 @@ public class RoundTest {
     public void testIncreaseAmmunitionCollected() {
         int originalAmmunition = ammunitionRound.getAmmunitionCollected();
         ammunitionRound.increaseMedKitsCollected();
-        assertEquals(originalAmmunition + ammunitionTower.getResourceAmount(), ammunitionRound.getMedKitsCollected());
+        assertEquals(originalAmmunition + ammunitionTower.getResourceAmount(),
+                ammunitionRound.getMedKitsCollected());
     }
 
 

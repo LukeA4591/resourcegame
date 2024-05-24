@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
 
 public class EndGameScreenController {
 
@@ -15,7 +15,7 @@ public class EndGameScreenController {
 
     private final GameEnvironment gameEnvironment;
 
-    public EndGameScreenController(GameEnvironment tempEnvironment) {
+    public EndGameScreenController(final GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
     }
 
@@ -40,7 +40,8 @@ public class EndGameScreenController {
     public void setStatsVBox() {
 
         Label label1 = new Label("Player Name: " + gameEnvironment.getPlayerName());
-        Label label2 = new Label("Completed rounds: " + gameEnvironment.getCurrentRound() + " out of " + gameEnvironment.getGameRounds());
+        Label label2 = new Label("Completed rounds: " + gameEnvironment.getCurrentRound() + " out of "
+                + gameEnvironment.getGameRounds());
         Label label3 = new Label("Final Balance: " + gameEnvironment.getCurrentBalance());
         Label label4 = new Label("Difficulty: " + gameEnvironment.getGameDifficulty());
 

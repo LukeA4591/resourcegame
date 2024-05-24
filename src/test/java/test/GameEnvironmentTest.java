@@ -28,9 +28,11 @@ public class GameEnvironmentTest {
         AlertHandler alertHandler = mock(AlertHandler.class);
 
         gameEnvironment = new GameEnvironment(gameEnvironment1 -> {}, gameEnvironment2 -> {}, gameEnvironment3 -> {},
-                gameEnvironment4 -> {}, gameEnvironment5 -> {}, gameEnvironment6 -> {}, () -> {}, alertHandler, new Random(200));
+                gameEnvironment4 -> {}, gameEnvironment5 -> {}, gameEnvironment6 -> {}, () -> {}, alertHandler,
+                new Random(200));
 
-        gameEnvironment.initializeGame("Player", 10, "Major", 800, 900, 2);
+        gameEnvironment.initializeGame("Player", 10, "Major", 800,
+                900, 2);
     }
 
 
@@ -262,7 +264,8 @@ public class GameEnvironmentTest {
         gameEnvironment.buyItem(ammunitionRepairKit);
         gameEnvironment.sellItem(ammunitionRepairKit);
 
-        assertEquals(800 + ammunitionRepairKit.getSellPrice() - ammunitionRepairKit.getCost(), gameEnvironment.getCurrentBalance());
+        assertEquals(800 + ammunitionRepairKit.getSellPrice() - ammunitionRepairKit.getCost(),
+                gameEnvironment.getCurrentBalance());
         assertTrue(gameEnvironment.getShopItems().contains(ammunitionRepairKit));
         assertFalse(gameEnvironment.getPlayerItems().contains(ammunitionRepairKit));
 
@@ -319,7 +322,8 @@ public class GameEnvironmentTest {
         gameEnvironment.buyTower(ammoRelayStation);
         gameEnvironment.sellTower(ammoRelayStation);
 
-        assertEquals(800 - ammoRelayStation.getCost() + ammoRelayStation.getSellPrice(), gameEnvironment.getCurrentBalance());
+        assertEquals(800 - ammoRelayStation.getCost() + ammoRelayStation.getSellPrice(),
+                gameEnvironment.getCurrentBalance());
         assertInstanceOf(AmmoRelayStation.class, gameEnvironment.getTowersInShop().get(2));
         assertFalse(gameEnvironment.getReserveTowers().contains(ammoRelayStation));
 
@@ -327,7 +331,8 @@ public class GameEnvironmentTest {
         gameEnvironment.buyTower(medicOutpost);
         gameEnvironment.sellTower(medicOutpost);
 
-        assertEquals(800 - medicOutpost.getCost() + medicOutpost.getSellPrice(), gameEnvironment.getCurrentBalance());
+        assertEquals(800 - medicOutpost.getCost() + medicOutpost.getSellPrice(),
+                gameEnvironment.getCurrentBalance());
         assertInstanceOf(MedicOutpost.class, gameEnvironment.getTowersInShop().get(2));
         assertFalse(gameEnvironment.getReserveTowers().contains(medicOutpost));
     }
@@ -380,13 +385,16 @@ public class GameEnvironmentTest {
     @Test
     public void testShouldTriggerRandomEvent() {
 
-        gameEnvironment.initializeGame("Player", 10, "Recruit", 1000, 1000, 3);
+        gameEnvironment.initializeGame("Player", 10, "Recruit", 1000,
+                1000, 3);
         assertTrue(gameEnvironment.shouldTriggerRandomEvent() || !gameEnvironment.shouldTriggerRandomEvent());
 
-        gameEnvironment.initializeGame("Player", 10, "Major", 1000, 1000, 3);
+        gameEnvironment.initializeGame("Player", 10, "Major", 1000,
+                1000, 3);
         assertTrue(gameEnvironment.shouldTriggerRandomEvent() || !gameEnvironment.shouldTriggerRandomEvent());
 
-        gameEnvironment.initializeGame("Player", 10, "Commander", 1000, 1000, 3);
+        gameEnvironment.initializeGame("Player", 10, "Commander", 1000,
+                1000, 3);
         assertTrue(gameEnvironment.shouldTriggerRandomEvent() || !gameEnvironment.shouldTriggerRandomEvent());
     }
 

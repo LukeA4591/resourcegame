@@ -5,7 +5,8 @@ import seng201.team0.models.towers.SupportTower;
 public class TroopCommandPost extends SupportTower {
 
     public TroopCommandPost() {
-        super("Troop Command Post", 0.3, "Troops", 500);
+        super("Troop Command Post", 0.3, "Troops",
+                500);
     }
 
     public String getDescription() {

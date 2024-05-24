@@ -4,11 +4,17 @@ import javafx.application.Platform;
 import javafx.util.Duration;
 import seng201.team0.GameEnvironment;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.animation.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Alert;
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
 import seng201.team0.models.Round;
-import seng201.team0.models.towers.*;
-import java.util.*;
+import seng201.team0.models.towers.Tower;
+
+import java.util.ArrayList;
 
 
 public class GameScreenController {
@@ -86,7 +92,7 @@ public class GameScreenController {
     private boolean called = true;
     int count;
 
-    public GameScreenController(GameEnvironment tempEnvironment) {
+    public GameScreenController(final GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
     }
 
@@ -166,9 +172,9 @@ public class GameScreenController {
 
 
     @FXML
-    private void onSelectRoundModeClicked(){
+    private void onSelectRoundModeClicked() {
         this.roundMode = roundModeComboBox.getValue();
-        if (roundMode == null){
+        if (roundMode == null) {
             gameEnvironment.showAlert("Invalid Round Mode",
                     "Please choose a mode for your next round", Alert.AlertType.ERROR);
         } else {
@@ -180,41 +186,46 @@ public class GameScreenController {
             int numberOfAmmunitionCarts = numCarts.get(0);
             int numberOfMedkitCarts = numCarts.get(1);
             int numberOfTroopCarts = numCarts.get(2);
-            roundInfoLabel1.setText(numberOfAmmunitionCarts + " Ammunition Carts | " + numberOfTroopCarts + " Troop Carts | " +
-                    numberOfMedkitCarts + " Medkit Carts");
+            roundInfoLabel1.setText(numberOfAmmunitionCarts + " Ammunition Carts | " + numberOfTroopCarts +
+                    " Troop Carts | " + numberOfMedkitCarts + " Medkit Carts");
 
             switch (roundMode) {
                 case "Artillery Barrage":
-                    roundInfoLabel2.setText("+2 Ammunition Tower Levels | +1 Troop Tower Levels | +1 Medkit Tower Levels");
+                    roundInfoLabel2.setText("+2 Ammunition Tower Levels | +1 Troop Tower Levels | +1 " +
+                            "Medkit Tower Levels");
                     break;
                 case "Ground Offensive":
-                    roundInfoLabel2.setText("+1 Ammunition Tower Levels | +2 Troop Tower Levels | +1 Medkit Tower Levels");
+                    roundInfoLabel2.setText("+1 Ammunition Tower Levels | +2 Troop Tower Levels | +1 " +
+                            "Medkit Tower Levels");
                     break;
                 case "Rescue Operation":
-                    roundInfoLabel2.setText("+1 Ammunition Tower Levels | +1 Troop Tower Levels | +2 Medkit Tower Levels");
+                    roundInfoLabel2.setText("+1 Ammunition Tower Levels | +1 Troop Tower Levels | +2 " +
+                            "Medkit Tower Levels");
                     break;
             }
         }
     }
     @FXML
-    private void onLoadSupplyTruckButtonClicked(){
+    private void onLoadSupplyTruckButtonClicked() {
         newRound.increaseAmmunitionCollected();
         int ammunitionCollected = newRound.getAmmunitionCollected();
+
         if (ammunitionCollected >= ammunitionNeeded) {
             ammoProgressBar.setProgress(1);
             loadSupplyTruckButton.setDisable(true);
             fillSupplyTruckLabel.setText("Supply Truck full!");
             checkRoundDone();
+
         } else {
             ammoProgressBar.setProgress((double) ammunitionCollected / ammunitionNeeded);
             disableButtonForTime(loadSupplyTruckButton, newRound.getAmmunitionTowerReload());
         }
     }
     @FXML
-    private void onLoadHumveeButtonClicked(){
+    private void onLoadHumveeButtonClicked() {
         newRound.increaseTroopsCollected();
         int troopsCollected = newRound.getTroopsCollected();
-        if (troopsCollected >= troopsNeeded){
+        if (troopsCollected >= troopsNeeded) {
             troopProgressBar.setProgress(1);
             loadHumveeButton.setDisable(true);
             fillHumveeLabel.setText("Humvee full!");
@@ -225,10 +236,10 @@ public class GameScreenController {
         }
     }
     @FXML
-    private void onLoadAmbulanceButtonClicked(){
+    private void onLoadAmbulanceButtonClicked() {
         newRound.increaseMedKitsCollected();
         int medKitsCollected = newRound.getMedKitsCollected();
-        if (medKitsCollected >= medKitsNeeded){
+        if (medKitsCollected >= medKitsNeeded) {
             medKitProgressBar.setProgress(1);
             loadAmbulanceButton.setDisable(true);
             fillAmbulanceLabel.setText("Ambulance full!");
@@ -271,7 +282,8 @@ public class GameScreenController {
                 startProgressTimer(gameEnvironment.getTrackDistance() / newRound.getCartSpeed());
             }
             else {
-                gameEnvironment.showAlert("Main Tower is Broken", "Round cannot be played with a broken tower", Alert.AlertType.ERROR);
+                gameEnvironment.showAlert("Main Tower is Broken", "Round cannot be played with a " +
+                        "broken tower", Alert.AlertType.ERROR);
             }
         }
         else {
@@ -279,7 +291,7 @@ public class GameScreenController {
                     "Please choose a Round Mode for your next round", Alert.AlertType.ERROR);
         }
     }
-    private void disableButtonForTime(Button button, double seconds) {
+    private void disableButtonForTime(final Button button, final double seconds) {
         button.setDisable(true); // Disable the button
 
         // Create a Timeline to re-enable the button after the specified time
@@ -292,7 +304,7 @@ public class GameScreenController {
         timeline.play(); // Start the timeline
     }
 
-    private void startProgressTimer(int durationInSeconds) {
+    private void startProgressTimer(final int durationInSeconds) {
         count = 0;
 
         roundTimerProgressBar.setProgress(0.0);
@@ -303,7 +315,7 @@ public class GameScreenController {
                     double progress = roundTimerProgressBar.getProgress() + 1.0 / durationInSeconds;
                     roundTimerProgressBar.setProgress(progress);
                     count += 1;
-                    if (count == durationInSeconds){
+                    if (count == durationInSeconds) {
                         roundTimerProgressBar.setProgress(1);
                     }
                 })
@@ -311,10 +323,10 @@ public class GameScreenController {
         timeline.setCycleCount(durationInSeconds);
         timeline.setOnFinished(event -> checkRoundDone());
         timeline.play();
-        }
+    }
 
 
-    private void checkRoundDone(){
+    private void checkRoundDone() {
         Platform.runLater(() -> {
             if (medKitProgressBar.getProgress() == 1 &&
                     ammoProgressBar.getProgress() == 1 &&
@@ -328,7 +340,7 @@ public class GameScreenController {
         );
     }
 
-    private void endRound(boolean roundWon){
+    private void endRound(final boolean roundWon){
 
         if (roundWon) {
 
@@ -338,7 +350,7 @@ public class GameScreenController {
                             " and you have won $" + roundWinBonus + "! \nYour towers " +
                             "have now leveled up!", Alert.AlertType.INFORMATION);
 
-            if (gameEnvironment.isGameWon()){
+            if (gameEnvironment.isGameWon()) {
                 gameEnvironment.setGameWon(true);
                 gameEnvironment.launchEndGameScreen();
 
@@ -357,7 +369,7 @@ public class GameScreenController {
 
             gameEnvironment.loseLife();
 
-            if (gameEnvironment.isGameLost()){
+            if (gameEnvironment.isGameLost()) {
                 gameEnvironment.launchEndGameScreen();
             } else {
 
@@ -365,7 +377,8 @@ public class GameScreenController {
                     gameEnvironment.initiateRandomEvent();
                 }
 
-                gameEnvironment.showAlert("Round failed!", "You have lost a life", Alert.AlertType.INFORMATION);
+                gameEnvironment.showAlert("Round failed!", "You have lost a life",
+                        Alert.AlertType.INFORMATION);
 
 
                 gameEnvironment.updateShopPostRound();

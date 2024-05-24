@@ -100,20 +100,30 @@ public class InventoryScreenController {
     @FXML
     private void initializeDescriptions() {
 
-        ammunitionTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(ammunitionTowerButton.getText())));
-        troopsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(troopsTowerButton.getText())));
-        medkitsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(medkitsTowerButton.getText())));
+        ammunitionTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(
+                ammunitionTowerButton.getText())));
+        troopsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(
+                troopsTowerButton.getText())));
+        medkitsTowerButton.setOnAction(event -> displayTowerInformation(gameEnvironment.getMainTowerByName(
+                medkitsTowerButton.getText())));
 
         supportTowerButton.setOnAction(event -> displaySupportTowerInformation(gameEnvironment.getSupportTower()));
 
-        reserveTower1Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower1Button.getText())));
-        reserveTower2Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower2Button.getText())));
-        reserveTower3Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower3Button.getText())));
-        reserveTower4Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(reserveTower4Button.getText())));
+        reserveTower1Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(
+                reserveTower1Button.getText())));
+        reserveTower2Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(
+                reserveTower2Button.getText())));
+        reserveTower3Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(
+                reserveTower3Button.getText())));
+        reserveTower4Button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(
+                reserveTower4Button.getText())));
 
-        item1Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(item1Button.getText())));
-        item2Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(item2Button.getText())));
-        item3Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(item3Button.getText())));
+        item1Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(
+                item1Button.getText())));
+        item2Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(
+                item2Button.getText())));
+        item3Button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(
+                item3Button.getText())));
 
     }
 
@@ -206,7 +216,8 @@ public class InventoryScreenController {
     @FXML
     private void initializeToggleButtons() {
 
-        List<ToggleButton> allToggleButtons = List.of(ammunitionTowerButton, troopsTowerButton, medkitsTowerButton, supportTowerButton, reserveTower1Button, reserveTower2Button,
+        List<ToggleButton> allToggleButtons = List.of(ammunitionTowerButton, troopsTowerButton, medkitsTowerButton,
+                supportTowerButton, reserveTower1Button, reserveTower2Button,
                 reserveTower3Button, reserveTower4Button, item1Button, item2Button,
                 item3Button);
 
@@ -214,8 +225,10 @@ public class InventoryScreenController {
             toggleButton.setToggleGroup(allToggleButtonsGroup);
         }
 
-        reserveTowerToggleButtons = List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button, reserveTower4Button);
-        mainTowerToggleButtons = List.of(ammunitionTowerButton,troopsTowerButton, medkitsTowerButton, supportTowerButton);
+        reserveTowerToggleButtons = List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button,
+                reserveTower4Button);
+        mainTowerToggleButtons = List.of(ammunitionTowerButton,troopsTowerButton, medkitsTowerButton,
+                supportTowerButton);
         itemToggleButtons = List.of(item1Button, item2Button, item3Button);
     }
 
@@ -257,7 +270,8 @@ public class InventoryScreenController {
         troopsTowerButton.setToggleGroup(mainTowersToggleGroup);
         medkitsTowerButton.setToggleGroup(mainTowersToggleGroup);
 
-        List<ToggleButton> reserveButtons= List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button, reserveTower4Button);
+        List<ToggleButton> reserveButtons= List.of(reserveTower1Button, reserveTower2Button, reserveTower3Button,
+                reserveTower4Button);
 
         for (ToggleButton button : reserveButtons) {
             button.setToggleGroup(reserveTowersToggleGroup);
@@ -274,8 +288,9 @@ public class InventoryScreenController {
     private void disableSwapping() {
         swappingTowers = false;
 
-        List<ToggleButton> allToggleButtons = List.of(ammunitionTowerButton, troopsTowerButton, medkitsTowerButton, reserveTower1Button, reserveTower2Button,
-                reserveTower3Button, reserveTower4Button, item1Button, item2Button, item3Button);
+        List<ToggleButton> allToggleButtons = List.of(ammunitionTowerButton, troopsTowerButton, medkitsTowerButton,
+                reserveTower1Button, reserveTower2Button, reserveTower3Button, reserveTower4Button, item1Button,
+                item2Button, item3Button);
 
         for (ToggleButton toggleButton : allToggleButtons) {
             toggleButton.setToggleGroup(allToggleButtonsGroup);
@@ -321,7 +336,8 @@ public class InventoryScreenController {
             }
         }
         else {
-            gameEnvironment.showAlert("Invalid Tower Selection", "You must select two towers to swap them.", Alert.AlertType.ERROR);
+            gameEnvironment.showAlert("Invalid Tower Selection", "You must select two towers to" +
+                    " swap them.", Alert.AlertType.ERROR);
 
         }
 
@@ -389,8 +405,10 @@ public class InventoryScreenController {
 
                     for (ToggleButton button : itemToggleButtons) {
 
-                        if (gameEnvironment.getPlayerItems().contains(gameEnvironment.getPlayerItemByName(button.getText())) &&
-                                gameEnvironment.getPlayerItemByName(button.getText()).getTowerType().equals(selectedTower.getResourceType())) {
+                        if (gameEnvironment.getPlayerItems().contains(gameEnvironment.getPlayerItemByName(
+                                button.getText())) && gameEnvironment.getPlayerItemByName(button.getText()).
+                                getTowerType().equals(selectedTower.getResourceType())) {
+
                             repairKit = gameEnvironment.getPlayerItemByName(button.getText());
 
                             gameEnvironment.useRepairKit(repairKit, selectedTower);
@@ -401,15 +419,18 @@ public class InventoryScreenController {
                     }
 
                          if (repairKit == null){
-                            gameEnvironment.showAlert("No Valid Repair Kit", "No repair kits are available to repair this tower", Alert.AlertType.ERROR);
+                            gameEnvironment.showAlert("No Valid Repair Kit", "No repair kits are " +
+                                    "available to repair this tower", Alert.AlertType.ERROR);
                         }
 
                 } else {
-                    gameEnvironment.showAlert("Tower Not Broken", "There is no need to use a repair kit on this tower because it is not broken.", Alert.AlertType.ERROR);
+                    gameEnvironment.showAlert("Tower Not Broken", "There is no need to use a repair " +
+                            "kit on this tower because it is not broken.", Alert.AlertType.ERROR);
                 }
             }
             }
-            else {gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected for repairing", Alert.AlertType.ERROR);}
+            else {gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
+                "for repairing", Alert.AlertType.ERROR);}
         }
 
     @FXML
@@ -447,16 +468,19 @@ public class InventoryScreenController {
                     if (!gameEnvironment.getMainTowers().contains(selectedTower)) {
                         gameEnvironment.removeTower(selectedTower);
                     } else {
-                        gameEnvironment.showAlert("Main Towers Cannot Be Removed", "Please swap the tower to reserves in order to remove it", Alert.AlertType.ERROR);
+                        gameEnvironment.showAlert("Main Towers Cannot Be Removed", "Please swap the " +
+                                "tower to reserves in order to remove it", Alert.AlertType.ERROR);
                     }
                 } else {
-                    gameEnvironment.showAlert("Tower Is Not Broken", "The selected tower is not broken and does not need to be removed", Alert.AlertType.ERROR);
+                    gameEnvironment.showAlert("Tower Is Not Broken", "The selected tower is not broken" +
+                            " and does not need to be removed", Alert.AlertType.ERROR);
                 }
             }
         }
                 else
                 {
-                    gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected for removal", Alert.AlertType.ERROR);
+                    gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
+                            "for removal", Alert.AlertType.ERROR);
 
 
             }

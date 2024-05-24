@@ -3,7 +3,7 @@ plugins {
     id 'java'
     id "org.openjfx.javafxplugin" version "0.1.0"
     id 'jacoco'
-    id 'checkstyle' // Add the Checkstyle plugin
+    id 'checkstyle'
 }
 
 archivesBaseName = 'seng201_team0'
@@ -22,20 +22,42 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.openjfx/javafx-controls
     implementation "org.openjfx:javafx-controls:${javafxVersion}"
+
+    // https://mvnrepository.com/artifact/org.openjfx/javafx-fxml
     implementation "org.openjfx:javafx-fxml:${javafxVersion}"
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+
+    // For Testing
     testImplementation "org.mockito:mockito-core:4.0.0"
 }
 
 application {
+    // Define the main class for the application.
     mainClass = "${mainClassName}"
 }
 
 javafx {
     version = "${javafxVersion}"
     modules = [ 'javafx.controls', 'javafx.fxml']
+}
+
+checkstyle {
+    toolVersion = '8.45'
+    configFile = file('config/checkstyle/checkstyle.xml')
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+    }
 }
 
 test {
@@ -53,7 +75,7 @@ jar {
         attributes 'Main-Class': mainClassName
     }
     from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect {it.isDirectory()?it:zipTree(it)}
     }
 }
 
@@ -67,21 +89,6 @@ jacocoTestReport {
         include '**/*.exec'
     }
     reports {
-        html.outputLocation = file("${buildDir}/reports/tests/coverage/")
+        html.destination file("${buildDir}/reports/tests/coverage/")
     }
 }
-
-// Checkstyle configuration
-checkstyle {
-    toolVersion = '9.3'
-    configFile = file("$rootDir/config/checkstyle/checkstyle.xml")
-}
-
-tasks.withType(Checkstyle).configureEach {
-    reports {
-        xml.required.set(false) // disable XML report
-        html.required.set(true)  // enable HTML report
-    }
-}
-
-check.dependsOn checkstyleMain

@@ -6,7 +6,8 @@ public class Barracks extends Tower {
 
 
     public Barracks() {
-        super("Barracks", 20, 2, "Troops", 150, 1);
+        super("Barracks", 20, 2, "Troops",
+                150, 1);
     }
 
     public String getDescription() {

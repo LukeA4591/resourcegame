@@ -10,7 +10,9 @@ import seng201.team0.models.towers.supporttowers.AmmoRelayStation;
 import seng201.team0.models.towers.supporttowers.MedicOutpost;
 import seng201.team0.models.towers.supporttowers.TroopCommandPost;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.function.Consumer;
 
 public class GameEnvironment {
@@ -52,10 +54,10 @@ public class GameEnvironment {
 
 
 
-    public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher,
-                           Consumer<GameEnvironment> gameScreenLauncher, Consumer<GameEnvironment> shopScreenLauncher,
-                           Consumer<GameEnvironment> inventoryScreenLauncher, Consumer<GameEnvironment> endGameScreenLauncher,
-                           Runnable clearScreen, AlertHandler alertHandler, Random random) {
+    public GameEnvironment(final Consumer<GameEnvironment> setupScreenLauncher, final Consumer<GameEnvironment>
+            towerSelectScreenLauncher, final Consumer<GameEnvironment> gameScreenLauncher, final Consumer<GameEnvironment>
+            shopScreenLauncher, final Consumer<GameEnvironment> inventoryScreenLauncher, final Consumer<GameEnvironment>
+            endGameScreenLauncher, final Runnable clearScreen, final AlertHandler alertHandler, final Random random) {
 
         this.alertHandler = alertHandler;
         this.clearScreen = clearScreen;
@@ -95,8 +97,8 @@ public class GameEnvironment {
         launchTowerSelectScreen();
     }
 
-
-    public void launchTowerSelectScreen() {towerSelectScreenLauncher.accept(this);}
+    public void launchTowerSelectScreen() {
+        towerSelectScreenLauncher.accept(this);}
     public void closeTowerSelectScreen() {
         clearScreen.run();
         launchGameScreen();
@@ -105,12 +107,14 @@ public class GameEnvironment {
     public void launchGameScreen() {
         gameScreenLauncher.accept(this);
     }
-    public void closeGameScreen(boolean isInventory) {
+    public void closeGameScreen(final boolean isInventory) {
         clearScreen.run();
         if (isInventory) {
             launchInventoryScreen();
         }
-        else launchShopScreen();
+        else {
+            launchShopScreen();
+        }
     }
     public void refreshGameScreen(){
         clearScreen.run();
@@ -141,7 +145,8 @@ public class GameEnvironment {
 
 
 
-    public void initializeGame(String name, int rounds, String gameDifficulty, double startingMoney, int trackDistance, int lives) {
+    public void initializeGame(final String name, final int rounds, final String gameDifficulty, final double
+            startingMoney, final int trackDistance, final int lives) {
 
         this.playerName = name;
         this.gameRounds = rounds;
@@ -159,10 +164,10 @@ public class GameEnvironment {
         return gameRounds;
     }
 
-    public int getCurrentRound(){
+    public int getCurrentRound() {
         return currentRound;
     }
-    public void setCurrentRound(int roundNumber) {
+    public void setCurrentRound(final int roundNumber) {
         this.currentRound = roundNumber;
     }
 
@@ -171,7 +176,7 @@ public class GameEnvironment {
         return gameDifficulty;
     }
 
-    public void setCurrentBalance(Double balance) {
+    public void setCurrentBalance(final Double balance) {
         this.currentBalance = balance;
     }
     public double getCurrentBalance() {
@@ -188,28 +193,32 @@ public class GameEnvironment {
     public boolean isGameLost() {
         return livesLeft <= 0;
     }
-    public boolean isGameWon () { return currentRound >= gameRounds; }
+    public boolean isGameWon () {
+        return currentRound >= gameRounds;
+    }
 
-    public void setSupportTower(SupportTower tower) {
+    public void setSupportTower(final SupportTower tower) {
         supportTower = tower;
     }
     public SupportTower getSupportTower() {
         return supportTower;
     }
 
-    public int getTrackDistance(){ return trackDistance; }
+    public int getTrackDistance() {
+        return trackDistance;
+    }
 
     public boolean getGameWon() {
         return gameWon;
     }
-    public void setGameWon(boolean gameWon) {
+    public void setGameWon(final boolean gameWon) {
         this.gameWon = gameWon;
     }
 
 
 
 
-    public void addTowerFromSelectScreen(Tower tower, boolean isSelected) {
+    public void addTowerFromSelectScreen(final Tower tower, final boolean isSelected) {
         if (isSelected) {
             mainTowers.add(tower);
         }
@@ -235,7 +244,7 @@ public class GameEnvironment {
     }
 
 
-    public void swapTowers(Tower mainTower, Tower reserveTower) {
+    public void swapTowers(final Tower mainTower, final Tower reserveTower) {
 
         if (mainTower instanceof SupportTower && reserveTower instanceof SupportTower) {
 
@@ -257,7 +266,8 @@ public class GameEnvironment {
         }
         else {
 
-            if (mainTower.getResourceType().equals(reserveTower.getResourceType()) && !(reserveTower instanceof SupportTower)) {
+            if (mainTower.getResourceType().equals(reserveTower.getResourceType()) && !(reserveTower instanceof
+                    SupportTower)) {
 
                 int mainIndex = mainTowers.indexOf(mainTower);
                 int reserveIndex = reserveTowers.indexOf(reserveTower);
@@ -265,18 +275,19 @@ public class GameEnvironment {
                 mainTowers.set(mainIndex, reserveTower);
                 reserveTowers.set(reserveIndex, mainTower);
             } else {
-                showAlert("Incompatible Towers", "Towers must be of the same resource type to swap.", Alert.AlertType.ERROR);
+                showAlert("Incompatible Towers", "Towers must be of the same resource type to swap.",
+                        Alert.AlertType.ERROR);
             }
         }
 
     }
 
-    public void showAlert(String title, String message, Alert.AlertType alertType) {
+    public void showAlert(final String title, final String message, final Alert.AlertType alertType) {
         alertHandler.showAlert(title, message, alertType);
     }
 
 
-    public Tower getMainTowerByName(String name) {
+    public Tower getMainTowerByName(final String name) {
         for (Tower tower : mainTowers) {
             if (tower.getName().equals(name)) {
                 return tower;
@@ -285,7 +296,7 @@ public class GameEnvironment {
         return null;
     }
 
-    public Tower getReserveTowerByName(String name) {
+    public Tower getReserveTowerByName(final String name) {
         for (Tower tower : reserveTowers) {
             if (tower.getName().equals(name)) {
                 return tower;
@@ -294,7 +305,7 @@ public class GameEnvironment {
         return null;
     }
 
-    public Tower getTowerInShopByName(String name) {
+    public Tower getTowerInShopByName(final String name) {
         for (Tower tower : towersInShop) {
             if (tower.getName().equals(name)) {
                 return tower;
@@ -303,7 +314,7 @@ public class GameEnvironment {
         return null;
     }
 
-    public Item getItemInShopByName(String name) {
+    public Item getItemInShopByName(final String name) {
         for (Item item : shopItems) {
             if (item.getName().equals(name)) {
                 return item;
@@ -312,7 +323,7 @@ public class GameEnvironment {
         return null;
     }
 
-    public Item getPlayerItemByName(String name) {
+    public Item getPlayerItemByName(final String name) {
         for (Item item : playerItems) {
             if (item.getName().equals(name)) {
                 return item;
@@ -323,18 +334,18 @@ public class GameEnvironment {
 
 
 
-    public void buyItem(Item item) {
+    public void buyItem(final Item item) {
         setCurrentBalance(currentBalance - item.getCost());
         playerItems.add(item);
         shopItems.remove(item);
     }
-    public void sellItem(Item item) {
+    public void sellItem(final Item item) {
         setCurrentBalance(currentBalance + item.getSellPrice());
         playerItems.remove(item);
         shopItems.add(item);
     }
 
-    public void buyTower(Tower tower) {
+    public void buyTower(final Tower tower) {
 
         if (supportTower == null && tower instanceof SupportTower) {
             setCurrentBalance(currentBalance - tower.getCost());
@@ -347,7 +358,7 @@ public class GameEnvironment {
         }
 
     }
-    public void sellTower(Tower tower) {
+    public void sellTower(final Tower tower) {
         setCurrentBalance(currentBalance + tower.getSellPrice());
         reserveTowers.remove(tower);
         towersInShop.add(createNewInstance(tower));
@@ -380,12 +391,12 @@ public class GameEnvironment {
             return new TroopCommandPost();
         }
 
-            return null;
+        return null;
     }
 
 
-    public void applyItemEffect(Item item) {
-        if (!item.getIsRepairKit()){
+    public void applyItemEffect(final Item item) {
+        if (!item.getIsRepairKit()) {
             for (Tower tower : mainTowers) {
                 if (item.getTowerType().equals(tower.getResourceType())) {
                     tower.setResourceAmount((int) (tower.getResourceAmount() + 20));
@@ -399,7 +410,7 @@ public class GameEnvironment {
         }
     }
 
-    public void removeItemEffect(Item item) {
+    public void removeItemEffect(final Item item) {
         if (!item.getIsRepairKit()) {
             for (Tower tower : mainTowers) {
                 if (item.getTowerType().equals(tower.getResourceType())) {
@@ -456,13 +467,14 @@ public class GameEnvironment {
         if (50 > random.nextInt(65)) {
             selectedTower = mainTowers.get(random.nextInt(mainTowers.size()));
         }
-        else if (reserveTowers.isEmpty()){
-                selectedTower = mainTowers.get(random.nextInt(mainTowers.size()));
-            }
+        else if (reserveTowers.isEmpty()) {
+            selectedTower = mainTowers.get(random.nextInt(mainTowers.size()));
+        }
         else {
             selectedTower = reserveTowers.get(random.nextInt(reserveTowers.size()));
         }
-        showAlert("ENEMY AIRSTRIKE", "An enemy airstrike has broken your " + selectedTower.getName() + " tower.", Alert.AlertType.INFORMATION);
+        showAlert("ENEMY AIRSTRIKE", "An enemy airstrike has broken your " + selectedTower.getName() +
+                " tower.", Alert.AlertType.INFORMATION);
 
         selectedTower.breakTower();
 
@@ -484,7 +496,8 @@ public class GameEnvironment {
 
         Tower selectedTower = possibleTowers.get(random.nextInt(possibleTowers.size()));
 
-        showAlert("COMMUNICATIONS BREAKDOWN", "Our communication lines have been shut down!: " + selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
+        showAlert("COMMUNICATIONS BREAKDOWN", "Our communication lines have been shut down!: " +
+                selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
 
         selectedTower.communicationsBreakdown();
 
@@ -506,7 +519,8 @@ public class GameEnvironment {
 
         Tower selectedTower = possibleTowers.get(random.nextInt(possibleTowers.size()));
 
-        showAlert("MEDICAL SUPPLY LINE SABOTAGE", "Our medical supply lines have been sabotaged!: " + selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
+        showAlert("MEDICAL SUPPLY LINE SABOTAGE", "Our medical supply lines have been sabotaged!: " +
+                selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
 
         selectedTower.medicalSupplyLineSabotage();
     }
@@ -527,23 +541,26 @@ public class GameEnvironment {
 
         Tower selectedTower = possibleTowers.get(random.nextInt(possibleTowers.size()));
 
-        showAlert("ENEMY AMBUSH", "Our ammunition suppliers have been ambushed!: " + selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
+        showAlert("ENEMY AMBUSH", "Our ammunition suppliers have been ambushed!: " +
+                selectedTower.getName() + " reload speed has been decreased.", Alert.AlertType.INFORMATION);
 
         selectedTower.enemyAmbush();
     }
 
-    public void useRepairKit(Item repairKit, Tower tower) {
+    public void useRepairKit(final Item repairKit, final Tower tower) {
         tower.repairTower();
         playerItems.remove(repairKit);
 
-        showAlert("Tower Repaired!", tower.getName() + " has been repaired using " + repairKit.getName(), Alert.AlertType.INFORMATION);
+        showAlert("Tower Repaired!", tower.getName() + " has been repaired using " +
+                repairKit.getName(), Alert.AlertType.INFORMATION);
     }
 
-    public void removeTower(Tower tower) {
+    public void removeTower(final Tower tower) {
 
         reserveTowers.remove(tower);
 
-        showAlert("Tower Removed", tower.getName() + " has been removed from your inventory", Alert.AlertType.INFORMATION);
+        showAlert("Tower Removed", tower.getName() + " has been removed from your inventory",
+                Alert.AlertType.INFORMATION);
     }
 
     public boolean isMainTowerBroken() {
@@ -588,16 +605,16 @@ public class GameEnvironment {
 
     }
 
-    public int getRoundWinBonus(){
+    public int getRoundWinBonus() {
         int prize = 200 + (currentRound - 1) * 20;
         currentBalance += prize;
         return prize;
     }
     public void levelUpTowers() {
-        for (Tower tower : mainTowers){
-            switch (roundMode){
+        for (Tower tower : mainTowers) {
+            switch (roundMode) {
                 case("Artillery Barrage"):
-                    if (tower.getResourceType().equals("Ammunition")){
+                    if (tower.getResourceType().equals("Ammunition")) {
                         tower.levelUp();
                         tower.levelUp();
                     } else {
@@ -605,7 +622,7 @@ public class GameEnvironment {
                     }
                     break;
                 case("Ground Offensive"):
-                    if (tower.getResourceType().equals("Troops")){
+                    if (tower.getResourceType().equals("Troops")) {
                         tower.levelUp();
                         tower.levelUp();
                     } else {
@@ -613,7 +630,7 @@ public class GameEnvironment {
                     }
                     break;
                 case ("Rescue Operation"):
-                    if (tower.getResourceType().equals("Medkits")){
+                    if (tower.getResourceType().equals("Medkits")) {
                         tower.levelUp();
                         tower.levelUp();
                     } else {
@@ -622,7 +639,7 @@ public class GameEnvironment {
             }
         }
     }
-    public void setRoundMode(String roundMode){
+    public void setRoundMode(final String roundMode) {
         this.roundMode = roundMode;
     }
 }
