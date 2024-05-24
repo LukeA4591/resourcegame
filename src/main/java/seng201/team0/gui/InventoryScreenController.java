@@ -124,6 +124,11 @@ public class InventoryScreenController {
 
         towerLevelLabel.setText("");
 
+        displaySupportTowerInformation(tower, descriptionVBox);
+
+    }
+
+    static void displaySupportTowerInformation(SupportTower tower, VBox descriptionVBox) {
         if (tower != null) {
             descriptionVBox.getChildren().clear();
 
@@ -136,8 +141,8 @@ public class InventoryScreenController {
                     new Label("Description: " + tower.getDescription())
             );
         }
-
     }
+
     @FXML
     private void displayTowerInformation(Tower tower) {
 
@@ -148,18 +153,22 @@ public class InventoryScreenController {
 
             towerLevelLabel.setText(tower.getLevelRepresentation());
 
-            descriptionVBox.getChildren().clear();
-
-            descriptionVBox.getChildren().addAll(
-                    new Label("Name: " + tower.getName()),
-                    new Label("Resource type: " + tower.getResourceType()),
-                    new Label("Resources per click: " + tower.getResourceAmount()),
-                    new Label(String.format("Reload speed: %.2f seconds", tower.getReloadSpeed())),
-                    new Label("Cost: " + tower.getCost()),
-                    new Label("Sell price: " + tower.getSellPrice()),
-                    new Label("Description: " + tower.getDescription())
-            );
+            displayTowerInformation(tower, descriptionVBox);
         }
+    }
+
+    static void displayTowerInformation(Tower tower, VBox descriptionVBox) {
+        descriptionVBox.getChildren().clear();
+
+        descriptionVBox.getChildren().addAll(
+                new Label("Name: " + tower.getName()),
+                new Label("Resource type: " + tower.getResourceType()),
+                new Label("Resources per click: " + tower.getResourceAmount()),
+                new Label(String.format("Reload speed: %.2f seconds", tower.getReloadSpeed())),
+                new Label("Cost: " + tower.getCost()),
+                new Label("Sell price: " + tower.getSellPrice()),
+                new Label("Description: " + tower.getDescription())
+        );
     }
 
     @FXML
@@ -168,11 +177,15 @@ public class InventoryScreenController {
 
         towerLevelLabel.setText("");
 
+        displayItemInformation(item, descriptionVBox);
+    }
+
+    static void displayItemInformation(Item item, VBox descriptionVBox) {
         if (!item.getIsRepairKit()) {
             descriptionVBox.getChildren().addAll(
                     new Label("Name: " + item.getName()),
                     new Label("Affects: " + item.getTowerType() + " Towers"),
-                    new Label("Resource boost: 1.5x multiplier"),
+                    new Label("Resource boost: 20"),
                     new Label("Cost: " + item.getCost()),
                     new Label("Sell price: " + item.getSellPrice()),
                     new Label("Description: " + item.getDescription())
@@ -382,8 +395,8 @@ public class InventoryScreenController {
 
                             gameEnvironment.useRepairKit(repairKit, selectedTower);
 
-                            button.setText("Locked");
-                            button.setDisable(true);
+                            updateButtons();
+
                         }
                     }
 

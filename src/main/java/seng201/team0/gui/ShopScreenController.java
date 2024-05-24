@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.towers.SupportTower;
 import seng201.team0.models.towers.Tower;
@@ -88,7 +87,7 @@ public class ShopScreenController {
     private List<ToggleButton> shopItemsButtons;
     private List<ToggleButton> playerTowerButtons;
 
-    private GameEnvironment gameEnvironment;
+    private final GameEnvironment gameEnvironment;
 
     public ShopScreenController(GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
@@ -113,59 +112,42 @@ public class ShopScreenController {
         for (ToggleButton button : towerShopButtons) {
             button.setOnAction(event -> displayTowerInformation(gameEnvironment.getTowerInShopByName(button.getText())));
         }
-
         for (ToggleButton button : shopItemsButtons) {
             button.setOnAction(event -> displayItemInformation(gameEnvironment.getItemInShopByName(button.getText())));
         }
-
         for (ToggleButton button : playerItemButtons) {
             button.setOnAction(event -> displayItemInformation(gameEnvironment.getPlayerItemByName(button.getText())));
         }
-
         for (ToggleButton button : playerTowerButtons) {
             button.setOnAction(event -> displayTowerInformation(gameEnvironment.getReserveTowerByName(button.getText())));
         }
     }
 
     @FXML
+    private void displaySupportTowerInformation(SupportTower tower) {
+
+        InventoryScreenController.displaySupportTowerInformation(tower, descriptionVBox);
+
+    }
+
+
+    @FXML
     private void displayItemInformation(Item item) {
         descriptionVBox.getChildren().clear();
 
-        if (!item.getIsRepairKit()) {
-            descriptionVBox.getChildren().addAll(
-                    new Label("Name: " + item.getName()),
-                    new Label("Affects: " + item.getTowerType() + " Towers"),
-                    new Label("Resource boost: 1.5x multiplier"),
-                    new Label("Cost: " + item.getCost()),
-                    new Label("Sell price: " + item.getSellPrice()),
-                    new Label("Description: " + item.getDescription())
-            );
-        }
-        else {
-            descriptionVBox.getChildren().addAll(
-                    new Label("Name: " + item.getName()),
-                    new Label("Repairs: " + item.getTowerType() + " Towers"),
-                    new Label("Cost: " + item.getCost()),
-                    new Label("Sell price: " + item.getSellPrice()),
-                    new Label("Description: " + item.getDescription())
-            );
-        }
+        InventoryScreenController.displayItemInformation(item, descriptionVBox);
     }
 
     @FXML
     private void displayTowerInformation(Tower tower) {
 
-        descriptionVBox.getChildren().clear();
+        if (tower instanceof SupportTower) {
+            displaySupportTowerInformation((SupportTower) tower);
+        }
+        else {
 
-        descriptionVBox.getChildren().addAll(
-                new Label("Name:  " + tower.getName()),
-                new Label("Resource type:  " + tower.getResourceType()),
-                new Label("Resources per click:  " + tower.getResourceAmount()),
-                new Label(String.format("Reload speed: %.2f seconds", tower.getReloadSpeed())),
-                new Label("Cost:  " + tower.getCost()),
-                new Label("Sell price: " + tower.getSellPrice()),
-                new Label("Description: " + tower.getDescription())
-        );
+            InventoryScreenController.displayTowerInformation(tower, descriptionVBox);
+        }
     }
 
     @FXML

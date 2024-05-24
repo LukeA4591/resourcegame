@@ -384,12 +384,12 @@ public class GameEnvironment {
         if (!item.getIsRepairKit()){
             for (Tower tower : mainTowers) {
                 if (item.getTowerType().equals(tower.getResourceType())) {
-                    tower.setResourceAmount((int) (tower.getResourceAmount() * 1.5));
+                    tower.setResourceAmount((int) (tower.getResourceAmount() + 20));
                 }
             }
             for (Tower tower : reserveTowers) {
                 if (item.getTowerType().equals(tower.getResourceType())) {
-                    tower.setResourceAmount((int) (tower.getResourceAmount() * 1.5));
+                    tower.setResourceAmount((int) (tower.getResourceAmount() + 20));
                 }
             }
         }
@@ -399,12 +399,12 @@ public class GameEnvironment {
         if (!item.getIsRepairKit()) {
             for (Tower tower : mainTowers) {
                 if (item.getTowerType().equals(tower.getResourceType())) {
-                    tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
+                    tower.setResourceAmount((int) (tower.getResourceAmount() - 20));
                 }
             }
             for (Tower tower : reserveTowers) {
                 if (item.getTowerType().equals(tower.getResourceType())) {
-                    tower.setResourceAmount((int) (tower.getResourceAmount() / 1.5));
+                    tower.setResourceAmount((int) (tower.getResourceAmount() - 20));
                 }
             }
         }

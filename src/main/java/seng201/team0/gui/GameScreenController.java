@@ -334,22 +334,24 @@ public class GameScreenController {
         );
     }
 
-    private void endRound(boolean roundFinish){
-        if (roundFinish) {
+    private void endRound(boolean roundWon){
+        if (roundWon) {
+
+            if (gameEnvironment.shouldTriggerRandomEvent()) {
+                gameEnvironment.initiateRandomEvent();
+            }
 
             int roundWinPrize = gameEnvironment.roundWinPrize();
             gameEnvironment.showAlert("Round Completed!",
                     "Congratulations you have beaten round " + gameEnvironment.getCurrentRound() +
                             " and you have won $" + roundWinPrize + "! \nYour towers " +
                             "have now leveled up!", Alert.AlertType.INFORMATION);
+
             if (gameEnvironment.isGameWon()){
                 gameEnvironment.setGameWon(true);
                 gameEnvironment.launchEndGameScreen();
-            } else {
 
-                if (gameEnvironment.shouldTriggerRandomEvent()) {
-                    gameEnvironment.initiateRandomEvent();
-                }
+            } else {
 
                 gameEnvironment.updateShopPostRound();
                 gameEnvironment.setCurrentRound(gameEnvironment.getCurrentRound() + 1);
@@ -357,15 +359,21 @@ public class GameScreenController {
                 gameEnvironment.refreshGameScreen();
             }
         } else {
+
+
+
             gameEnvironment.loseLife();
+
             if (gameEnvironment.isGameLost()){
                 gameEnvironment.launchEndGameScreen();
             } else {
-                gameEnvironment.showAlert("Round failed!", "You have lost a life", Alert.AlertType.INFORMATION);
 
                 if (gameEnvironment.shouldTriggerRandomEvent()) {
                     gameEnvironment.initiateRandomEvent();
                 }
+
+                gameEnvironment.showAlert("Round failed!", "You have lost a life", Alert.AlertType.INFORMATION);
+
 
                 gameEnvironment.updateShopPostRound();
                 gameEnvironment.refreshGameScreen();

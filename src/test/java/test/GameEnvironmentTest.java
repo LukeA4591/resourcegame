@@ -10,6 +10,8 @@ import seng201.team0.models.towers.*;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.items.*;
 
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 
 public class GameEnvironmentTest {
@@ -254,8 +256,52 @@ public class GameEnvironmentTest {
 
         Item ammunitionRepairKit = new AmmunitionTowerRepairKit();
 
+        gameEnvironment.buyItem(ammunitionRepairKit);
         gameEnvironment.sellItem(ammunitionRepairKit);
 
+        assertEquals(800 + ammunitionRepairKit.getSellPrice() - ammunitionRepairKit.getCost(), gameEnvironment.getCurrentBalance());
+        assertTrue(gameEnvironment.getShopItems().contains(ammunitionRepairKit));
+        assertFalse(gameEnvironment.getPlayerItems().contains(ammunitionRepairKit));
+
+    }
+
+    @Test
+    public void testBuyTower() {
+
+        Tower armoury = new Armoury();
+        SupportTower ammoRelayStation = new AmmoRelayStation();
+        SupportTower medicOutpost = new MedicOutpost();
+
+        gameEnvironment.getTowersInShop().addAll(List.of(armoury, ammoRelayStation));
+
+        gameEnvironment.buyTower(armoury);
+
+        assertEquals(800 - armoury.getCost(), gameEnvironment.getCurrentBalance());
+        assertTrue(gameEnvironment.getReserveTowers().contains(armoury));
+        assertFalse(gameEnvironment.getTowersInShop().contains(armoury));
+
+        gameEnvironment.setCurrentBalance(gameEnvironment.getCurrentBalance() + armoury.getCost());
+        gameEnvironment.buyTower(ammoRelayStation);
+
+        assertEquals(800 - ammoRelayStation.getCost(), gameEnvironment.getCurrentBalance());
+        assertSame(gameEnvironment.getSupportTower(), ammoRelayStation);
+        assertFalse(gameEnvironment.getTowersInShop().contains(ammoRelayStation));
+
+        gameEnvironment.setCurrentBalance(gameEnvironment.getCurrentBalance() + ammoRelayStation.getCost());
+        gameEnvironment.buyTower(medicOutpost);
+
+        assertEquals(800 - medicOutpost.getCost(), gameEnvironment.getCurrentBalance());
+        assertTrue(gameEnvironment.getReserveTowers().contains(medicOutpost));
+        assertNotSame(gameEnvironment.getSupportTower(), medicOutpost);
+
+    }
+
+    @Test
+    public void testSellTower() {
+
+        Tower armoury = new Armoury();
+        SupportTower ammoRelayStation = new AmmoRelayStation();
+        SupportTower medicOutpost = new MedicOutpost();
 
     }
 
