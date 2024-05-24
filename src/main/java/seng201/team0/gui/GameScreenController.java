@@ -198,11 +198,11 @@ public class GameScreenController {
      */
     private Round newRound;
     /**
-     * create variable to ensure that endround isn't called twice
+     * create variable to ensure that endRound isn't called twice
      */
     private boolean called = true;
     /**
-     * variable to ensure that floating point arithmetic error doesn't effect round.
+     * Variable to ensure that floating point arithmetic error doesn't affect the round.
      */
     int count;
 
@@ -461,7 +461,7 @@ public class GameScreenController {
      * disables a button for an amount of time, seconds. Disables the button then creates a new Timeline instance
      * the Timeline contains a KeyFrame instance that uses Duration.millis to pause for parameter seconds.
      * Button is then enabled.
-     * @param button button to be diabled for some time
+     * @param button button to be disabled for some time
      * @param seconds disables button for set amount of time
      */
     private void disableButtonForTime(final Button button, final double seconds) {
@@ -479,7 +479,7 @@ public class GameScreenController {
 
     /**
      * Called when the round starts. Takes a duration in seconds and displays the time interval on a progress bar.
-     * First creates a Timline instance. A Timline takes a KeyFrames intance. The keyframe instance takes 2 parameters,
+     * First creates a Timeline instance. A Timeline takes a KeyFrames instance. The keyframe instance takes 2 parameters,
      * time, and event. This keyframe performs every 1 second, the event is updating the progress bar by 1 second. This
      * is repeated howe many seconds are in the round.
      * @param durationInSeconds The time for the total progress timer to take.
