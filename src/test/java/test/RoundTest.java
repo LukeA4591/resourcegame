@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RoundTest {
-    private GameEnvironment gameEnvironment;
     private Round ammunitionRound;
     private Round medkitRound;
     private Round troopRound;
@@ -26,14 +25,12 @@ public class RoundTest {
     private Tower ammunitionTower;
     private Tower troopTower;
 
-    private AlertHandler alertHandler;
-
     @BeforeEach
     public void init() {
 
-        alertHandler = mock(AlertHandler.class);
+        AlertHandler alertHandler = mock(AlertHandler.class);
 
-        gameEnvironment = new GameEnvironment(gameEnvironment1 -> {}, gameEnvironment2 -> {},
+        GameEnvironment gameEnvironment = new GameEnvironment(gameEnvironment1 -> {}, gameEnvironment2 -> {},
                 gameEnvironment3 -> {}, gameEnvironment4 -> {}, gameEnvironment5 -> {}, gameEnvironment6 -> {},
                 () -> {}, alertHandler, new Random());
 
@@ -45,9 +42,9 @@ public class RoundTest {
         gameEnvironment.getMainTowers().add(troopTower);
         gameEnvironment.getMainTowers().add(ammunitionTower);
 
-        ammunitionRound = new Round(1, "Recruit", "Artillery Barrage", gameEnvironment);
-        medkitRound = new Round(1, "Recruit", "Ground Offensive", gameEnvironment);
-        troopRound = new Round(1, "Recruit", "Rescue Operation", gameEnvironment);
+        ammunitionRound = new Round(1,  "Artillery Barrage", gameEnvironment);
+        medkitRound = new Round(1,  "Ground Offensive", gameEnvironment);
+        troopRound = new Round(1,  "Rescue Operation", gameEnvironment);
 
     }
 

@@ -13,8 +13,6 @@ import seng201.team0.models.towers.gametowers.*;
 import seng201.team0.models.towers.supporttowers.AmmoRelayStation;
 import seng201.team0.models.towers.supporttowers.MedicOutpost;
 import seng201.team0.models.towers.supporttowers.TroopCommandPost;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -613,9 +611,7 @@ public class GameEnvironmentTest {
 
         gameEnvironment.getMainTowers().addAll(List.of(armoury, barracks, medicalTent));
 
-        ArrayList<Integer> carts = new ArrayList<>(List.of(1, 3, 0));
-
-        gameEnvironment.levelUpTowers(carts);
+        gameEnvironment.levelUpTowers();
 
         assertEquals(2, armoury.getLevel());
         assertEquals(1, barracks.getLevel());

@@ -27,6 +27,9 @@ public class ShopScreenController {
     private Label livesLeftLabel;
 
     @FXML
+    private Label towerLevelLabel;
+
+    @FXML
     private ToggleButton tower1Button;
     @FXML
     private ToggleButton tower2Button;
@@ -126,6 +129,8 @@ public class ShopScreenController {
     @FXML
     private void displaySupportTowerInformation(SupportTower tower) {
 
+        towerLevelLabel.setText("");
+
         InventoryScreenController.displaySupportTowerInformation(tower, descriptionVBox);
 
     }
@@ -134,6 +139,8 @@ public class ShopScreenController {
     @FXML
     private void displayItemInformation(Item item) {
         descriptionVBox.getChildren().clear();
+
+        towerLevelLabel.setText("");
 
         InventoryScreenController.displayItemInformation(item, descriptionVBox);
     }
@@ -145,6 +152,8 @@ public class ShopScreenController {
             displaySupportTowerInformation((SupportTower) tower);
         }
         else {
+
+            towerLevelLabel.setText(tower.getLevelRepresentation());
 
             InventoryScreenController.displayTowerInformation(tower, descriptionVBox);
         }

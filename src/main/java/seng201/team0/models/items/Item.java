@@ -1,15 +1,14 @@
 package seng201.team0.models.items;
 
 import seng201.team0.models.Purchasable;
-import seng201.team0.models.towers.Tower;
 
 public abstract class Item implements Purchasable {
 
-    private String name;
-    private int cost;
-    private int sellPrice;
+    private final String name;
+    private final int cost;
+    private final int sellPrice;
 
-    private boolean isRepairKit;
+    private final boolean isRepairKit;
 
     public Item(String name, int cost, boolean isRepairKit) {
         this.name = name;
@@ -37,11 +36,6 @@ public abstract class Item implements Purchasable {
     public boolean getIsRepairKit() {
         return isRepairKit;
     }
-    public void setIsRepairKit(boolean bool) {
-        this.isRepairKit = bool;
-    }
-
-
 
 
 }

@@ -63,21 +63,21 @@ public class TowerTest {
     public void testCommunicationsBreakDown() {
         double originalReloadSpeed = barracks.getReloadSpeed();
         barracks.communicationsBreakdown();
-        assertEquals(originalReloadSpeed * 1.2, barracks.getReloadSpeed());
+        assertEquals(originalReloadSpeed + 0.15, barracks.getReloadSpeed());
     }
 
     @Test
     public void testMedicalSupplyLineSabotage() {
         double originalReloadSpeed = medbay.getReloadSpeed();
         medbay.communicationsBreakdown();
-        assertEquals(originalReloadSpeed * 1.2, medbay.getReloadSpeed());
+        assertEquals(originalReloadSpeed + 0.15, medbay.getReloadSpeed());
     }
 
     @Test
     public void testEnemyAmbush() {
         double originalReloadSpeed = armoury.getReloadSpeed();
         armoury.communicationsBreakdown();
-        assertEquals(originalReloadSpeed * 1.2, armoury.getReloadSpeed());
+        assertEquals(originalReloadSpeed + 0.15, armoury.getReloadSpeed());
     }
 
     @Test

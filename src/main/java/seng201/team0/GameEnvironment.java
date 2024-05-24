@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class GameEnvironment {
 
-    private AlertHandler alertHandler;
+    private final AlertHandler alertHandler;
 
 
     private final Consumer<GameEnvironment> setupScreenLauncher;
@@ -203,7 +203,7 @@ public class GameEnvironment {
         return gameWon;
     }
     public void setGameWon(boolean gameWon) {
-        this.gameWon = true;
+        this.gameWon = gameWon;
     }
 
 
@@ -593,7 +593,7 @@ public class GameEnvironment {
         currentBalance += prize;
         return prize;
     }
-    public void levelUpTowers(ArrayList<Integer> carts){
+    public void levelUpTowers() {
         for (Tower tower : mainTowers){
             switch (roundMode){
                 case("Artillery Barrage"):

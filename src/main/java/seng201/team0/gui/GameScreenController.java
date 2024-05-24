@@ -1,7 +1,6 @@
 package seng201.team0.gui;
 
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.util.Duration;
 import seng201.team0.GameEnvironment;
 import javafx.fxml.FXML;
@@ -80,12 +79,6 @@ public class GameScreenController {
     private ProgressBar roundTimerProgressBar;
     private String roundMode;
     private final GameEnvironment gameEnvironment;
-    private int numberOfMedkitCarts;
-    private int numberOfAmmunitionCarts;
-    private  int numberOfTroopCarts;
-    private int medKitsCollected;
-    private int ammunitionCollected;
-    private int troopsCollected;
     private int medKitsNeeded;
     private int ammunitionNeeded;
     private int troopsNeeded;
@@ -181,12 +174,12 @@ public class GameScreenController {
         } else {
             roundModeLabel.setText("Round Mode: " + roundMode);
             gameEnvironment.setRoundMode(roundMode);
-            newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
+            newRound = new Round(gameEnvironment.getCurrentRound(),
                     roundMode, gameEnvironment);
             ArrayList<Integer> numCarts = newRound.getNumCarts();
-            numberOfAmmunitionCarts = numCarts.get(0);
-            numberOfMedkitCarts = numCarts.get(1);
-            numberOfTroopCarts = numCarts.get(2);
+            int numberOfAmmunitionCarts = numCarts.get(0);
+            int numberOfMedkitCarts = numCarts.get(1);
+            int numberOfTroopCarts = numCarts.get(2);
             roundInfoLabel1.setText(numberOfAmmunitionCarts + " Ammunition Carts | " + numberOfTroopCarts + " Troop Carts | " +
                     numberOfMedkitCarts + " Medkit Carts");
 
@@ -206,7 +199,7 @@ public class GameScreenController {
     @FXML
     private void onLoadSupplyTruckButtonClicked(){
         newRound.increaseAmmunitionCollected();
-        ammunitionCollected = newRound.getAmmunitionCollected();
+        int ammunitionCollected = newRound.getAmmunitionCollected();
         if (ammunitionCollected >= ammunitionNeeded) {
             ammoProgressBar.setProgress(1);
             loadSupplyTruckButton.setDisable(true);
@@ -220,7 +213,7 @@ public class GameScreenController {
     @FXML
     private void onLoadHumveeButtonClicked(){
         newRound.increaseTroopsCollected();
-        troopsCollected = newRound.getTroopsCollected();
+        int troopsCollected = newRound.getTroopsCollected();
         if (troopsCollected >= troopsNeeded){
             troopProgressBar.setProgress(1);
             loadHumveeButton.setDisable(true);
@@ -234,7 +227,7 @@ public class GameScreenController {
     @FXML
     private void onLoadAmbulanceButtonClicked(){
         newRound.increaseMedKitsCollected();
-        medKitsCollected = newRound.getMedKitsCollected();
+        int medKitsCollected = newRound.getMedKitsCollected();
         if (medKitsCollected >= medKitsNeeded){
             medKitProgressBar.setProgress(1);
             loadAmbulanceButton.setDisable(true);
@@ -339,10 +332,6 @@ public class GameScreenController {
 
         if (roundWon) {
 
-            if (gameEnvironment.shouldTriggerRandomEvent()) {
-                gameEnvironment.initiateRandomEvent();
-            }
-
             int roundWinBonus = gameEnvironment.getRoundWinBonus();
             gameEnvironment.showAlert("Round Completed!",
                     "Congratulations you have beaten round " + gameEnvironment.getCurrentRound() +
@@ -355,14 +344,16 @@ public class GameScreenController {
 
             } else {
 
+                if (gameEnvironment.shouldTriggerRandomEvent()) {
+                    gameEnvironment.initiateRandomEvent();
+                }
+
                 gameEnvironment.updateShopPostRound();
                 gameEnvironment.setCurrentRound(gameEnvironment.getCurrentRound() + 1);
-                gameEnvironment.levelUpTowers(newRound.getNumCarts());
+                gameEnvironment.levelUpTowers();
                 gameEnvironment.refreshGameScreen();
             }
         } else {
-
-
 
             gameEnvironment.loseLife();
 

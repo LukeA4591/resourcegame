@@ -6,10 +6,10 @@ public abstract class Tower implements Purchasable {
     private String name;
     private double resourceAmount;
     private double reloadSpeed;
-    private String resourceType;
+    private final String resourceType;
     private int level;
-    private int cost;
-    private int sellPrice;
+    private final int cost;
+    private final int sellPrice;
     private boolean isBroken;
     private static final int MAX_LEVEL = 6;
 
@@ -56,9 +56,6 @@ public abstract class Tower implements Purchasable {
     public String getResourceType() {
         return resourceType;
     }
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
-    }
 
     public Integer getLevel() {
         return level;
@@ -75,15 +72,9 @@ public abstract class Tower implements Purchasable {
     public int getCost() {
         return cost;
     }
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
 
     public int getSellPrice() {
         return sellPrice;
-    }
-    public void setSellPrice(int sellPrice) {
-        this.sellPrice = sellPrice;
     }
 
     public abstract String getDescription();

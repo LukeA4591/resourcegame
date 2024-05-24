@@ -8,15 +8,13 @@ import java.util.*;
 
 public class Round {
 
-    private List<Cart> ammunitionCarts;
-    private List<Cart> medkitCarts;
-    private List<Cart> troopCarts;
+    private final List<Cart> ammunitionCarts;
+    private final List<Cart> medkitCarts;
+    private final List<Cart> troopCarts;
 
-    private double trackDistance;
-    private int roundNumber;
-    private String difficulty;
-    private String roundMode;
-    private GameEnvironment gameEnvironment;
+    private final int roundNumber;
+    private final String roundMode;
+    private final GameEnvironment gameEnvironment;
 
     private int medKitsCollected;
     private int ammunitionCollected;
@@ -29,10 +27,9 @@ public class Round {
     private Tower troopTower;
     private int cartSpeed;
 
-    public Round(int roundNumber, String difficulty, String roundMode, GameEnvironment gameEnvironment) {
+    public Round(int roundNumber, String roundMode, GameEnvironment gameEnvironment) {
 
         this.roundNumber = roundNumber;
-        this.difficulty = difficulty;
         this.roundMode = roundMode;
         this.gameEnvironment = gameEnvironment;
 
@@ -98,9 +95,8 @@ public class Round {
         }
     }
     public ArrayList<Integer> getNumCarts(){
-        ArrayList<Integer> numCarts = new ArrayList<>(List.of(ammunitionCarts.size(),
+        return new ArrayList<>(List.of(ammunitionCarts.size(),
                 medkitCarts.size(), troopCarts.size()));
-        return numCarts;
     }
     public int getMedKitsCollected(){
         return medKitsCollected;

@@ -6,6 +6,7 @@ import javafx.scene.layout.VBox;
 import seng201.team0.GameEnvironment;
 import seng201.team0.models.items.Item;
 import seng201.team0.models.towers.*;
+import seng201.team0.models.towers.SupportTower;
 
 import java.util.List;
 
@@ -59,8 +60,6 @@ public class InventoryScreenController {
     @FXML
     private Button removeTowerButton;
     @FXML
-    private Button swapTowersButton;
-    @FXML
     private Button returnButton;
 
     @FXML
@@ -80,7 +79,7 @@ public class InventoryScreenController {
 
 
 
-    private GameEnvironment gameEnvironment;
+    private final GameEnvironment gameEnvironment;
 
     public InventoryScreenController(GameEnvironment tempEnvironment) {
         this.gameEnvironment = tempEnvironment;
@@ -129,6 +128,7 @@ public class InventoryScreenController {
     }
 
     static void displaySupportTowerInformation(SupportTower tower, VBox descriptionVBox) {
+
         if (tower != null) {
             descriptionVBox.getChildren().clear();
 
