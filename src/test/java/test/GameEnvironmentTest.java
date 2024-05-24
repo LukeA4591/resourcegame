@@ -19,12 +19,11 @@ import static org.mockito.Mockito.*;
 public class GameEnvironmentTest {
 
     private GameEnvironment gameEnvironment;
-    private AlertHandler alertHandler;
 
     @BeforeEach
     public void init() {
 
-        alertHandler = mock(AlertHandler.class);
+        AlertHandler alertHandler = mock(AlertHandler.class);
 
         gameEnvironment = new GameEnvironment(gameEnvironment1 -> {}, gameEnvironment2 -> {}, gameEnvironment3 -> {},
                 gameEnvironment4 -> {}, gameEnvironment5 -> {}, gameEnvironment6 -> {}, () -> {}, alertHandler, new Random(200));
