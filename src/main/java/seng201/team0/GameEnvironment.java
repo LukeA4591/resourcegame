@@ -31,6 +31,7 @@ public class GameEnvironment {
     private double currentBalance;
     private int livesLeft;
     private int trackDistance;
+    private String roundMode;
 
 
     private final List<Tower> mainTowers;
@@ -332,25 +333,15 @@ public class GameEnvironment {
 
     public void buyTower(Tower tower) {
 
-
         if (supportTower == null && tower instanceof SupportTower) {
             setCurrentBalance(currentBalance - tower.getCost());
             towersInShop.remove(tower);
             setSupportTower((SupportTower) tower);
-        }
-
-
-
-
-        else {
+        } else {
             setCurrentBalance(currentBalance - tower.getCost());
             reserveTowers.add(tower);
             towersInShop.remove(tower);
         }
-
-
-
-
 
     }
     public void sellTower(Tower tower) {
@@ -600,27 +591,36 @@ public class GameEnvironment {
         return prize;
     }
     public void levelUpTowers(ArrayList<Integer> carts){
-        int numberOfAmmunitionCarts = carts.get(0);
-        int numberOfMedkitCarts = carts.get(1);
-        int numberOfTroopCarts = carts.get(2);
         for (Tower tower : mainTowers){
-            String resourceType = tower.getResourceType();
-            if (resourceType.equals("Medkits")) {
-                for (int i = 0; i < numberOfMedkitCarts; i++){
-                    tower.levelUp();
-                }
-            }
-            if (resourceType.equals("Ammunition")) {
-                for (int i = 0; i < numberOfAmmunitionCarts; i++) {
-                    tower.levelUp();
-                }
-            }
-            if (resourceType.equals("Troops")){
-                for (int i = 0; i < numberOfTroopCarts; i++){
-                    tower.levelUp();
-                }
+            switch (roundMode){
+                case("Artillery Barrage"):
+                    if (tower.getResourceType().equals("Ammunition")){
+                        tower.levelUp();
+                        tower.levelUp();
+                    } else {
+                        tower.levelUp();
+                    }
+                    break;
+                case("Ground Offensive"):
+                    if (tower.getResourceType().equals("Troops")){
+                        tower.levelUp();
+                        tower.levelUp();
+                    } else {
+                        tower.levelUp();
+                    }
+                    break;
+                case ("Rescue Operation"):
+                    if (tower.getResourceType().equals("Medkits")){
+                        tower.levelUp();
+                        tower.levelUp();
+                    } else {
+                        tower.levelUp();
+                    }
             }
         }
+    }
+    public void setRoundMode(String roundMode){
+        this.roundMode = roundMode;
     }
 }
 

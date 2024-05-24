@@ -180,6 +180,7 @@ public class GameScreenController {
                     "Please choose a mode for your next round", Alert.AlertType.ERROR);
         } else {
             roundModeLabel.setText("Round Mode: " + roundMode);
+            gameEnvironment.setRoundMode(roundMode);
             newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),
                     roundMode, gameEnvironment);
             ArrayList<Integer> numCarts = newRound.getNumCarts();
@@ -191,8 +192,7 @@ public class GameScreenController {
 
             switch (roundMode) {
                 case "Artillery Barrage":
-                    roundInfoLabel2.setText("+" + numberOfAmmunitionCarts + " Ammunition Tower Levels | +" +
-                            numberOfTroopCarts +" Troop Tower Levels | +" + numberOfMedkitCarts + " Medkit Tower Levels");
+                    roundInfoLabel2.setText("+2 Ammunition Tower Levels | +1 Troop Tower Levels | +1 Medkit Tower Levels");
                     break;
                 case "Ground Offensive":
                     roundInfoLabel2.setText("+1 Ammunition Tower Levels | +2 Troop Tower Levels | +1 Medkit Tower Levels");
