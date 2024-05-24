@@ -580,7 +580,7 @@ public class InventoryScreenController {
      * @return the selectedTower or null if no tower is selected.
      */
     @FXML
-    private Tower getSelectedTower(ToggleButton selectedButton) {
+    private Tower getSelectedTower(final ToggleButton selectedButton) {
 
         Tower selectedTower = null;
 
@@ -632,7 +632,7 @@ public class InventoryScreenController {
         else {
             gameEnvironment.showAlert("Invalid Tower Selection", "There is no tower selected " +
                     "for removal", Alert.AlertType.ERROR);
-            }
+        }
     }
 }
 

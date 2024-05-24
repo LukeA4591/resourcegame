@@ -206,7 +206,7 @@ public class Round {
      *
      * @return The list of ammunition carts.
      */
-    public ArrayList<Cart> getAmmunitionCarts(){
+    public ArrayList<Cart> getAmmunitionCarts() {
         return ammunitionCarts;
     }
 
