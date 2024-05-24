@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import seng201.team0.GameEnvironment;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class FXWrapper implements AlertHandler {
     @FXML
@@ -20,7 +21,7 @@ public class FXWrapper implements AlertHandler {
         this.stage = stage;
         new GameEnvironment(this::launchSetupScreen, this::launchTowerSelectScreen, this::launchGameScreen,
                 this::launchShopScreen, this::launchInventoryScreen, this::launchEndGameScreen, this::clearPane,
-                this);
+                this, new Random());
     }
 
     public void clearPane() {

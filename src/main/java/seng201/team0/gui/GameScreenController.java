@@ -177,7 +177,7 @@ public class GameScreenController {
         this.roundMode = roundModeComboBox.getValue();
         if (roundMode == null){
             gameEnvironment.showAlert("Invalid Round Mode",
-                    "Please chose a mode for your next round", Alert.AlertType.ERROR);
+                    "Please choose a mode for your next round", Alert.AlertType.ERROR);
         } else {
             roundModeLabel.setText("Round Mode: " + roundMode);
             newRound = new Round(gameEnvironment.getCurrentRound(), gameEnvironment.getGameDifficulty(),

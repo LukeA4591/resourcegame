@@ -11,6 +11,7 @@ import seng201.team0.GameEnvironment;
 import seng201.team0.models.items.*;
 
 import java.util.List;
+import java.util.Random;
 
 import static org.mockito.Mockito.*;
 
@@ -25,7 +26,7 @@ public class GameEnvironmentTest {
         alertHandler = mock(AlertHandler.class);
 
         gameEnvironment = new GameEnvironment(gameEnvironment1 -> {}, gameEnvironment2 -> {}, gameEnvironment3 -> {},
-                gameEnvironment4 -> {}, gameEnvironment5 -> {}, gameEnvironment6 -> {}, () -> {}, alertHandler);
+                gameEnvironment4 -> {}, gameEnvironment5 -> {}, gameEnvironment6 -> {}, () -> {}, alertHandler, new Random(200));
 
         gameEnvironment.initializeGame("Player", 10, "Major", 800, 900, 2);
     }
@@ -272,7 +273,7 @@ public class GameEnvironmentTest {
         SupportTower ammoRelayStation = new AmmoRelayStation();
         SupportTower medicOutpost = new MedicOutpost();
 
-        gameEnvironment.getTowersInShop().addAll(List.of(armoury, ammoRelayStation));
+        gameEnvironment.getTowersInShop().addAll(List.of(armoury, ammoRelayStation, medicOutpost));
 
         gameEnvironment.buyTower(armoury);
 
@@ -303,6 +304,145 @@ public class GameEnvironmentTest {
         SupportTower ammoRelayStation = new AmmoRelayStation();
         SupportTower medicOutpost = new MedicOutpost();
 
+        gameEnvironment.getTowersInShop().addAll(List.of(armoury, ammoRelayStation, medicOutpost));
+
+        gameEnvironment.buyTower(armoury);
+        gameEnvironment.sellTower(armoury);
+
+        assertEquals(800 - armoury.getCost() + armoury.getSellPrice(), gameEnvironment.getCurrentBalance());
+        assertInstanceOf(Armoury.class, gameEnvironment.getTowersInShop().get(2));
+        assertFalse(gameEnvironment.getReserveTowers().contains(armoury));
+
+        gameEnvironment.setCurrentBalance(gameEnvironment.getCurrentBalance() + armoury.getSellPrice());
+        gameEnvironment.buyTower(ammoRelayStation);
+        gameEnvironment.sellTower(ammoRelayStation);
+
+        assertEquals(800 - ammoRelayStation.getCost() + ammoRelayStation.getSellPrice(), gameEnvironment.getCurrentBalance());
+        assertInstanceOf(AmmoRelayStation.class, gameEnvironment.getTowersInShop().get(2));
+        assertFalse(gameEnvironment.getReserveTowers().contains(ammoRelayStation));
+
+        gameEnvironment.setCurrentBalance(gameEnvironment.getCurrentBalance() + ammoRelayStation.getSellPrice());
+        gameEnvironment.buyTower(medicOutpost);
+        gameEnvironment.sellTower(medicOutpost);
+
+        assertEquals(800 - medicOutpost.getCost() + medicOutpost.getSellPrice(), gameEnvironment.getCurrentBalance());
+        assertInstanceOf(MedicOutpost.class, gameEnvironment.getTowersInShop().get(2));
+        assertFalse(gameEnvironment.getReserveTowers().contains(medicOutpost));
     }
+
+    @Test
+    public void testApplyItemEffect() {
+
+        Tower armoury = new Armoury();
+        Tower medicalTent = new MedicalTent();
+        Tower barracks = new Barracks();
+
+        gameEnvironment.getMainTowers().add(armoury);
+        gameEnvironment.getReserveTowers().add(medicalTent);
+        gameEnvironment.getReserveTowers().add(barracks);
+
+        Item ammoCrate = new AmmoCrate();
+
+        double originalResourceAmount = armoury.getResourceAmount();
+
+        gameEnvironment.applyItemEffect(ammoCrate);
+
+        assertEquals(20 + originalResourceAmount, armoury.getResourceAmount());
+        assertEquals(originalResourceAmount, medicalTent.getResourceAmount());
+        assertEquals(originalResourceAmount, barracks.getResourceAmount());
+
+    }
+
+    @Test
+    public void testRemoveItemEffect() {
+
+        Tower armoury = new Armoury();
+        Tower medicalTent = new MedicalTent();
+        Tower barracks = new Barracks();
+
+        gameEnvironment.getMainTowers().add(armoury);
+        gameEnvironment.getReserveTowers().add(medicalTent);
+        gameEnvironment.getReserveTowers().add(barracks);
+
+        Item ammoCrate = new AmmoCrate();
+
+        double originalResourceAmount = armoury.getResourceAmount();
+
+        gameEnvironment.removeItemEffect(ammoCrate);
+
+        assertEquals(originalResourceAmount - 20, armoury.getResourceAmount());
+        assertEquals(originalResourceAmount, medicalTent.getResourceAmount());
+        assertEquals(originalResourceAmount, barracks.getResourceAmount());
+    }
+
+    @Test
+    public void testShouldTriggerRandomEvent() {
+
+        gameEnvironment.initializeGame("Player", 10, "Recruit", 1000, 1000, 3);
+        assertTrue(gameEnvironment.shouldTriggerRandomEvent() || !gameEnvironment.shouldTriggerRandomEvent());
+
+        gameEnvironment.initializeGame("Player", 10, "Major", 1000, 1000, 3);
+        assertTrue(gameEnvironment.shouldTriggerRandomEvent() || !gameEnvironment.shouldTriggerRandomEvent());
+
+        gameEnvironment.initializeGame("Player", 10, "Commander", 1000, 1000, 3);
+        assertTrue(gameEnvironment.shouldTriggerRandomEvent() || !gameEnvironment.shouldTriggerRandomEvent());
+    }
+
+    @Test
+    public void testInitiateRandomEvent() {
+        gameEnvironment = spy(gameEnvironment);
+        doNothing().when(gameEnvironment).enemyAirStrike();
+        doNothing().when(gameEnvironment).enemyAmbush();
+        doNothing().when(gameEnvironment).communicationsBreakdown();
+        doNothing().when(gameEnvironment).medicalSupplyLineSabotage();
+
+        for (int i = 0; i < 1000; i++) {
+            gameEnvironment.initiateRandomEvent();
+        }
+
+        verify(gameEnvironment, atLeastOnce()).enemyAmbush();
+        verify(gameEnvironment, atLeastOnce()).enemyAirStrike();
+        verify(gameEnvironment, atLeastOnce()).communicationsBreakdown();
+        verify(gameEnvironment, atLeastOnce()).medicalSupplyLineSabotage();
+
+    }
+
+    @Test
+    public void testEnemyAirStrike() {
+
+        Tower armoury = new Armoury();
+        gameEnvironment.getMainTowers().add(armoury);
+        gameEnvironment.enemyAirStrike();
+
+        assertTrue(armoury.isBroken());
+
+        Tower specialForcesCamp = new SpecialForcesCamp();
+        gameEnvironment.getReserveTowers().add(specialForcesCamp);
+
+
+        gameEnvironment = spy(gameEnvironment);
+
+        for (int i = 0; i < 100; i++) {
+            gameEnvironment.enemyAirStrike();
+        }
+
+        assertTrue(specialForcesCamp.isBroken());
+    }
+
+    @Test
+    public void testCommunicationsBreakdown() {
+
+    }
+
+    @Test
+    public void testMedicalSupplyLineSabotage() {
+
+    }
+
+    @Test
+    public void testEnemyAmbush() {
+
+    }
+
 
 }

@@ -6,6 +6,7 @@ import seng201.team0.models.RandomEvent;
 import seng201.team0.models.items.*;
 import seng201.team0.models.towers.*;
 
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -41,7 +42,7 @@ public class GameEnvironment {
     private final List<Item> shopItems;
     private final List<Item> playerItems;
 
-    private final Random random = new Random();
+    private final Random random;
 
     private boolean gameWon;
 
@@ -50,7 +51,7 @@ public class GameEnvironment {
     public GameEnvironment(Consumer<GameEnvironment> setupScreenLauncher, Consumer<GameEnvironment> towerSelectScreenLauncher,
                            Consumer<GameEnvironment> gameScreenLauncher, Consumer<GameEnvironment> shopScreenLauncher,
                            Consumer<GameEnvironment> inventoryScreenLauncher, Consumer<GameEnvironment> endGameScreenLauncher,
-                           Runnable clearScreen, AlertHandler alertHandler) {
+                           Runnable clearScreen, AlertHandler alertHandler, Random random) {
 
         this.alertHandler = alertHandler;
         this.clearScreen = clearScreen;
@@ -69,6 +70,8 @@ public class GameEnvironment {
 
         this.playerItems = new ArrayList<>();
         this.shopItems = new ArrayList<>();
+
+        this.random = random;
 
         initializeItems();
 
@@ -329,16 +332,26 @@ public class GameEnvironment {
 
     public void buyTower(Tower tower) {
 
+
         if (supportTower == null && tower instanceof SupportTower) {
             setCurrentBalance(currentBalance - tower.getCost());
             towersInShop.remove(tower);
             setSupportTower((SupportTower) tower);
         }
+
+
+
+
         else {
             setCurrentBalance(currentBalance - tower.getCost());
             reserveTowers.add(tower);
             towersInShop.remove(tower);
         }
+
+
+
+
+
     }
     public void sellTower(Tower tower) {
         setCurrentBalance(currentBalance + tower.getSellPrice());
@@ -346,7 +359,7 @@ public class GameEnvironment {
         towersInShop.add(createNewInstance(tower));
     }
 
-    private Tower createNewInstance(Tower tower) {
+    public Tower createNewInstance(Tower tower) {
         if (tower instanceof Armoury) {
             return new Armoury();
         } else if (tower instanceof Barracks) {
@@ -508,11 +521,7 @@ public class GameEnvironment {
 
         List<Tower> allTowers = new ArrayList<>();
         allTowers.addAll(mainTowers);
-
-        if (!reserveTowers.isEmpty()) {
-            allTowers.addAll(reserveTowers);
-        }
-
+        allTowers.addAll(reserveTowers);
 
         List<Tower> possibleTowers = new ArrayList<>();
 

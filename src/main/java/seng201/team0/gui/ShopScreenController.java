@@ -234,6 +234,7 @@ public class ShopScreenController {
 
                 Tower selectedTower = gameEnvironment.getTowerInShopByName(selectedButton.getText());
 
+
                 if (selectedTower instanceof SupportTower) {
                     gameEnvironment.buyTower(selectedTower);
                     updatePlayerDetails();

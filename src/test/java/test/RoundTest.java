@@ -16,6 +16,7 @@ import seng201.team0.models.towers.Tower;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.function.Consumer;
 
 public class RoundTest {
@@ -36,7 +37,7 @@ public class RoundTest {
 
         gameEnvironment = new GameEnvironment(gameEnvironment1 -> {}, gameEnvironment2 -> {},
                 gameEnvironment3 -> {}, gameEnvironment4 -> {}, gameEnvironment5 -> {}, gameEnvironment6 -> {},
-                () -> {}, alertHandler);
+                () -> {}, alertHandler, new Random());
 
         medkitTower = new MedicalTent();
         ammunitionTower = new Armoury();
